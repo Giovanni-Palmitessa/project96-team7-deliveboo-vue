@@ -9,7 +9,7 @@ export default {
 
 <template>
   <h1 class="text-3xl font-bold underline text-center pt-6">Hello world!</h1>
-
+  <h1 class="text-verde">vede</h1>
   <div>
     <div class="flex justify-center p-4">
       <button
