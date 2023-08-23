@@ -6,46 +6,50 @@
     <div class="cardFooter">
       <h1 class="mb-7 mt-4 font-bold text-xl">Scopri Deliveboo</h1>
       <ul>
-        <li>Investitori</li>
-        <li>Chi siamo</li>
-        <li>Ristoranti</li>
-        <li>Altro</li>
-        <li>Pressroom</li>
-        <li>Programmazione</li>
-        <li>Design</li>
-        <li>Lavora con noi</li>
-        <li>Diventa nostro partner</li>
+        <li><a href="#">Investitori</a></li>
+        <li><a href="#">Chi siamo</a></li>
+        <li><a href="#">Ristoranti</a></li>
+        <li><a href="#">Altro</a></li>
+        <li><a href="#">Pressroom</a></li>
+        <li><a href="#">Programmazione</a></li>
+        <li><a href="#">Design</a></li>
+        <li><a href="#">Lavora con noi</a></li>
+        <li><a href="#">Diventa nostro partner</a></li>
       </ul>
     </div>
     <div class="cardFooter">
       <h2 class="mb-7 mt-4 font-bold text-xl">Note Legali</h2>
       <ul>
-        <li>Termini & Condizioni</li>
-        <li>Informativa sulla privacy</li>
-        <li>Cookies</li>
+        <li><a href="#">Termini & Condizioni</a></li>
+        <li><a href="#">Informativa sulla privacy</a></li>
+        <li><a href="#">Cookies</a></li>
       </ul>
     </div>
     <div class="cardFooter">
       <h2 class="mb-7 mt-4 font-bold text-xl">Aiuto</h2>
       <ul>
-        <li>Contatti</li>
-        <li>FAQ</li>
-        <li>Tipi di cucina</li>
-        <li>Lavora con noi</li>
+        <li><a href="#">Contatti</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Tipi di cucina</a></li>
+        <li><a href="#"></a></li>
       </ul>
     </div>
-    <div class="cardFooter grid grid-cols-4">
-      <h2 class="mb-4 mt-4 col-span-4 font-bold text-xl">
-        Porta Deliveboo con te
-      </h2>
-      <div class="appStoreApple col-span-3"></div>
-      <div class="appStoreGoogle col-span-3"></div>
+    <div class="cardFooter flex flex-col">
+      <h2 class="my-4 font-bold text-xl">Porta Deliveboo con te</h2>
+      <a href="#" class="appStoreApple w-40 mb-4"></a>
+      <a href="#" class="appStoreGoogle w-40"></a>
     </div>
   </div>
-  <div class="icon text-white">
-    <i class="fa-brands fa-facebook"></i>
-    <i class="fa-brands fa-twitter"></i>
-    <i class="fa-brands fa-instagram"></i>
+  <div class="icon text-white flex items-center gap-4 px-[50px] pb-4">
+    <a href="#"
+      ><i class="fa-brands fa-facebook text-2xl hover:text-b_hover"></i
+    ></a>
+    <a href="#"
+      ><i class="fa-brands fa-twitter text-2xl hover:text-b_hover"></i
+    ></a>
+    <a href="#"
+      ><i class="fa-brands fa-instagram text-2xl hover:text-b_hover"></i
+    ></a>
   </div>
 </template>
 <style scoped>
@@ -74,16 +78,16 @@ li:hover {
   background-image: url(public/img/download-on-the-app-store-apple-logo-svgrepo-com.svg);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 80px;
-  width: 65%;
+  height: 50px;
+  /* width: 65%; */
   background-position: center;
 }
 .appStoreGoogle {
   background-image: url(public/img/google-play-badge-logo-svgrepo-com.svg);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 80px;
-  width: 65%;
+  height: 50px;
+  /* width: 65%; */
   background-position: center;
 }
 </style>
