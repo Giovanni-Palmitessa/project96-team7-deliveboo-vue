@@ -33,7 +33,6 @@
         <li>Tipi di cucina</li>
         <li>Lavora con noi</li>
       </ul>
-      Aiuto
     </div>
     <div class="cardFooter grid grid-cols-4">
       <h2 class="mb-4 mt-4 col-span-4 font-bold text-xl">
