@@ -13,16 +13,6 @@ export default {};
         <div
           class="h-14 w-52 md:ml-[-25px] bg-[url('../../public/img/logo-deliveboo_thumbnail.png')] overflow-hidden bg-[length:245px_155px] bg-center"
         ></div>
-
-        <!-- <img
-          src="../../public/img/logo-deliveboo_thumbnail.png"
-          class="h-28"
-          alt="Flowbite Logo"
-        /> -->
-        <!-- <span
-          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          >Flowbite</span
-        > -->
       </a>
       <div class="flex">
         <button
@@ -55,12 +45,12 @@ export default {};
         id="navbar-sticky"
       >
         <ul
-          class="flex flex-col items-center p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
+          class="flex flex-col lg:items-center text-center p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
         >
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:bg-transparent md:text-secondary md:p-0"
+              class="block py-2 pl-3 pr-4 text-gray-900 hover:bg-secondary hover:text-white md:p-0 rounded md:bg-transparent md:text-secondary"
               aria-current="page"
               >Home</a
             >
@@ -82,14 +72,14 @@ export default {};
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
+              class="block py-2 pl-3 pr-4 mb-2 lg:mb-0 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
               ><i class="fa-solid fa-cart-shopping mr-1"></i>Cart</a
             >
           </li>
           <li>
             <button
               type="button"
-              class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-4 py-2 text-center mr-3 md:mr-0"
             >
               Login
             </button>
