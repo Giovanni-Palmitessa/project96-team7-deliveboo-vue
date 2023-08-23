@@ -25,12 +25,6 @@ export default {};
         > -->
       </a>
       <div class="flex">
-        <!-- <button
-          type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Get started
-        </button> -->
         <button
           data-collapse-toggle="navbar-sticky"
           type="button"
@@ -61,7 +55,7 @@ export default {};
         id="navbar-sticky"
       >
         <ul
-          class="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
+          class="flex flex-col items-center p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
         >
           <li>
             <a
@@ -91,6 +85,14 @@ export default {};
               class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
               ><i class="fa-solid fa-cart-shopping mr-1"></i>Cart</a
             >
+          </li>
+          <li>
+            <button
+              type="button"
+              class="text-white bg-secondary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+            >
+              Login
+            </button>
           </li>
         </ul>
       </div>
