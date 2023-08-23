@@ -11,7 +11,7 @@ export default {};
     >
       <a href="https://flowbite.com/" class="flex items-center">
         <div
-          class="h-14 w-52 bg-[url('../../public/img/logo-deliveboo_thumbnail.png')] overflow-hidden bg-[length:245px_155px] bg-center"
+          class="h-14 w-52 md:ml-[-25px] bg-[url('../../public/img/logo-deliveboo_thumbnail.png')] overflow-hidden bg-[length:245px_155px] bg-center"
         ></div>
 
         <!-- <img
@@ -34,7 +34,7 @@ export default {};
         <button
           data-collapse-toggle="navbar-sticky"
           type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-secondary rounded-lg md:hidden hover:bg-secondary hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-controls="navbar-sticky"
           aria-expanded="false"
         >
@@ -61,12 +61,12 @@ export default {};
         id="navbar-sticky"
       >
         <ul
-          class="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-primary border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
+          class="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
         >
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:bg-transparent md:text-secondary md:p-0"
               aria-current="page"
               >Home</a
             >
@@ -74,22 +74,22 @@ export default {};
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
               >About</a
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
               >Contact us</a
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >Cart</a
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
+              ><i class="fa-solid fa-cart-shopping mr-1"></i>Cart</a
             >
           </li>
         </ul>
