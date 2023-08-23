@@ -8,7 +8,7 @@ export default {
   theme: {
     colors: {
       primary: "#FFC244",
-      secondary: "#00846B",
+      secondary: "#00A082",
       b_hover: "#00846B",
     },
     extend: {},
