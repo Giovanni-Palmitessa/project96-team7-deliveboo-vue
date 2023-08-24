@@ -42,6 +42,12 @@ export default {};
               </p>
             </div>
           </div>
+          <input
+            type="number"
+            id="number"
+            class="w-2/5 mx-auto border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
+            required
+          />
         </div>
       </li>
 
@@ -85,6 +91,12 @@ export default {};
               </p>
             </div>
           </div>
+          <input
+            type="number"
+            id="number"
+            class="w-2/5 mx-auto border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
+            required
+          />
         </div>
       </li>
       <li class="cards_item">
@@ -128,6 +140,12 @@ export default {};
               </p>
             </div>
           </div>
+          <input
+            type="number"
+            id="number"
+            class="w-2/5 mx-auto mb-5 border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
+            required
+          />
         </div>
       </li>
     </ul>
@@ -308,18 +326,6 @@ body {
 .upcharge::after {
   right: 0;
   bottom: 1.25rem;
-}
-
-.note {
-  display: block;
-  text-align: center;
-  padding: 0.5rem;
-  font-weight: 900;
-
-  color: var(--black);
-  font-size: 1.3em;
-  font-style: italic;
-  margin-top: 1rem;
 }
 
 @keyframes fly-in {
