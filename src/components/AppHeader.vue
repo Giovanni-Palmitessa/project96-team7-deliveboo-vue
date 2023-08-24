@@ -56,10 +56,10 @@ export default {};
             >
           </li>
           <li>
-            <a
-              href="#"
+            <router-link
               class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
-              >About</a
+              :to="{ name: 'about' }"
+              >About</router-link
             >
           </li>
           <li>
