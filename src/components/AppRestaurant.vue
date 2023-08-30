@@ -1,21 +1,21 @@
 <script>
 export default {
   data() {
-    return {
-    }
+    return {};
   },
   props: {
     restaurants: Array,
   },
-  methods: {
-  },
-  created() {
-  }
+  methods: {},
+  created() {},
 };
 </script>
 
 <template>
-  <div class="bg-white border border-gray-200 rounded-lg shadow" v-for="restaurant in restaurants">
+  <div
+    class="bg-primary border border-gray-200 rounded-lg shadow"
+    v-for="restaurant in restaurants"
+  >
     <a href="#">
       <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" />
     </a>
@@ -33,13 +33,25 @@ export default {
           {{ category.name }}
         </a>
       </template>
-      <a href="#"
-        class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary">
+      <a
+        href="#"
+        class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary"
+      >
         Vai al Menù
-        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 5h12m0 0L9 1m4 4L9 9" />
+        <svg
+          class="w-3.5 h-3.5 ml-2"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9"
+          />
         </svg>
       </a>
     </div>
