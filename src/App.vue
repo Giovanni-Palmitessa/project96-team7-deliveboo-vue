@@ -26,10 +26,14 @@ export default {
 </template>
 
 <style>
-.home {
-  background-image: url("../public/img/bg-food.jpg");
+
+
+ 
+
+/* .home {
+  background-image: url('../public/img/bg-food.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
+} */
 </style>
