@@ -33,6 +33,9 @@ export default {
         this.arrRestaurants = response.data.results.data;
       });
     },
+    changePage(page) {
+      this.currentPage = page;
+    },
   },
   created() {
     this.getCategory();
