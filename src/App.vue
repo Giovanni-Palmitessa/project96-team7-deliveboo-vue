@@ -16,7 +16,7 @@ export default {
 <template>
   <AppHeader />
 
-  <div class="container">
+  <div class="container mx-auto">
     <router-view></router-view>
   </div>
   <AppFooter />
