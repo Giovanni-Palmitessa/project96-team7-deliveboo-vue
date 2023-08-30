@@ -1,8 +1,39 @@
-<script></script>
+<script>
+import axios from "axios";
+import { store } from "../store";
+export default {
+  data() {
+    return {
+      store,
+      products: [],
+    };
+  },
+  methods: {
+    getProducts() {
+      let restaurantId = sessionStorage.getItem("restaurant_id");
+      axios
+        .get(store.baseUrl + "api/products", {
+          params: {
+            restaurant_id: restaurantId,
+          },
+        })
+        .then((response) => {
+          this.products = response.data.results.data;
+        });
+    },
+  },
+  created() {
+    this.getProducts();
+  },
+};
+</script>
 <template>
-  <div class="main pt-20">
-    <ul class="cards">
-      <li class="cards_item relative">
+  <div class="container mt-[5.5rem] py-8 px-4 md:px-0">
+    <h1 class="text-4xl text-center font-bold text-secondary pb-8">
+      Il nostro Menù
+    </h1>
+    <ul class="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <li v-for="product in products" class="cards_item relative">
         <div class="card bg-primary" tabindex="0">
           <div class="card_image">
             <img
@@ -11,13 +42,11 @@
             />
           </div>
           <div class="card_content">
-            <h2 class="card_title bg-secondary">Pasta al pesto &#x2022; 10€</h2>
+            <h2 class="card_title bg-secondary">
+              {{ product.name }} &#x2022; {{ product.price }}€
+            </h2>
             <div class="card_text">
-              <p>
-                Un piatto elegante e saporito, lo Sformato di Spinaci unisce
-                spinaci freschi con uova, panna e formaggio Parmigiano, il tutto
-                cotto al forno per una consistenza soffice.
-              </p>
+              <p>{{ product.description }}</p>
               <p class="upcharge bg-secondary absolute bottom-0">
                 <button class="button bg-primary">
                   <svg
@@ -48,110 +77,12 @@
           />
         </div>
       </li>
-
-      <li class="cards_item">
-        <div class="card bg-primary" tabindex="0">
-          <div class="card_image">
-            <img
-              src="https://assets.codepen.io/652/photo-1520174691701-bc555a3404ca.jpeg"
-              alt="a Reuben sandwich on wax paper. "
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title bg-secondary">
-              Ultimate Reuben &#x2022; $18
-            </h2>
-            <div class="card_text">
-              <p>
-                Un piatto elegante e saporito, lo Sformato di Spinaci unisce
-                spinaci freschi con uova, panna e formaggio Parmigiano, il tutto
-                cotto al forno per una consistenza soffice.
-              </p>
-              <p class="upcharge bg-secondary">
-                <button class="button bg-primary">
-                  <svg
-                    viewBox="0 0 16 16"
-                    class="bi bi-cart-check"
-                    height="24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="#00846B"
-                  >
-                    <path
-                      d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
-                    ></path>
-                    <path
-                      d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-                    ></path>
-                  </svg>
-                  <p class="text">Aggiungi all'ordine</p>
-                </button>
-              </p>
-            </div>
-          </div>
-          <input
-            type="number"
-            id="number"
-            class="w-2/5 mx-auto border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
-            required
-          />
-        </div>
-      </li>
-      <li class="cards_item">
-        <div class="card bg-primary" tabindex="0">
-          <div class="card_image">
-            <img
-              src="https://assets.codepen.io/652/photo-1544510808-91bcbee1df55.jpeg"
-              alt="A side view of a plate of figs and berries. "
-            />
-          </div>
-          <div class="card_content">
-            <h2 class="card_title bg-secondary">
-              Fig &amp; Berry Plate &#x2022; $16
-            </h2>
-            <div class="card_text">
-              <p>
-                Un piatto elegante e saporito, lo Sformato di Spinaci unisce
-                spinaci freschi con uova, panna e formaggio Parmigiano, il tutto
-                cotto al forno per una consistenza soffice. lorem
-                ciaicaskcpioasciopasoiasn
-              </p>
-              <p class="upcharge bg-secondary">
-                <button class="button bg-primary">
-                  <svg
-                    viewBox="0 0 16 16"
-                    class="bi bi-cart-check"
-                    height="24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="#00846B"
-                  >
-                    <path
-                      d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
-                    ></path>
-                    <path
-                      d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-                    ></path>
-                  </svg>
-                  <p class="text">Aggiungi all'ordine</p>
-                </button>
-              </p>
-            </div>
-          </div>
-          <input
-            type="number"
-            id="number"
-            class="w-2/5 mx-auto mb-5 border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
-            required
-          />
-        </div>
-      </li>
     </ul>
   </div>
 </template>
 
 <style scoped>
-:root {
+/* :root {
   --white: #efefef;
   --black: #222;
   --trueBlack: #000;
@@ -170,9 +101,9 @@ body {
 .main {
   max-width: 1200px;
   margin: 0 auto;
-}
+} */
 
-.cards {
+/* .cards {
   display: grid;
   flex-wrap: wrap;
   list-style: none;
@@ -180,7 +111,7 @@ body {
   padding: 0;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
-}
+} */
 
 .cards_item {
   display: flex;

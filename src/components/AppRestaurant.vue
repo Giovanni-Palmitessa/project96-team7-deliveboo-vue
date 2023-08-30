@@ -4,17 +4,23 @@ export default {
     return {};
   },
   props: {
-    restaurants: Array,
+    restaurant: Object,
   },
-  methods: {},
+  methods: {
+    setRestaurantId(index) {
+      sessionStorage.removeItem("restaurantId");
+      sessionStorage.setItem("restaurant_id", index);
+      console.log(sessionStorage.getItem("restaurant_id"));
+    },
+  },
   created() {},
 };
 </script>
 
 <template>
   <div
+    @click="setRestaurantId(restaurant.id)"
     class="bg-primary border border-gray-200 rounded-lg shadow"
-    v-for="restaurant in restaurants"
   >
     <a href="#">
       <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" />
