@@ -1,12 +1,12 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
-import AppRestaurant from "../components/AppRestaurant.vue";
+import AppRestaurant_ from "../components/AppRestaurant_.vue";
 import AppCategorySelector from "../components/AppCategorySelector.vue";
 import AppJumbo from "../components/AppJumbo.vue";
 
 export default {
-  components: { AppRestaurant, AppCategorySelector, AppJumbo },
+  components: { AppRestaurant_, AppCategorySelector, AppJumbo },
   data() {
     return {
       // Store
@@ -43,13 +43,28 @@ export default {
         this.arrCategory = response.data.results;
       });
     },
+    // getRestaurants() {
+    //   axios
+    //     .get(this.store.baseUrl + "api/restaurants", {
+    //       params: {
+    //         page: this.currentPage,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       this.arrRestaurants = response.data.results.data;
+    //       this.nPages = response.data.results.last_page;
+    //     });
+    // },
     getRestaurants() {
+      const params = {
+        page: this.currentPage,
+      };
+      if (this.category && this.category.length > 0) {
+        params.category_id = this.category;
+      }
+
       axios
-        .get(this.store.baseUrl + "api/restaurants", {
-          params: {
-            page: this.currentPage,
-          },
-        })
+        .get(this.store.baseUrl + "api/restaurants", { params })
         .then((response) => {
           this.arrRestaurants = response.data.results.data;
           this.nPages = response.data.results.last_page;
@@ -63,6 +78,12 @@ export default {
   watch: {
     currentPage() {
       this.getRestaurants();
+    },
+    category: {
+      deep: true,
+      handler() {
+        this.getRestaurants();
+      },
     },
   },
 };
@@ -79,7 +100,7 @@ export default {
       @filtered="category = $event"
     />
     <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-      <AppRestaurant
+      <AppRestaurant_
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"
         :restaurant="restaurant"
