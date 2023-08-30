@@ -49,7 +49,11 @@ export default {
       @filtered="category = $event"
     />
     <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-      <AppRestaurant :restaurants="arrRestaurants" />
+      <AppRestaurant
+        v-for="restaurant in arrRestaurants"
+        :key="restaurant.id"
+        :restaurant="restaurant"
+      />
     </div>
   </div>
 </template>
