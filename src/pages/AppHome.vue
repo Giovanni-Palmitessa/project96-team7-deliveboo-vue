@@ -28,7 +28,7 @@ export default {
     getRestaurants() {
       axios.get(this.store.baseUrl + "api/restaurants").then((response) => {
         this.arrRestaurants = response.data.results.data;
-      })
+      });
     },
   },
   created() {
@@ -41,15 +41,17 @@ export default {
 <template>
   <AppJumbo />
   <div class="container mx-auto">
-    <h1 class="mt-32">Resturant list</h1>   
-  
-  <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-    <AppRestaurant :restaurants="arrRestaurants" />
+    <h1 class="text-5xl text-center font-bold text-secondary my-3">
+      Resturants
+    </h1>
+    <AppCategorySelector
+      :categories="arrCategory"
+      @filtered="category = $event"
+    />
+    <div class="mt-20 p-8 grid grid-cols-3 gap-4">
+      <AppRestaurant :restaurants="arrRestaurants" />
+    </div>
   </div>
-
-  <AppCategorySelector :categories="arrCategory" @filtered="category = $event" />
-  </div>
-
 </template>
 
 <style></style>
