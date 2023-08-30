@@ -5,11 +5,11 @@ export default {};
 <template>
   <nav class="bg-primary fixed w-full z-20 top-0 left-0 border-b border-gray-200">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="https://flowbite.com/" class="flex items-center">
+      <router-link class="flex items-center" :to="{ name: 'home' }">
         <div
           class="h-14 w-52 md:ml-[-25px] bg-[url('../../public/img/logo-deliveboo_thumbnail.png')] overflow-hidden bg-[length:245px_155px] bg-center">
         </div>
-      </a>
+      </router-link>
       <div class="flex">
         <button data-collapse-toggle="navbar-sticky" type="button"
           class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-secondary rounded-lg md:hidden hover:bg-secondary hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-200"
