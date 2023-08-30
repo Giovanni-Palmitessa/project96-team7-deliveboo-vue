@@ -77,17 +77,53 @@ export default {};
     </div>
 
     <!-- TERZA SEZIONE PER ABOUT CON IMMAGINE GRANDE -->
-    <h2 class="text-center text-2xl pt-14 pb-6">
-      <strong>Consegna Rapida e Affidabile:</strong> Sappiamo che la fame non
-      aspetta. I nostri autisti esperti assicurano che il tuo pasto arrivi caldo
-      e pronto per essere gustato nel minor tempo possibile.
-    </h2>
+    <div>
+      <h2 class="text-center text-2xl pt-14 pb-6">
+        <strong>Consegna Rapida e Affidabile:</strong> Sappiamo che la fame non
+        aspetta. I nostri autisti esperti assicurano che il tuo pasto arrivi
+        caldo e pronto per essere gustato nel minor tempo possibile.
+      </h2>
 
-    <img
-      class="mx-auto w-10/12 rounded-xl"
-      src="../../public/img/cibo-domicilio.jpg"
-      alt="food"
-    />
+      <img
+        class="mx-auto w-10/12 rounded-xl"
+        src="../../public/img/cibo-domicilio.jpg"
+        alt="food"
+      />
+    </div>
+
+    <!-- ULTIMA SEZIONE -->
+    <div class="mt-14">
+      <h2 class="text-3xl font-bold text-secondary">La Nostra Missione</h2>
+
+      <p class="pt-5 text-xl text-gray-900 text-center">
+        La nostra missione è rendere le tue esperienze culinarie il più comode
+        possibile. Vogliamo liberarti dagli oneri della cucina e permetterti di
+        goderti pasti deliziosi nella tranquillità del tuo spazio personale.
+      </p>
+
+      <div class="flex gap-5 justify-between pt-10">
+        <img
+          class="w-3/6 rounded-2xl"
+          src="../../public/img/Ricerca-delivery.jpg"
+          alt="food delivery"
+        />
+
+        <img
+          class="w-3/6 rounded-2xl"
+          src="../../public/img/Sushi-delivery-a-Milano.jpg"
+          alt="food delivery"
+        />
+      </div>
+
+      <p class="py-9 text-xl text-gray-900">
+        Affidati a
+        <span class="text-xl font-bold text-secondary">DeliveBoo</span> per
+        soddisfare i tuoi desideri gastronomici. Non importa se sei da solo, con
+        la famiglia o con gli amici, siamo qui per portare il buon cibo
+        direttamente da noi a te. Rilassati, goditi il viaggio culinario e
+        lascia che il tuo prossimo pasto sia un'esperienza indimenticabile.
+      </p>
+    </div>
   </div>
 </template>
 
