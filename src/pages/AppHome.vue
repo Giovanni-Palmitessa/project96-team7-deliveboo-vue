@@ -36,6 +36,18 @@ export default {
     changePage(page) {
       this.currentPage = page;
     },
+    nextPage() {
+      if (this.currentPage >= this.nPages) {
+        this.currentPage = page;
+      }
+      this.currentPage++;
+    },
+    previousPage() {
+      if (this.currentPage <= 1) {
+        this.currentPage = page;
+      }
+      this.currentPage--;
+    },
   },
   created() {
     this.getCategory();
