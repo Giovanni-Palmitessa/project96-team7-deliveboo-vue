@@ -17,6 +17,9 @@ export default {
       // Ristoranti
       arrRestaurants: [],
       restaurants: null,
+      // Paginatore
+      currentPage: 1,
+      nPages: 0,
     };
   },
   methods: {
