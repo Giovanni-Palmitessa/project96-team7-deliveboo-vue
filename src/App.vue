@@ -16,10 +16,20 @@ export default {
 <template>
   <AppHeader />
 
-  <div class="container">
-    <router-view></router-view>
+  <div class="home">
+    <div class="container mx-auto">
+      <router-view></router-view>
+    </div>
   </div>
+
   <AppFooter />
 </template>
 
-<style></style>
+<style>
+.home {
+  background-image: url('../public/img/bg-food.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+</style>

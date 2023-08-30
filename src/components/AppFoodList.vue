@@ -1,6 +1,4 @@
-<script>
-export default {};
-</script>
+<script></script>
 <template>
   <div class="main pt-20">
     <ul class="cards">

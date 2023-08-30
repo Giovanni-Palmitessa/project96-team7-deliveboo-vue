@@ -3,6 +3,7 @@ export default {};
 </script>
 
 <template>
+
   <div class="container">
     <h1 class="mt-28 text-3xl font-bold text-secondary">
       DeliveBoo: Gusta i Sapori del Mondo Comodamente a Casa Tua!
@@ -125,6 +126,8 @@ export default {};
       </p>
     </div>
   </div>
+
+  
 </template>
 
 <style>
