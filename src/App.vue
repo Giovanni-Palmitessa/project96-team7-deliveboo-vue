@@ -1,12 +1,10 @@
 <script>
 import { initFlowbite } from "flowbite";
 import AppHeader from "./components/AppHeader.vue";
-import AppFoodList from "./components/AppFoodList.vue";
 import AppFooter from "./components/AppFooter.vue";
 export default {
   components: {
     AppHeader,
-    AppFoodList,
     AppFooter,
   },
   mounted() {
@@ -17,7 +15,10 @@ export default {
 
 <template>
   <AppHeader />
-  <AppFoodList />
+
+  <div class="container">
+    <router-view></router-view>
+  </div>
   <AppFooter />
 </template>
 
