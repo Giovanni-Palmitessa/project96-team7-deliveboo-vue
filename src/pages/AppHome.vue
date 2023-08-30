@@ -2,9 +2,10 @@
 import axios from "axios";
 import AppRestaurant from "../components/AppRestaurant.vue";
 import AppCategorySelector from "../components/AppCategorySelector.vue";
+import AppJumbo from "../components/AppJumbo.vue";
 
 export default {
-  components: { AppRestaurant, AppCategorySelector },
+  components: { AppRestaurant, AppCategorySelector, AppJumbo },
   data() {
     return {
       arrCategory: [],
@@ -25,6 +26,7 @@ export default {
 </script>
 
 <template>
+  <AppJumbo />
   <div class="container mx-auto">
     <h1 class="mt-32">Resturant list</h1>
 

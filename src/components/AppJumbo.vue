@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <div class="bg-primary mt-[9.6rem]">
+  <div class="bg-primary mt-[5.5rem]">
     <div
       class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 bg-primary"
     >
