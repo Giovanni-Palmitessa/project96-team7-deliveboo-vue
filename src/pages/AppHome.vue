@@ -5,7 +5,7 @@ export default { components: { AppFoodList } };
 </script>
 
 <template>
-  <h1 class="mt-32">Resturant list</h1>
+  <h1 class="mt-[88px]">Resturant list</h1>
   <AppFoodList />
 </template>
 
