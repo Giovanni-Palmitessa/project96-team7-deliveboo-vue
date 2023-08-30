@@ -5,7 +5,7 @@ export default {};
 <template>
   <nav class="bg-primary fixed w-full z-20 top-0 left-0">
     <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      class="container flex flex-wrap items-center justify-between mx-auto p-4"
     >
       <router-link class="flex items-center" :to="{ name: 'home' }">
         <div
@@ -53,11 +53,6 @@ export default {};
             >
           </li>
           <li>
-            <!-- <router-link
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
-              :to="{ name: 'about' }"
-              >About</router-link
-              > -->
             <router-link
               class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
               :to="{ name: 'about' }"
@@ -78,14 +73,6 @@ export default {};
             >
               <i class="fa-solid fa-cart-shopping mr-1"></i>Carrello
             </router-link>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-4 py-2 text-center mr-3 md:mr-0"
-            >
-              Login
-            </button>
           </li>
         </ul>
       </div>
