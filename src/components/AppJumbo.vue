@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <div class="bg-primary mt-[5.5rem]">
+  <div class="bg-primary mt-[5.5rem] pt-8">
     <div
       class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 bg-primary"
     >
@@ -31,12 +31,8 @@ export default {};
         </div>
       </div>
     </div>
-    <img
-      class="w-full h-40 invert"
-      src="../../public/img/wave.svg"
-      alt="wave"
-    />
   </div>
+  <img src="../../public/img/wave.svg" alt="wave" />
 </template>
 
-<script scoped></script>
+<style scoped></style>
