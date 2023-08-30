@@ -48,19 +48,19 @@ export default {};
           class="flex flex-col lg:items-center text-center p-4 md:p-0 mt-4 font-medium border bg-primary border-secondary rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
         >
           <li>
-            <a
-              href="#"
+            <router-link
               class="block py-2 pl-3 pr-4 text-gray-900 hover:bg-secondary hover:text-white md:p-0 rounded md:bg-transparent md:text-secondary"
-              aria-current="page"
-              >Home</a
+              :to="{ name: 'home' }"
+              >Home</router-link
             >
           </li>
           <li>
-            <a
-              href="#"
+            <!-- <router-link
               class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
-              >About</a
-            >
+              :to="{ name: 'about' }"
+              >About</router-link
+              > -->
+            <router-link :to="{ name: 'about' }">About</router-link>
           </li>
           <li>
             <a
