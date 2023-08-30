@@ -1,30 +1,23 @@
 <script>
 import axios from 'axios';
-import { store } from '../store';
 
 export default {
   data() {
     return {
-      arrRestaurants: [],
-      restaurants: null,
-      store,
     }
+  },
+  props: {
+    restaurants: Array,
   },
   methods: {
-    getRestaurants() {
-      axios.get(this.store.baseUrl + "api/restaurants").then((response) => {
-        this.arrRestaurants = response.data.results.data;
-      })
-    }
   },
   created() {
-    this.getRestaurants();
   }
 };
 </script>
 
 <template>
-  <div class="mt-52" v-for="restaurant in arrRestaurants" :key="restaurant.name">{{ restaurant.name }}</div>
+  <div class="mt-52" v-for="restaurant in restaurants">{{ restaurant.name }}</div>
 
   <div class="bg-white border border-gray-200 rounded-lg shadow">
     <a href="#">
