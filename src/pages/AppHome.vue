@@ -30,8 +30,6 @@ export default {
     :categories="arrCategory"
     @filtered="category = $event"
   />
-  <!-- appcard -->
-  <!-- <AppFoodList /> -->
 </template>
 
 <style></style>
