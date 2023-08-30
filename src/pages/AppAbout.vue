@@ -49,7 +49,7 @@ export default {};
     <div></div>
 
     <div class="flex gap-5 mt-14">
-      <div class="flex flex-col basis-9/12 pt-6">
+      <div class="flex flex-col basis-7/12 pt-6">
         <ul>
           <li class="text-xl">
             <strong>Personalizzazione:</strong> Hai preferenze alimentari
