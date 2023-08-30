@@ -41,7 +41,8 @@ export default {
   <h1 class="mt-32">Resturant list</h1>
 
   <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-    <AppRestaurant v-for="index in 6" :key="index" :restaurants="arrRestaurants" />
+    <AppRestaurant :restaurants="arrRestaurants" />
+    <!-- <AppRestaurant v-for="index in 6" :key="index" :restaurants="arrRestaurants" /> -->
   </div>
 
   <AppCategorySelector :categories="arrCategory" @filtered="category = $event" />

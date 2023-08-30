@@ -1,6 +1,4 @@
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -17,28 +15,24 @@ export default {
 </script>
 
 <template>
-  <div class="mt-52" v-for="restaurant in restaurants">{{ restaurant.name }}</div>
-
-  <div class="bg-white border border-gray-200 rounded-lg shadow">
+  <div class="bg-white border border-gray-200 rounded-lg shadow" v-for="restaurant in restaurants">
     <a href="#">
       <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" />
     </a>
     <div class="p-5 bg-primary">
       <a href="#">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-          Haruka Sushi
+          {{ restaurant.name }}
         </h5>
       </a>
       <p class="mb-3 font-normal text-sm text-gray-700">
-        Esperienza culinaria incantata: Il nostro ristorante trasforma
-        ingredienti ordinari in opere d'arte gustative, incantando i palati con
-        un connubio magico di sapori e presentazioni uniche
+        {{ restaurant.description }}
       </p>
-      <ul class="flex gap-2 mb-3 text-sm font-semibold">
-        <li>Italiano</li>
-        <li>Fusion</li>
-        <li>Greco</li>
-      </ul>
+      <template v-for="category in restaurant.categories">
+        <a class="flex gap-2 mb-3 text-sm font-semibold" href="#">
+          {{ category.name }}
+        </a>
+      </template>
       <a href="#"
         class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary">
         Vai al Menù
