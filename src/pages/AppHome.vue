@@ -25,16 +25,18 @@ export default {
 </script>
 
 <template>
-  <h1 class="mt-32">Resturant list</h1>
+  <div class="container mx-auto">
+    <h1 class="mt-32">Resturant list</h1>
 
-  <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-    <AppRestaurant v-for="index in 6" :key="index" />
+    <div class="mt-20 p-8 grid grid-cols-3 gap-4">
+      <AppRestaurant v-for="index in 6" :key="index" />
+    </div>
+
+    <AppCategorySelector
+      :categories="arrCategory"
+      @filtered="category = $event"
+    />
   </div>
-
-  <AppCategorySelector
-    :categories="arrCategory"
-    @filtered="category = $event"
-  />
 </template>
 
 <style></style>

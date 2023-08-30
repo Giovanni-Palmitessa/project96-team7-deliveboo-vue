@@ -17,7 +17,7 @@ export default {
   <AppHeader />
 
   <div class="home">
-    <div class="container mx-auto">
+    <div class="">
       <router-view></router-view>
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
 
 <style>
 .home {
-  background-image: url('../public/img/bg-food.jpg');
+  background-image: url("../public/img/bg-food.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
