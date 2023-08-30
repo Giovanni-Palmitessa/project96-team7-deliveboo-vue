@@ -33,8 +33,8 @@ export default {
           {{ category.name }}
         </a>
       </template>
-      <a
-        href="#"
+      <RouterLink
+        :to="{ name: 'menu' }"
         class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary"
       >
         Vai al Menù
@@ -53,7 +53,7 @@ export default {
             d="M1 5h12m0 0L9 1m4 4L9 9"
           />
         </svg>
-      </a>
+      </RouterLink>
     </div>
   </div>
 </template>
