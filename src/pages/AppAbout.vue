@@ -15,6 +15,7 @@ export default {};
       click.
     </p>
 
+    <!-- PRIMA SEZIONE PER ABOUT -->
     <div class="flex gap-5 mt-10">
       <div class="image basis-full">
         <img
@@ -46,12 +47,11 @@ export default {};
       </div>
     </div>
 
-    <div></div>
-
+    <!-- SECONDA SEZIONE PER ABOUT -->
     <div class="flex gap-5 mt-14">
       <div class="flex flex-col basis-7/12 pt-6">
         <ul>
-          <li class="text-xl">
+          <li class="pt-4 text-xl">
             <strong>Personalizzazione:</strong> Hai preferenze alimentari
             specifiche o allergie? Nessun problema. Nel nostro sistema di
             ordinazione, puoi facilmente indicare le tue esigenze e
@@ -75,6 +75,19 @@ export default {};
         />
       </div>
     </div>
+
+    <!-- TERZA SEZIONE PER ABOUT CON IMMAGINE GRANDE -->
+    <h2 class="text-center text-2xl pt-14 pb-6">
+      <strong>Consegna Rapida e Affidabile:</strong> Sappiamo che la fame non
+      aspetta. I nostri autisti esperti assicurano che il tuo pasto arrivi caldo
+      e pronto per essere gustato nel minor tempo possibile.
+    </h2>
+
+    <img
+      class="mx-auto w-10/12 rounded-xl"
+      src="../../public/img/cibo-domicilio.jpg"
+      alt="food"
+    />
   </div>
 </template>
 
