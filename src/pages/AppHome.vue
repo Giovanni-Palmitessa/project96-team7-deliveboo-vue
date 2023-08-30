@@ -1,10 +1,10 @@
 <script>
 import axios from "axios";
-import AppFoodList from "../components/AppFoodList.vue";
+import AppRestaurant from "../components/AppRestaurant.vue";
 import AppCategorySelector from "../components/AppCategorySelector.vue";
 
 export default {
-  components: { AppFoodList, AppCategorySelector },
+  components: { AppRestaurant, AppCategorySelector },
   data() {
     return {
       arrCategory: [],
@@ -26,6 +26,11 @@ export default {
 
 <template>
   <h1 class="mt-32">Resturant list</h1>
+
+  <div class="mt-20 p-8 grid grid-cols-3 gap-4">
+    <AppRestaurant v-for="index in 6" :key="index" />
+  </div>
+
   <AppCategorySelector
     :categories="arrCategory"
     @filtered="category = $event"
