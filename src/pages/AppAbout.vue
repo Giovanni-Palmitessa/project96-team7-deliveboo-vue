@@ -3,12 +3,11 @@ export default {};
 </script>
 
 <template>
-  <h1 class="mt-36">
-    About us Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-    excepturi harum cumque, consequuntur nemo incidunt accusantium dolorem ex,
-    quam deserunt laboriosam quae consectetur a suscipit ea in inventore, eos
-    dicta.
-  </h1>
+  <div class="container mx-auto w-4/5">
+    <h1 class="mt-28 text-3xl font-bold text-secondary">
+      DeliveBoo: Gusta i Sapori del Mondo Comodamente a Casa Tua!
+    </h1>
+  </div>
 </template>
 
 <style></style>
