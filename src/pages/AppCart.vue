@@ -3,33 +3,78 @@ export default {};
 </script>
 
 <template>
-  <div class="mt-[120px] flex justify-between mx-20">
+  <div class="mt-[120px] flex flex-col-reverse lg:flex-row justify-between sm:mx-0 md:mx-0 lg:mx-20">
     <!-- Card con l'immagine a sinistra -->
-    <div
-      class="card-sinistra flex flex-col items-center md:flex-row md:max-w-xl bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-    >
-      <img
-        class="object-cover w-full rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-        src="https://picsum.photos/id/237/200/300"
-        alt=""
-      />
-      <div class="flex flex-col justify-between p-4 leading-normal">
-        <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
-          Titolo Prodotto
-        </h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Descrizione- Ingredienti - Ingredienti - Ingredienti - Ingredienti -.
-        </p>
-        <div class="rounded-full">Aggiungi al carrello</div>
-      </div>
+    <div class="flex flex-col">
+        <div class="card-sinistra gap-3 p-3 flex flex-col md:flex-row md:max-w-full sm:mx-4 md:mx-4 lg:mx-0 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-6">
+            <img class="object-cover self-center md:self-start lg:self-start h-32 w-32 rounded-t-lg lg:h-20 lg:w-28 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="https://picsum.photos/id/237/200/300" alt=""/>
+            <div class="flex flex-col justify-between w-full">
+                <div class="text-center md:text-start lg:text-start">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Nome Prodotto</h5>
+                    <p class="mb-3 lg:px-2 font-normal text-gray-700 dark:text-gray-400">
+                        Descrizione- Ingredienti - Ingredienti - Ingredienti - Ingredienti -.
+                    </p>
+                </div>
+                <button class="rounded self-center md:self-end lg:self-end w-48 mb-2 mx-4 p-2 text-center bg-red-700 text-white">
+                    Rimuovi dal carrello
+                </button>
+            </div>
+        </div>
+        <div class="card-sinistra gap-3 p-3 flex flex-col md:flex-row md:max-w-full sm:mx-4 md:mx-4 lg:mx-0 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-6">
+            <img class="object-cover self-center md:self-start lg:self-start h-32 w-32 rounded-t-lg lg:h-20 lg:w-28 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="https://picsum.photos/id/237/200/300" alt=""/>
+            <div class="flex flex-col justify-between w-full">
+                <div class="text-center md:text-start lg:text-start">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Nome Prodotto</h5>
+                    <p class="mb-3 lg:px-2 font-normal text-gray-700 dark:text-gray-400">
+                        Descrizione- Ingredienti - Ingredienti - Ingredienti - Ingredienti -.
+                    </p>
+                </div>
+                <button class="rounded self-center md:self-end lg:self-end w-48 mb-2 mx-4 p-2 text-center bg-red-700 text-white">
+                    Rimuovi dal carrello
+                </button>
+            </div>
+        </div>
+        <div class="card-sinistra gap-3 p-3 flex flex-col md:flex-row md:max-w-full sm:mx-4 md:mx-4 lg:mx-0 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-6">
+            <img class="object-cover self-center md:self-start lg:self-start h-32 w-32 rounded-t-lg lg:h-20 lg:w-28 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="https://picsum.photos/id/237/200/300" alt=""/>
+            <div class="flex flex-col justify-between w-full">
+                <div class="text-center md:text-start lg:text-start">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Nome Prodotto</h5>
+                    <p class="mb-3 lg:px-2 font-normal text-gray-700 dark:text-gray-400">
+                        Descrizione- Ingredienti - Ingredienti - Ingredienti - Ingredienti -.
+                    </p>
+                </div>
+                <button class="rounded self-center md:self-end lg:self-end w-48 mb-2 mx-4 p-2 text-center bg-red-700 text-white">
+                    Rimuovi dal carrello
+                </button>
+            </div>
+        </div>
+        <div class="card-sinistra gap-3 p-3 flex flex-col md:flex-row md:max-w-full sm:mx-4 md:mx-4 lg:mx-0 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-6">
+            <img class="object-cover self-center md:self-start lg:self-start h-32 w-32 rounded-t-lg lg:h-20 lg:w-28 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="https://picsum.photos/id/237/200/300" alt=""/>
+            <div class="flex flex-col justify-between w-full">
+                <div class="text-center md:text-start lg:text-start">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Nome Prodotto</h5>
+                    <p class="mb-3 lg:px-2 font-normal text-gray-700 dark:text-gray-400">
+                        Descrizione- Ingredienti - Ingredienti - Ingredienti - Ingredienti -.
+                    </p>
+                </div>
+                <button class="rounded self-center md:self-end lg:self-end w-48 mb-2 mx-4 p-2 text-center bg-red-700 text-white">
+                    Rimuovi dal carrello
+                </button>
+            </div>
+        </div>
     </div>
+    
+    
+
     <!-- Riepilogo ordine a destra -->
     <div
-      class="max-w-3xl Container-carrello p-6 bg-white rounded-lg shadow-md text-center dark:bg-gray-800"
+    class="max-w-3xl container-carrello p-6 bg-white rounded-lg shadow-md text-center dark:bg-gray-800 mb-6 lg:mb-0"
     >
-      <h1 class="text-3xl font-bold mb-6">Carrello</h1>
+      <h1 class="text-3xl text-secondary font-bold mb-6">Carrello</h1>
       <div class="flex items-center justify-between mb-4">
         <h5 class="text-xl font-bold text-gray-900 dark:text-white">
           Prodotti Ordinati
@@ -76,7 +121,7 @@ export default {};
       </div>
       <div class="mt-6">
         <button
-          class="w-full py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-60"
+          class="w-full py-2 font-bold text-primary bg-secondary hover:bg-b_hover focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-60"
         >
           Procedi all'acquisto
         </button>
@@ -90,10 +135,11 @@ export default {};
 .object-cover {
   height: 100%;
 }
-.card-sinistra {
+/* .card-sinistra {
   height: 200px;
-}
-.Container-carrello {
-  width: 450px;
-}
+} */
+/* .container-carrello {
+    
+    width: 450px;
+} */
 </style>
