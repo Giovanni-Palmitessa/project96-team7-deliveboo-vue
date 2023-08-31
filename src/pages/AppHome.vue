@@ -18,7 +18,7 @@ export default {
       arrRestaurants: [],
       restaurants: null,
       // Paginatore
-      currentPage: 2,
+      currentPage: 1,
       nPages: 0,
     };
   },
@@ -43,13 +43,28 @@ export default {
         this.arrCategory = response.data.results;
       });
     },
+    // getRestaurants() {
+    //   axios
+    //     .get(this.store.baseUrl + "api/restaurants", {
+    //       params: {
+    //         page: this.currentPage,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       this.arrRestaurants = response.data.results.data;
+    //       this.nPages = response.data.results.last_page;
+    //     });
+    // },
     getRestaurants() {
+      const params = {
+        page: this.currentPage,
+      };
+      if (this.category && this.category.length > 0) {
+        params.category_id = this.category;
+      }
+
       axios
-        .get(this.store.baseUrl + "api/restaurants", {
-          params: {
-            page: this.currentPage,
-          },
-        })
+        .get(this.store.baseUrl + "api/restaurants", { params })
         .then((response) => {
           this.arrRestaurants = response.data.results.data;
           this.nPages = response.data.results.last_page;
@@ -63,6 +78,12 @@ export default {
   watch: {
     currentPage() {
       this.getRestaurants();
+    },
+    category: {
+      deep: true,
+      handler() {
+        this.getRestaurants();
+      },
     },
   },
 };

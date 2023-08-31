@@ -8,6 +8,7 @@ export default {
   theme: {
     colors: {
       primary: "#FFC244",
+      primary_hover: "#9E782A",
       secondary: "#00A082",
       b_hover: "#00846B",
     },

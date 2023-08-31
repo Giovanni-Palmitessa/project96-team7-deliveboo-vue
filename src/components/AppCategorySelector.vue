@@ -8,8 +8,10 @@ export default {
   },
   methods: {
     filterRestaurants() {
-      // Invia gli elementi selezionati al componente genitore
-      this.$emit("filtered", this.selectedCategories);
+      this.$emit(
+        "filtered",
+        this.selectedCategories.map((category) => category.id)
+      );
     },
   },
 };
@@ -19,10 +21,10 @@ export default {
   <div>
     <div>
       <form @submit.prevent="filterRestaurants">
-        <div v-for="category in categories" :key="category.name">
+        <div v-for="category in categories" :key="category.id">
           <input
             type="checkbox"
-            :value="category.name"
+            :value="category"
             v-model="selectedCategories"
           />
           {{ category.name }}
@@ -32,5 +34,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style></style>
