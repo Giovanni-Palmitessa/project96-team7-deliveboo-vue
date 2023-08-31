@@ -13,15 +13,11 @@ export default {
       console.log(sessionStorage.getItem("restaurant_id"));
     },
   },
-  created() {},
 };
 </script>
 
 <template>
-  <div
-    @click="setRestaurantId(restaurant.id)"
-    class="bg-primary border border-gray-200 rounded-lg shadow"
-  >
+  <div class="bg-primary border border-gray-200 rounded-lg shadow">
     <a href="#">
       <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" />
     </a>
@@ -42,6 +38,7 @@ export default {
       <RouterLink
         :to="{ name: 'menu' }"
         class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary"
+        @click.prevent="setRestaurantId(restaurant.id)"
       >
         Vai al Menù
         <svg

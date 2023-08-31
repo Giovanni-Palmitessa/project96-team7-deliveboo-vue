@@ -6,19 +6,20 @@ export default {
     return {
       store,
       products: [],
+      restaurantId: sessionStorage.getItem("restaurant_id"),
     };
   },
   methods: {
     getProducts() {
-      let restaurantId = sessionStorage.getItem("restaurant_id");
       axios
         .get(store.baseUrl + "api/products", {
           params: {
-            restaurant_id: restaurantId,
+            restaurant_id: this.restaurantId,
           },
         })
         .then((response) => {
           this.products = response.data.results.data;
+          console.log(this.products);
         });
     },
   },

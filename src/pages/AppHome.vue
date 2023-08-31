@@ -43,18 +43,6 @@ export default {
         this.arrCategory = response.data.results;
       });
     },
-    // getRestaurants() {
-    //   axios
-    //     .get(this.store.baseUrl + "api/restaurants", {
-    //       params: {
-    //         page: this.currentPage,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       this.arrRestaurants = response.data.results.data;
-    //       this.nPages = response.data.results.last_page;
-    //     });
-    // },
     getRestaurants() {
       const params = {
         page: this.currentPage,
