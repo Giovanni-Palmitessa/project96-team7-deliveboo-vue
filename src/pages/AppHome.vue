@@ -1,12 +1,12 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
-import AppRestaurant_ from "../components/AppRestaurant_.vue";
+import AppRestaurant from "../components/AppRestaurant.vue";
 import AppCategorySelector from "../components/AppCategorySelector.vue";
 import AppJumbo from "../components/AppJumbo.vue";
 
 export default {
-  components: { AppRestaurant_, AppCategorySelector, AppJumbo },
+  components: { AppRestaurant, AppCategorySelector, AppJumbo },
   data() {
     return {
       // Store
@@ -18,7 +18,7 @@ export default {
       arrRestaurants: [],
       restaurants: null,
       // Paginatore
-      currentPage: 2,
+      currentPage: 1,
       nPages: 0,
     };
   },
@@ -100,7 +100,7 @@ export default {
       @filtered="category = $event"
     />
     <div class="mt-20 p-8 grid grid-cols-3 gap-4">
-      <AppRestaurant_
+      <AppRestaurant
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"
         :restaurant="restaurant"
