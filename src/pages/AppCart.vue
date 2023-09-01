@@ -3,6 +3,7 @@ export default {
   data() {
     return {
       products: [],
+      subtotal: null,
     };
   },
   methods: {
@@ -12,9 +13,23 @@ export default {
       console.log(products);
       this.products = products;
     },
+    getSubtotal() {
+      if (this.products) {
+        const subtotal = this.products.reduce(
+          (sum, item) => sum + item.price,
+          0
+        );
+        // console.log(`La somma dei prezzi è: ${subtotal}`);
+        this.subtotal = subtotal;
+      }
+    },
+    restoreCart() {
+      localStorage.removeItem("cart");
+    },
   },
   created() {
     this.getProductsCart();
+    this.getSubtotal();
   },
 };
 </script>
@@ -59,7 +74,7 @@ export default {
               <span class="text-emerald-500 ml-2">(-50% OFF)</span>
             </p> -->
             <p class="text-gray-800 font-normal text-xl">
-              € {{ product.price }}
+              €{{ product.price }}
             </p>
           </div>
           <!-- Remove Product Icon -->
@@ -135,15 +150,15 @@ export default {
 
     <!-- Purchase Resume -->
     <div
-      class="flex flex-col bg-primary w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg"
+      class="flex flex-col bg-primary_hover w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg mt-14"
     >
-      <p class="text-secondary text-xl font-extrabold">Riepilogo Acquisti</p>
+      <p class="text-b_hover text-xl font-extrabold">Riepilogo Acquisti</p>
       <div
-        class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm"
+        class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary"
       >
         <div class="flex flex-row justify-between">
           <p class="text-dark">Subtotale (2 Articoli)</p>
-          <p class="text-end font-bold">€99.98</p>
+          <p class="text-end font-bold">€ {{ this.subtotal }}</p>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
@@ -152,11 +167,6 @@ export default {
             <p class="text-end font-bold">€3.90</p>
             <p class="text-dark text-sm font-normal">Arriverà il 16 Luglio</p>
           </div>
-        </div>
-        <hr class="bg-secondary h-[1px] border-t-0" />
-        <div class="flex flex-row justify-between">
-          <p class="text-dark">Discount Coupon</p>
-          <a class="text-gray-500 text-base underline" href="#">Add</a>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
@@ -173,6 +183,7 @@ export default {
           </button>
           <button
             class="transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md"
+            @click="restoreCart"
           >
             SVUOTA CARRELLO
           </button>
