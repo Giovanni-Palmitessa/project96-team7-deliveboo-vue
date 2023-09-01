@@ -6,7 +6,10 @@ export default {
     return {
       store,
       products: [],
+      productsCart: [],
       restaurantId: sessionStorage.getItem("restaurant_id"),
+      qnt: null,
+      notAllowed: false,
     };
   },
   methods: {
@@ -19,8 +22,28 @@ export default {
         })
         .then((response) => {
           this.products = response.data.results.data;
-          console.log(this.products);
+          // console.log(this.products);
         });
+    },
+    getProductInfo(id, name, price) {
+      let product = {
+        id: id,
+        name: name,
+        price: price,
+        qnt: 1,
+      };
+
+      if (this.productsCart.some((item) => item.id === product.id)) {
+        const obj = this.productsCart.find((item) => item.id === product.id);
+        obj.qnt++;
+        console.log(this.productsCart);
+      } else {
+        this.productsCart.push(product);
+        // console.log(this.productsCart);
+        let cartStr = JSON.stringify(this.productsCart);
+        localStorage.setItem("cart", cartStr);
+        console.log(localStorage.getItem("cart"));
+      }
     },
   },
   created() {
@@ -49,7 +72,17 @@ export default {
             <div class="card_text">
               <p>{{ product.description }}</p>
               <p class="upcharge bg-secondary absolute bottom-0">
-                <button class="button bg-primary">
+                <button
+                  @click="
+                    getProductInfo(
+                      product.id,
+                      product.name,
+                      product.price,
+                      this.qnt
+                    )
+                  "
+                  class="button bg-primary"
+                >
                   <svg
                     viewBox="0 0 16 16"
                     class="bi bi-cart-check"
@@ -70,12 +103,13 @@ export default {
               </p>
             </div>
           </div>
-          <input
+          <!-- <input
             type="number"
             id="number"
             class="w-2/5 mx-auto border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
             required
-          />
+            v-model="qnt"
+          /> -->
         </div>
       </li>
     </ul>

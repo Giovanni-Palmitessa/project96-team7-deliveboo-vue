@@ -10,7 +10,7 @@ export default {
     setRestaurantId(index) {
       sessionStorage.removeItem("restaurantId");
       sessionStorage.setItem("restaurant_id", index);
-      console.log(sessionStorage.getItem("restaurant_id"));
+      // console.log(sessionStorage.getItem("restaurant_id"));
     },
   },
 };
