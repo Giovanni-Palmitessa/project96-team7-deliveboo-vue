@@ -1,10 +1,16 @@
 <script>
+import axios from "axios";
 import { store } from "../store";
 
 export default {
   data() {
     return {
       store,
+      email: "",
+      name: "",
+      surname: "",
+      phone: "",
+      message: "",
     };
   },
   methods: {
@@ -20,6 +26,7 @@ export default {
   <form class="my-32" @submit.prevent="sendMailtoGuest" novalidate>
     <div class="relative z-0 w-full mb-6 group">
       <input
+        v-model="email"
         type="email"
         name="email"
         id="email"
@@ -36,6 +43,7 @@ export default {
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
         <input
+          v-model="name"
           type="text"
           name="name"
           id="name"
@@ -50,6 +58,7 @@ export default {
       </div>
       <div class="relative z-0 w-full mb-6 group">
         <input
+          v-model="surname"
           type="text"
           name="surname"
           id="surname"
@@ -66,6 +75,7 @@ export default {
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
         <input
+          v-model="phone"
           type="tel"
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           name="phone"
@@ -81,6 +91,7 @@ export default {
       </div>
       <div class="relative z-0 w-full mb-6 group">
         <input
+          v-model="message"
           type="text"
           name="message"
           id="message"
