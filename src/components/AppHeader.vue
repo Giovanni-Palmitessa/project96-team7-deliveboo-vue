@@ -60,10 +60,10 @@ export default {};
             >
           </li>
           <li>
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'contact' }"
               class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
-              >Contatti</a
+              >Ordini</router-link
             >
           </li>
           <li>
