@@ -15,7 +15,13 @@ export default {
   },
   methods: {
     sendMailtoGuest() {
-      axios.post(this.store.baseUrl + "api/guests");
+      axios.post(this.store.baseUrl + "api/guests", {
+        email: this.email,
+        name: this.name,
+        surname: this.surname,
+        phone: this.phone,
+        message: this.message,
+      });
     },
   },
 };
@@ -28,7 +34,6 @@ export default {
       <input
         v-model="email"
         type="email"
-        name="email"
         id="email"
         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
@@ -45,7 +50,6 @@ export default {
         <input
           v-model="name"
           type="text"
-          name="name"
           id="name"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
@@ -60,7 +64,6 @@ export default {
         <input
           v-model="surname"
           type="text"
-          name="surname"
           id="surname"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
@@ -78,7 +81,6 @@ export default {
           v-model="phone"
           type="tel"
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          name="phone"
           id="phone"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
