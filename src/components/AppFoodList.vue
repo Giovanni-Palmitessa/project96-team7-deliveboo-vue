@@ -25,24 +25,25 @@ export default {
           // console.log(this.products);
         });
     },
-    getProductInfo(id, name, price) {
+    getProductInfo(objCart) {
       let product = {
-        id: id,
-        name: name,
-        price: price,
+        id: objCart.id,
+        name: objCart.name,
+        description: objCart.description,
+        price: objCart.price,
         qnt: 1,
       };
 
       if (this.productsCart.some((item) => item.id === product.id)) {
         const obj = this.productsCart.find((item) => item.id === product.id);
         obj.qnt++;
-        // console.log(this.productsCart);
+        console.log(this.productsCart);
       } else {
         this.productsCart.push(product);
-        // console.log(this.productsCart);
+        console.log(this.productsCart);
         let cartStr = JSON.stringify(this.productsCart);
         localStorage.setItem("cart", cartStr);
-        // console.log(localStorage.getItem("cart"));
+        console.log(localStorage.getItem("cart"));
       }
     },
   },
@@ -73,14 +74,7 @@ export default {
               <p>{{ product.description }}</p>
               <p class="upcharge bg-secondary absolute bottom-0">
                 <button
-                  @click="
-                    getProductInfo(
-                      product.id,
-                      product.name,
-                      product.price,
-                      this.qnt
-                    )
-                  "
+                  @click="getProductInfo(product)"
                   class="button bg-primary"
                 >
                   <svg
