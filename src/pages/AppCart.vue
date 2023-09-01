@@ -1,5 +1,22 @@
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      products: [],
+    };
+  },
+  methods: {
+    getProductsCart() {
+      let productsStr = localStorage.getItem("cart");
+      let products = JSON.parse(productsStr);
+      console.log(products);
+      this.products = products;
+    },
+  },
+  created() {
+    this.getProductsCart();
+  },
+};
 </script>
 
 <template>

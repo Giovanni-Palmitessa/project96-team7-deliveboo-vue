@@ -36,13 +36,13 @@ export default {
       if (this.productsCart.some((item) => item.id === product.id)) {
         const obj = this.productsCart.find((item) => item.id === product.id);
         obj.qnt++;
-        console.log(this.productsCart);
+        // console.log(this.productsCart);
       } else {
         this.productsCart.push(product);
         // console.log(this.productsCart);
         let cartStr = JSON.stringify(this.productsCart);
         localStorage.setItem("cart", cartStr);
-        console.log(localStorage.getItem("cart"));
+        // console.log(localStorage.getItem("cart"));
       }
     },
   },
