@@ -2,6 +2,11 @@
 import { store } from "../store";
 
 export default {
+  data() {
+    return {
+      store,
+    };
+  },
   methods: {
     sendMailtoGuest() {
       axios.post(this.store.baseUrl + "api/guests");
