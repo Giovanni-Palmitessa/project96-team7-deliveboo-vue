@@ -29,6 +29,7 @@ export default {
       <!-- Product -->
       <div
         class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
+        v-for="product in products"
       >
         <div class="flex flex-col md:flex-row gap-3 justify-between">
           <!-- Product Information -->
@@ -39,25 +40,27 @@ export default {
                 src="https://static.netshoes.com.br/produtos/tenis-adidas-coreracer-masculino/09/NQQ-4635-309/NQQ-4635-309_zoom1.jpg?ts=1675445414&ims=544x"
               />
             </div>
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1 max-w-[300px]">
               <p class="text-lg text-gray-800 font-semibold">
-                Adidas Coreracer Men's Shoes
+                {{ product.name }}
               </p>
               <p class="text-xs text-gray-600 font-semibold">
-                Color: <span class="font-normal">Black + Zinc</span>
+                {{ product.description }}
               </p>
-              <p class="text-xs text-gray-600 font-semibold">
+              <!-- <p class="text-xs text-gray-600 font-semibold">
                 Size: <span class="font-normal">42</span>
-              </p>
+              </p> -->
             </div>
           </div>
           <!-- Price Information -->
           <div class="self-center text-center">
-            <p class="text-gray-600 font-normal text-sm line-through">
+            <!-- <p class="text-gray-600 font-normal text-sm line-through">
               €99.99
               <span class="text-emerald-500 ml-2">(-50% OFF)</span>
+            </p> -->
+            <p class="text-gray-800 font-normal text-xl">
+              € {{ product.price }}
             </p>
-            <p class="text-gray-800 font-normal text-xl">€49.99</p>
           </div>
           <!-- Remove Product Icon -->
           <div class="self-center">
