@@ -24,26 +24,31 @@ export default {
           this.products = response.data.results.data;
         });
     },
-    getProductInfo(id, name, price, currentRestaurantId) {
+    getProductInfo(product) {
+      console.log("Current restaurantId:", this.restaurantId); // Debug
+      console.log("Product restaurantId:", product.restaurantId); // Debug
+      console.log("Current productsCart:", this.productsCart); // Debug
+
       // Se il carrello è vuoto o contiene prodotti dello stesso ristorante
       if (
         this.productsCart.length === 0 ||
-        this.productsCart[0].restaurantId === currentRestaurantId
+        this.productsCart[0].restaurant_id === this.restaurantId
       ) {
-        let product = {
-          id: id,
-          name: name,
-          price: price,
+        let newProduct = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
           qnt: 1,
-          restaurantId: currentRestaurantId,
+          restaurant_id: this.restaurantId,
         };
 
-        if (this.productsCart.some((item) => item.id === product.id)) {
-          const obj = this.productsCart.find((item) => item.id === product.id);
+        if (this.productsCart.some((item) => item.id === newProduct.id)) {
+          const obj = this.productsCart.find(
+            (item) => item.id === newProduct.id
+          );
           obj.qnt++;
         } else {
-          this.productsCart.push(product);
-          console.log(this.productsCart);
+          this.productsCart.push(newProduct);
         }
 
         let cartStr = JSON.stringify(this.productsCart);
@@ -86,14 +91,7 @@ export default {
               <p>{{ product.description }}</p>
               <p class="upcharge bg-secondary absolute bottom-0">
                 <button
-                  @click="
-                    getProductInfo(
-                      product.id,
-                      product.name,
-                      product.price,
-                      restaurantId
-                    )
-                  "
+                  @click="getProductInfo(product)"
                   class="button bg-primary"
                 >
                   <svg
