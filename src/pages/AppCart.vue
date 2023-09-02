@@ -26,6 +26,18 @@ export default {
     restoreCart() {
       localStorage.removeItem("cart");
     },
+    increaseQnt(id) {
+      this.products[id - 1].qnt += 1;
+      console.log(this.products[id - 1].qnt);
+    },
+    decreaseQnt(id) {
+      if (this.products[id - 1].qnt > 0) {
+        this.products[id - 1].qnt -= 1;
+        // console.log(this.products[id - 1].qnt);
+      } else {
+        this.products[id - 1].qnt = 0;
+      }
+    },
   },
   created() {
     this.getProductsCart();
@@ -110,6 +122,7 @@ export default {
         <div class="flex flex-row self-center gap-1">
           <button
             class="w-5 h-5 self-center rounded-full border border-secondary"
+            @click="decreaseQnt(product.id)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -126,11 +139,12 @@ export default {
           <input
             type="text"
             readonly="readonly"
-            value="1"
+            :value="product.qnt"
             class="w-8 h-8 text-center text-gray-900 text-sm outline-none border border-secondary rounded-sm"
           />
           <button
             class="w-5 h-5 self-center rounded-full border border-secondary"
+            @click="increaseQnt(product.id)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
