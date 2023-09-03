@@ -10,32 +10,38 @@ export default {
     getProductsCart() {
       let productsStr = localStorage.getItem("cart");
       let products = JSON.parse(productsStr);
-      console.log(products);
-      this.products = products;
+      if (products) {
+        this.products = products;
+      } else {
+        this.products = [];
+      }
     },
     getSubtotal() {
       if (this.products) {
         const subtotal = this.products.reduce(
-          (sum, item) => sum + item.price,
+          (sum, item) => sum + item.price * item.qnt,
           0
         );
-        // console.log(`La somma dei prezzi è: ${subtotal}`);
         this.subtotal = subtotal;
+      } else {
+        this.subtotal = 0;
       }
     },
     restoreCart() {
-      localStorage.removeItem("cart");
+      localStorage.clear();
+      this.getProductsCart();
+      this.getSubtotal();
     },
-    increaseQnt(id) {
-      this.products[id - 1].qnt += 1;
-      console.log(this.products[id - 1].qnt);
+    increaseQnt(index) {
+      this.products[index].qnt += 1;
+      this.getSubtotal();
     },
-    decreaseQnt(id) {
-      if (this.products[id - 1].qnt > 0) {
-        this.products[id - 1].qnt -= 1;
-        // console.log(this.products[id - 1].qnt);
+    decreaseQnt(index) {
+      if (this.products[index].qnt > 0) {
+        this.products[index].qnt -= 1;
+        this.getSubtotal();
       } else {
-        this.products[id - 1].qnt = 0;
+        this.products[index].qnt = 0;
       }
     },
   },
@@ -56,7 +62,7 @@ export default {
       <!-- Product -->
       <div
         class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
-        v-for="product in products"
+        v-for="(product, index) in products"
       >
         <div class="flex flex-col md:flex-row gap-3 justify-between">
           <!-- Product Information -->
@@ -121,14 +127,14 @@ export default {
         <!-- Product Quantity -->
         <div class="flex flex-row self-center gap-1">
           <button
-            class="w-5 h-5 self-center rounded-full border border-secondary"
-            @click="decreaseQnt(product.id)"
+            class="w-4 h-4 self-center rounded-full border border-secondary"
+            @click="decreaseQnt(index)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#d1d5db"
+              stroke="#00A082"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -140,17 +146,17 @@ export default {
             type="text"
             readonly="readonly"
             :value="product.qnt"
-            class="w-8 h-8 text-center text-gray-900 text-sm outline-none border border-secondary rounded-sm"
+            class="w-12 h-6 text-center text-gray-900 text-sm outline-none border border-secondary rounded-md"
           />
           <button
-            class="w-5 h-5 self-center rounded-full border border-secondary"
-            @click="increaseQnt(product.id)"
+            class="w-4 h-4 self-center rounded-full border border-secondary"
+            @click="increaseQnt(index)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill=""
-              stroke="#9ca3af"
+              stroke="#00A082"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
