@@ -4,6 +4,8 @@ export default {
     return {
       products: [],
       subtotal: null,
+      totalPrice: null,
+      shipping: 4.9,
     };
   },
   methods: {
@@ -26,6 +28,10 @@ export default {
       } else {
         this.subtotal = 0;
       }
+    },
+    getTotalPrice() {
+      const price = this.subtotal + this.shipping;
+      return price;
     },
     restoreCart() {
       localStorage.clear();
@@ -183,22 +189,23 @@ export default {
         class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary"
       >
         <div class="flex flex-row justify-between">
-          <p class="text-dark">Subtotale (2 Articoli)</p>
+          <p class="text-dark">
+            Subtotale ({{ this.products.length }} Articoli)
+          </p>
           <p class="text-end font-bold">€ {{ this.subtotal }}</p>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
           <p class="text-dark">Spedizione</p>
           <div>
-            <p class="text-end font-bold">€3.90</p>
-            <p class="text-dark text-sm font-normal">Arriverà il 16 Luglio</p>
+            <p class="text-end font-bold">€ {{ this.shipping }}</p>
           </div>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
           <p class="text-dark">Totale</p>
           <div>
-            <p class="text-end font-bold">€103.88</p>
+            <p class="text-end font-bold">€ {{ getTotalPrice() }}</p>
           </div>
         </div>
         <div class="flex gap-2">
