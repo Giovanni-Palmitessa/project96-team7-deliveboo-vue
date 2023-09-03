@@ -32,17 +32,24 @@ export default {
       this.getProductsCart();
       this.getSubtotal();
     },
+    // l'incremento e il decremento non viene salvato con il refresh della pagina
     increaseQnt(index) {
       this.products[index].qnt += 1;
+      this.updateCart();
       this.getSubtotal();
     },
     decreaseQnt(index) {
       if (this.products[index].qnt > 0) {
         this.products[index].qnt -= 1;
+        this.updateCart();
         this.getSubtotal();
       } else {
         this.products[index].qnt = 0;
       }
+    },
+    // Aggiorna il carrello nel localStorage
+    updateCart() {
+      localStorage.setItem("cart", JSON.stringify(this.products));
     },
   },
   created() {
