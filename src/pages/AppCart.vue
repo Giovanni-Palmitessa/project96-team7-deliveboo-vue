@@ -32,7 +32,6 @@ export default {
       this.getProductsCart();
       this.getSubtotal();
     },
-    // l'incremento e il decremento non viene salvato con il refresh della pagina
     increaseQnt(index) {
       this.products[index].qnt += 1;
       this.updateCart();
