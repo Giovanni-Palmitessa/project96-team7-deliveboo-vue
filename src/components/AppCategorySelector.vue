@@ -67,6 +67,7 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  /* sds */
 }
 
 .category-selected {
