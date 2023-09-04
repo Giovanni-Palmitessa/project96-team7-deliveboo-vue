@@ -14,6 +14,7 @@ export default {
       message: "",
       shoWSuccess: false,
       isSending: false,
+      hasErrors: false,
     };
   },
   methods: {
