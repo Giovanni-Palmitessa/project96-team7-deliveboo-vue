@@ -17,6 +17,7 @@ export default {
       hasErrors: false,
     };
   },
+  props: ["dataOrder"],
   methods: {
     sendMailtoGuest() {
       this.isSending = true;
@@ -55,6 +56,7 @@ export default {
   },
   mounted() {
     initFlowbite();
+    console.log(this.dataOrder);
   },
 };
 </script>
