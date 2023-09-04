@@ -201,7 +201,7 @@ export default {
         </div>
         <div class="flex gap-2">
           <RouterLink
-            :to="{ name: 'contact', params: { dataOrder: products } }"
+            :to="{ name: 'contact' }"
             class="transition-colors text-sm text-center bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md"
           >
             <button>CHECKOUT</button>

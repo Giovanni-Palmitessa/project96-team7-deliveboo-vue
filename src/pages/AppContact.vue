@@ -7,6 +7,7 @@ export default {
   data() {
     return {
       store,
+      products: [],
       email: "",
       name: "",
       surname: "",
@@ -17,7 +18,6 @@ export default {
       hasErrors: false,
     };
   },
-  props: ["dataOrder"],
   methods: {
     sendMailtoGuest() {
       this.isSending = true;
@@ -53,10 +53,22 @@ export default {
       this.phone = "";
       this.message = "";
     },
+    getProductsCart() {
+      let productsStr = localStorage.getItem("cart");
+      let products = JSON.parse(productsStr);
+      if (products) {
+        this.products = products;
+      } else {
+        this.products = [];
+      }
+    },
+  },
+  created() {
+    this.getProductsCart();
   },
   mounted() {
     initFlowbite();
-    console.log(this.dataOrder);
+    console.log(this.products);
   },
 };
 </script>
