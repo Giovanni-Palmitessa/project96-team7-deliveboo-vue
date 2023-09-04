@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
+import { RouterLink } from "vue-router";
 
 export default {
   data() {
@@ -8,8 +9,9 @@ export default {
       store,
       products: [],
       productsCart: JSON.parse(localStorage.getItem("cart")) || [],
-      restaurantId: null, // Inizializzato come null
+      restaurantId: null,
       notAllowed: false,
+      showAlert: false,
     };
   },
   methods: {
@@ -28,7 +30,6 @@ export default {
       console.log("Current restaurantId:", this.restaurantId); // Debug
       console.log("Product restaurantId:", product.restaurantId); // Debug
       console.log("Current productsCart:", this.productsCart); // Debug
-
       // Se il carrello è vuoto o contiene prodotti dello stesso ristorante
       if (
         this.productsCart.length === 0 ||
@@ -41,7 +42,6 @@ export default {
           qnt: 1,
           restaurant_id: this.restaurantId,
         };
-
         if (this.productsCart.some((item) => item.id === newProduct.id)) {
           const obj = this.productsCart.find(
             (item) => item.id === newProduct.id
@@ -50,15 +50,12 @@ export default {
         } else {
           this.productsCart.push(newProduct);
         }
-
         let cartStr = JSON.stringify(this.productsCart);
         localStorage.setItem("cart", cartStr);
         this.notAllowed = false; // Resetta il flag di errore
       } else {
         this.notAllowed = true;
-        alert(
-          "Non è possibile aggiungere prodotti da ristoranti diversi nel medesimo carrello."
-        );
+        this.showAlert = true;
       }
     },
   },
@@ -66,11 +63,64 @@ export default {
     this.restaurantId = sessionStorage.getItem("restaurant_id");
     this.getProducts();
   },
+  components: { RouterLink },
 };
 </script>
 
 <template>
   <div class="container mt-[5.5rem] py-8 px-4 md:px-0">
+    <div
+      id="alert-3"
+      class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+      role="alert"
+      v-if="this.showAlert"
+    >
+      <svg
+        class="flex-shrink-0 w-4 h-4"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <div class="ml-3 text-sm font-medium">
+        Non puoi selezionare prodotti da due ristoranti diversi, svuota il
+        carrello prima di procedere!
+        <RouterLink
+          :to="{ name: 'cart' }"
+          class="font-semibold underline hover:no-underline"
+          >Vai al carrello</RouterLink
+        >
+      </div>
+      <button
+        @click="this.showAlert = false"
+        type="button"
+        class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+        data-dismiss-target="#alert-3"
+        aria-label="Close"
+      >
+        <span class="sr-only">Close</span>
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+      </button>
+    </div>
     <h1 class="text-4xl text-center font-bold text-secondary pb-8">
       Il nostro Menù
     </h1>
