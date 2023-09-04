@@ -8,9 +8,7 @@ export default {
   },
   methods: {
     toggleCategory(category) {
-      const index = this.selectedCategories.findIndex(
-        (c) => c.id === category.id
-      );
+      const index = this.selectedCategories.indexOf(category);
       if (index === -1) {
         this.selectedCategories.push(category);
       } else {
@@ -18,7 +16,7 @@ export default {
       }
     },
     isSelected(category) {
-      return this.selectedCategories.some((c) => c.id === category.id);
+      return this.selectedCategories.includes(category);
     },
     filterRestaurants() {
       this.$emit(
@@ -28,22 +26,6 @@ export default {
     },
   },
 };
-// export default {
-//   props: ["categories"],
-//   data() {
-//     return {
-//       selectedCategories: [],
-//     };
-//   },
-//   methods: {
-//     filterRestaurants() {
-//       this.$emit(
-//         "filtered",
-//         this.selectedCategories.map((category) => category.id)
-//       );
-//     },
-//   },
-// };
 </script>
 
 <template>
