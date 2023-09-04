@@ -1,5 +1,6 @@
 <script>
 import { initFlowbite } from "flowbite";
+
 export default {
   data() {
     return {
@@ -7,6 +8,7 @@ export default {
       subtotal: null,
       totalPrice: null,
       shipping: 4.9,
+
     };
   },
   methods: {
@@ -18,6 +20,7 @@ export default {
       } else {
         this.products = [];
       }
+
     },
     getSubtotal() {
       if (this.products) {
@@ -65,6 +68,7 @@ export default {
   mounted() {
     initFlowbite();
   },
+
 };
 </script>
 
@@ -77,7 +81,7 @@ export default {
 
       <!-- Product -->
       <div
-        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
+        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"        
         v-for="(product, index) in products"
       >
         <div class="flex flex-col md:flex-row gap-3 justify-between">
@@ -223,6 +227,7 @@ export default {
             data-modal-target="popup-modal"
             data-modal-toggle="popup-modal"
             type="button"
+
           >
             SVUOTA CARRELLO
           </button>

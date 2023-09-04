@@ -24,6 +24,9 @@ export default {
           this.products = response.data.results.data;
         });
     },
+
+   
+
     getProductInfo(product) {
       console.log("Current restaurantId:", this.restaurantId); // Debug
       console.log("Product restaurantId:", product.restaurantId); // Debug
