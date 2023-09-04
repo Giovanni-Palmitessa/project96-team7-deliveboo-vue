@@ -13,6 +13,7 @@ export default {
       phone: "",
       message: "",
       shoWSuccess: false,
+      isSending: false,
     };
   },
   methods: {
