@@ -1,36 +1,74 @@
 <script>
+import { initFlowbite } from "flowbite";
+
 export default {
   data() {
     return {
       products: [],
       subtotal: null,
+      totalPrice: null,
+      shipping: 4.9,
+
     };
   },
   methods: {
     getProductsCart() {
       let productsStr = localStorage.getItem("cart");
       let products = JSON.parse(productsStr);
-      console.log(products);
-      this.products = products;
+      if (products) {
+        this.products = products;
+      } else {
+        this.products = [];
+      }
+
     },
     getSubtotal() {
       if (this.products) {
         const subtotal = this.products.reduce(
-          (sum, item) => sum + item.price,
+          (sum, item) => sum + item.price * item.qnt,
           0
         );
-        // console.log(`La somma dei prezzi è: ${subtotal}`);
         this.subtotal = subtotal;
+      } else {
+        this.subtotal = 0;
       }
     },
+    getTotalPrice() {
+      const price = this.subtotal + this.shipping;
+      return price;
+    },
     restoreCart() {
-      localStorage.removeItem("cart");
+      localStorage.clear();
+      this.getProductsCart();
+      this.getSubtotal();
+    },
+    increaseQnt(index) {
+      this.products[index].qnt += 1;
+      this.updateCart();
+      this.getSubtotal();
+    },
+    decreaseQnt(index) {
+      if (this.products[index].qnt > 0) {
+        this.products[index].qnt -= 1;
+        this.updateCart();
+        this.getSubtotal();
+      } else {
+        this.products[index].qnt = 0;
+      }
+    },
+    // Aggiorna il carrello nel localStorage
+    updateCart() {
+      localStorage.setItem("cart", JSON.stringify(this.products));
     },
   },
   created() {
     this.getProductsCart();
     this.getSubtotal();
   },
+  mounted() {
+    initFlowbite();
+  },
+
 };
 </script>
 
@@ -43,8 +81,8 @@ export default {
 
       <!-- Product -->
       <div
-        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
-        v-for="product in products"
+        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"        
+        v-for="(product, index) in products"
       >
         <div class="flex flex-col md:flex-row gap-3 justify-between">
           <!-- Product Information -->
@@ -109,13 +147,14 @@ export default {
         <!-- Product Quantity -->
         <div class="flex flex-row self-center gap-1">
           <button
-            class="w-5 h-5 self-center rounded-full border border-secondary"
+            class="w-4 h-4 self-center rounded-full border border-secondary"
+            @click="decreaseQnt(index)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#d1d5db"
+              stroke="#00A082"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -126,17 +165,18 @@ export default {
           <input
             type="text"
             readonly="readonly"
-            value="1"
-            class="w-8 h-8 text-center text-gray-900 text-sm outline-none border border-secondary rounded-sm"
+            :value="product.qnt"
+            class="w-12 h-6 text-center text-gray-900 text-sm outline-none border border-secondary rounded-md"
           />
           <button
-            class="w-5 h-5 self-center rounded-full border border-secondary"
+            class="w-4 h-4 self-center rounded-full border border-secondary"
+            @click="increaseQnt(index)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill=""
-              stroke="#9ca3af"
+              stroke="#00A082"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -157,22 +197,23 @@ export default {
         class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary"
       >
         <div class="flex flex-row justify-between">
-          <p class="text-dark">Subtotale (2 Articoli)</p>
+          <p class="text-dark">
+            Subtotale ({{ this.products.length }} Articoli)
+          </p>
           <p class="text-end font-bold">€ {{ this.subtotal }}</p>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
           <p class="text-dark">Spedizione</p>
           <div>
-            <p class="text-end font-bold">€3.90</p>
-            <p class="text-dark text-sm font-normal">Arriverà il 16 Luglio</p>
+            <p class="text-end font-bold">€ {{ this.shipping }}</p>
           </div>
         </div>
         <hr class="bg-secondary h-[1px] border-t-0" />
         <div class="flex flex-row justify-between">
           <p class="text-dark">Totale</p>
           <div>
-            <p class="text-end font-bold">€103.88</p>
+            <p class="text-end font-bold">€ {{ getTotalPrice() }}</p>
           </div>
         </div>
         <div class="flex gap-2">
@@ -182,11 +223,85 @@ export default {
             CHECKOUT
           </button>
           <button
-            class="transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md"
-            @click="restoreCart"
+            class="block transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md"
+            data-modal-target="popup-modal"
+            data-modal-toggle="popup-modal"
+            type="button"
+
           >
             SVUOTA CARRELLO
           </button>
+
+          <!-- modal  -->
+          <div
+            id="popup-modal"
+            tabindex="-1"
+            class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+          >
+            <div class="relative w-full max-w-md max-h-full shadow-lg">
+              <div
+                class="relative bg-b_hover rounded-lg shadow border-2 border-primary"
+              >
+                <button
+                  type="button"
+                  class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+                  data-modal-hide="popup-modal"
+                >
+                  <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-6 text-center">
+                  <svg
+                    class="mx-auto mb-4 text-gray-400 w-12 h-12"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="#FFC244"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                  <h3 class="mb-5 text-lg font-normal text-primary">
+                    Sei sicuro di voler svuotare il carrello?
+                  </h3>
+                  <button
+                    @click="restoreCart"
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                  >
+                    Sono sicuro!
+                  </button>
+                  <button
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                  >
+                    No, cancella
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
