@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     sendMailtoGuest() {
+      this.isSending = true;
       axios
         .post(this.store.baseUrl + "api/guests", {
           email: this.email,
@@ -27,7 +28,7 @@ export default {
           message: this.message,
         })
         .then((response) => {
-          console.log(response.data);
+          this.isSending = false;
 
           if (response.data.success) {
             this.shoWSuccess = true;
@@ -180,6 +181,7 @@ export default {
       <button
         type="submit"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        :disabled="isSending"
       >
         Submit
       </button>
