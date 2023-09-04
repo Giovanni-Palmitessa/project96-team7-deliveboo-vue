@@ -15,13 +15,15 @@ export default {
   },
   methods: {
     sendMailtoGuest() {
-      axios.post(this.store.baseUrl + "api/guests", {
-        email: this.email,
-        name: this.name,
-        surname: this.surname,
-        phone: this.phone,
-        message: this.message,
-      });
+      axios
+        .post(this.store.baseUrl + "api/guests", {
+          email: this.email,
+          name: this.name,
+          surname: this.surname,
+          phone: this.phone,
+          message: this.message,
+        })
+        .then((response) => console.log("server contattato"));
     },
   },
 };
