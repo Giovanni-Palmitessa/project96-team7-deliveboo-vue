@@ -1,14 +1,14 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
+
 export default {
   data() {
     return {
       store,
       products: [],
-      productsCart: [],
-      restaurantId: sessionStorage.getItem("restaurant_id"),
-      qnt: null,
+      productsCart: JSON.parse(localStorage.getItem("cart")) || [],
+      restaurantId: null, // Inizializzato come null
       notAllowed: false,
     };
   },
@@ -22,35 +22,53 @@ export default {
         })
         .then((response) => {
           this.products = response.data.results.data;
-          // console.log(this.products);
         });
     },
-    getProductInfo(id, name, price) {
-      let product = {
-        id: id,
-        name: name,
-        price: price,
-        qnt: 1,
-      };
+    getProductInfo(product) {
+      console.log("Current restaurantId:", this.restaurantId); // Debug
+      console.log("Product restaurantId:", product.restaurantId); // Debug
+      console.log("Current productsCart:", this.productsCart); // Debug
 
-      if (this.productsCart.some((item) => item.id === product.id)) {
-        const obj = this.productsCart.find((item) => item.id === product.id);
-        obj.qnt++;
-        console.log(this.productsCart);
-      } else {
-        this.productsCart.push(product);
-        // console.log(this.productsCart);
+      // Se il carrello è vuoto o contiene prodotti dello stesso ristorante
+      if (
+        this.productsCart.length === 0 ||
+        this.productsCart[0].restaurant_id === this.restaurantId
+      ) {
+        let newProduct = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          qnt: 1,
+          restaurant_id: this.restaurantId,
+        };
+
+        if (this.productsCart.some((item) => item.id === newProduct.id)) {
+          const obj = this.productsCart.find(
+            (item) => item.id === newProduct.id
+          );
+          obj.qnt++;
+        } else {
+          this.productsCart.push(newProduct);
+        }
+
         let cartStr = JSON.stringify(this.productsCart);
         localStorage.setItem("cart", cartStr);
-        console.log(localStorage.getItem("cart"));
+        this.notAllowed = false; // Resetta il flag di errore
+      } else {
+        this.notAllowed = true;
+        alert(
+          "Non è possibile aggiungere prodotti da ristoranti diversi nel medesimo carrello."
+        );
       }
     },
   },
   created() {
+    this.restaurantId = sessionStorage.getItem("restaurant_id");
     this.getProducts();
   },
 };
 </script>
+
 <template>
   <div class="container mt-[5.5rem] py-8 px-4 md:px-0">
     <h1 class="text-4xl text-center font-bold text-secondary pb-8">
@@ -73,14 +91,7 @@ export default {
               <p>{{ product.description }}</p>
               <p class="upcharge bg-secondary absolute bottom-0">
                 <button
-                  @click="
-                    getProductInfo(
-                      product.id,
-                      product.name,
-                      product.price,
-                      this.qnt
-                    )
-                  "
+                  @click="getProductInfo(product)"
                   class="button bg-primary"
                 >
                   <svg
