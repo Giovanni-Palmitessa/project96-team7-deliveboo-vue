@@ -7,6 +7,19 @@ export default {
     };
   },
   methods: {
+    toggleCategory(category) {
+      const index = this.selectedCategories.findIndex(
+        (c) => c.id === category.id
+      );
+      if (index === -1) {
+        this.selectedCategories.push(category);
+      } else {
+        this.selectedCategories.splice(index, 1);
+      }
+    },
+    isSelected(category) {
+      return this.selectedCategories.some((c) => c.id === category.id);
+    },
     filterRestaurants() {
       this.$emit(
         "filtered",
@@ -15,22 +28,81 @@ export default {
     },
   },
 };
+// export default {
+//   props: ["categories"],
+//   data() {
+//     return {
+//       selectedCategories: [],
+//     };
+//   },
+//   methods: {
+//     filterRestaurants() {
+//       this.$emit(
+//         "filtered",
+//         this.selectedCategories.map((category) => category.id)
+//       );
+//     },
+//   },
+// };
 </script>
 
 <template>
   <div>
     <div>
       <form @submit.prevent="filterRestaurants">
-        <div v-for="category in categories" :key="category.id">
-          <input
-            type="checkbox"
-            :value="category"
-            v-model="selectedCategories"
-          />
-          {{ category.name }}
+        <div class="flex justify-around">
+          <div
+            class="category-button"
+            v-for="category in categories"
+            :key="category.id"
+          >
+            <button
+              type="button"
+              class="category-button"
+              :class="{ 'category-selected': isSelected(category) }"
+              @click="toggleCategory(category)"
+            >
+              {{ category.name }}
+            </button>
+          </div>
         </div>
-        <button type="submit">Filtra</button>
+        <div class="mt-10">
+          <button type="submit" class="filter-button">Filtra</button>
+        </div>
       </form>
     </div>
   </div>
 </template>
+<style scoped>
+.category-button {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  background-color: #00846b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.category-selected {
+  background-color: #ffc244; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+.filter-button {
+  justify-self: center;
+  background-color: #00846b; /* Colore di sfondo del pulsante */
+  color: white; /* Colore del testo del pulsante */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.filter-button:hover {
+  background-color: #ffc244; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+</style>
