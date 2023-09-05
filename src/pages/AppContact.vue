@@ -8,6 +8,7 @@ export default {
     return {
       store,
       products: [],
+      hostedFieldInstance: false,
       email: "",
       name: "",
       surname: "",
@@ -67,7 +68,7 @@ export default {
 
       braintree.dropin.create(
         {
-          authorization: "sandbox_g42y39zw_348pk9cgf3bgyw2b",
+          authorization: "sandbox_4xdhvbmn_qpd72yyd9wbs3d5d",
           selector: "#dropin-container",
         },
         function (err, instance) {
@@ -79,14 +80,32 @@ export default {
         }
       );
     },
+    tokenization() {
+      axios.get(this.store.baseUrl + "api/orders/generate").then((resp) => {
+        braintree.client
+          .create({
+            authorization: resp.data.token,
+          })
+          .then((clientInstance) => {
+            let options = {
+              client: clientInstance,
+            };
+            return braintree.hostedFields.create(options);
+          })
+          .then((hostedFieldInstance) => {
+            // @TODO - Use hostedFieldInstance to send data to Braintree
+            this.hostedFieldInstance = hostedFieldInstance;
+          })
+          .catch((err) => {});
+      });
+    },
   },
-  created() {
-    this.getProductsCart();
-    this.braintree();
-  },
+  created() {},
   mounted() {
     initFlowbite();
-    console.log(this.products);
+    this.braintree();
+    this.getProductsCart();
+    this.tokenization();
   },
 };
 </script>
