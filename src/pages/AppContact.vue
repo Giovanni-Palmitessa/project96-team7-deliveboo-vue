@@ -65,6 +65,7 @@ export default {
   },
   created() {
     this.getProductsCart();
+    console.log(this.products[0].restaurant_id);
   },
   mounted() {
     initFlowbite();
