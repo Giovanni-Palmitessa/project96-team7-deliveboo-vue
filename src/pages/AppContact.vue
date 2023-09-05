@@ -62,10 +62,38 @@ export default {
         this.products = [];
       }
     },
+    braintree() {
+      var button = document.querySelector("#submit-button");
+
+      braintree.dropin.create(
+        {
+          // Insert your tokenization key here
+          authorization: "fake-valid-no-billing-address-nonce",
+          container: "#dropin-container",
+        },
+        function (createErr, instance) {
+          var button = document.querySelector("#submit-button");
+
+          braintree.dropin.create(
+            {
+              authorization: "sandbox_4xdhvbmn_qpd72yyd9wbs3d5d",
+              selector: "#dropin-container",
+            },
+            function (err, instance) {
+              button.addEventListener("click", function () {
+                instance.requestPaymentMethod(function (err, payload) {
+                  // Submit payload.nonce to your server
+                });
+              });
+            }
+          );
+        }
+      );
+    },
   },
   created() {
     this.getProductsCart();
-    console.log(this.products[0].restaurant_id);
+    this.braintree();
   },
   mounted() {
     initFlowbite();
@@ -168,7 +196,11 @@ export default {
 
     <h1>Riepilogo Ordine</h1>
 
-    <form class="my-32" @submit.prevent="sendMailtoGuest" novalidate>
+    <form
+      class="my-32 max-w-md mx-auto"
+      @submit.prevent="sendMailtoGuest"
+      novalidate
+    >
       <div class="relative z-0 w-full mb-6 group">
         <input
           v-model="email"
@@ -254,6 +286,11 @@ export default {
         Submit
       </button>
     </form>
+    <div id="dropin-wrapper" class="max-w-sm mx-auto mb-8">
+      <div id="checkout-message"></div>
+      <div id="dropin-container"></div>
+      <button id="submit-button">Submit payment</button>
+    </div>
   </div>
 </template>
 
