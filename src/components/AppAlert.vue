@@ -9,7 +9,7 @@ export default {
 <template>
   <div
     id="alert-3"
-    class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+    class="flex items-center p-4 mb-4 text-white rounded-lg bg-red-500"
     role="alert"
   >
     <svg
@@ -36,7 +36,7 @@ export default {
     <button
       @click="$emit('closeAlert')"
       type="button"
-      class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+      class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8"
       data-dismiss-target="#alert-3"
       aria-label="Close"
     >
