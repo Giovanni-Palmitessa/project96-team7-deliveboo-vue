@@ -40,7 +40,7 @@ export default {
           >
             <button
               type="button"
-              class="category-button"
+              class="category-button text-sm md:text-lg"
               :class="{ 'text-primary': isSelected(category) }"
               @click="toggleCategory(category)"
             >

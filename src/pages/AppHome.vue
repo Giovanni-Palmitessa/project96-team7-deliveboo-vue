@@ -83,7 +83,7 @@ export default {
 <template>
   <AppJumbo />
   <div class="container mx-auto">
-    <h1 class="text-5xl text-center font-bold text-secondary my-3">
+    <h1 class="text-4xl lg:text-5xl text-center font-bold text-secondary my-3">
       Resturants
     </h1>
     <AppCategorySelector
