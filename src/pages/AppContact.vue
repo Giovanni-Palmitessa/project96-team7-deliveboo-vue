@@ -67,26 +67,15 @@ export default {
 
       braintree.dropin.create(
         {
-          // Insert your tokenization key here
-          authorization: "fake-valid-no-billing-address-nonce",
-          container: "#dropin-container",
+          authorization: "sandbox_g42y39zw_348pk9cgf3bgyw2b",
+          selector: "#dropin-container",
         },
-        function (createErr, instance) {
-          var button = document.querySelector("#submit-button");
-
-          braintree.dropin.create(
-            {
-              authorization: "sandbox_4xdhvbmn_qpd72yyd9wbs3d5d",
-              selector: "#dropin-container",
-            },
-            function (err, instance) {
-              button.addEventListener("click", function () {
-                instance.requestPaymentMethod(function (err, payload) {
-                  // Submit payload.nonce to your server
-                });
-              });
-            }
-          );
+        function (err, instance) {
+          button.addEventListener("click", function () {
+            instance.requestPaymentMethod(function (err, payload) {
+              // Submit payload.nonce to your server
+            });
+          });
         }
       );
     },
