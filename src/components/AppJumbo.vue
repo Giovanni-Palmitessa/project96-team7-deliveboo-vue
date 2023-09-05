@@ -32,7 +32,7 @@ export default {};
       </div>
     </div>
   </div>
-  <img src="../../public/img/wave.svg" alt="wave" />
+  <img src="../../public/img/wave.svg" alt="wave" class="mb-[-4rem]" />
 </template>
 
 <style scoped></style>
