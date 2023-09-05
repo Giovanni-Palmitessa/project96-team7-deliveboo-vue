@@ -90,7 +90,7 @@ export default {
       :categories="arrCategory"
       @filtered="category = $event"
     />
-    <div class="mt-20 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <AppRestaurant
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"

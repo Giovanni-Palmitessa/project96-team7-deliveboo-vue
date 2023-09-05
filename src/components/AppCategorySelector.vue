@@ -31,61 +31,33 @@ export default {
 <template>
   <div>
     <div>
-      <form @submit.prevent="filterRestaurants">
-        <div class="flex justify-around">
+      <form @submit.prevent="filterRestaurants" class="px-8 mt-9">
+        <div class="flex flex-wrap gap-4">
           <div
-            class="category-button"
+            class="category-button px-3 py-1 bg-secondary rounded-md shadow-md"
             v-for="category in categories"
             :key="category.id"
           >
             <button
               type="button"
               class="category-button"
-              :class="{ 'category-selected': isSelected(category) }"
+              :class="{ 'text-primary': isSelected(category) }"
               @click="toggleCategory(category)"
             >
               {{ category.name }}
             </button>
           </div>
         </div>
-        <div class="mt-10">
-          <button type="submit" class="filter-button">Filtra</button>
+        <div class="mt-6">
+          <button
+            type="submit"
+            class="filter-button px-5 py-2 bg-primary_hover hover:bg-primary rounded-md shadow-md"
+          >
+            Filtra
+          </button>
         </div>
       </form>
     </div>
   </div>
 </template>
-<style scoped>
-.category-button {
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-  background-color: #00846b;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  /* sds */
-}
-
-.category-selected {
-  background-color: #ffc244; /* Cambia il colore di sfondo al passaggio del mouse */
-}
-
-.filter-button {
-  justify-self: center;
-  background-color: #00846b; /* Colore di sfondo del pulsante */
-  color: white; /* Colore del testo del pulsante */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.filter-button:hover {
-  background-color: #ffc244; /* Cambia il colore di sfondo al passaggio del mouse */
-}
-</style>
+<style scoped></style>
