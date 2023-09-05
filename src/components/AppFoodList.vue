@@ -117,7 +117,7 @@ export default {
           </button>
 
           <RouterLink
-            :to="{ name: 'productDetails' }"
+            :to="{ name: 'details' }"
             class="text-white text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md"
           >
             Dettagli prodotto
