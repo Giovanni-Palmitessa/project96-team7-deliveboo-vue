@@ -81,9 +81,9 @@ export default {
   <h1 class="text-secondary text-3xl font-extrabold mt-[100px] text-center">IL MIO CARRELLO</h1>
   <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-1">
     <!-- My Cart -->
-    <div class="w-full flex flex-col h-fit gap-4 p-4 items-center">
+    <div class="w-full flex flex-col h-fit items-center">
       <!-- Product -->
-      <div v-if="this.subtotal !== 0">
+      <div v-if="this.subtotal !== 0" class="w-4/5 gap-3 flex flex-col">
         <div class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
           v-for="(product, index) in products" :key="product.id">
           <div class="flex flex-col md:flex-row gap-3 justify-between">
@@ -141,14 +141,15 @@ export default {
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="flex flex-col items-center">
         <img src="../../public/img/cryng-pizza.jpg" alt="#" class="max-h-80">
+        <h2 class="text-2xl font-semibold mb-2">Aggiungi prodotti al carrello!</h2>
       </div>
     </div>
 
 
     <!-- Purchase Resume -->
-    <div class="flex flex-col bg-primary_hover w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg mt-14">
+    <div class="flex flex-col bg-primary_hover w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg">
       <p class="text-b_hover text-xl font-extrabold">Riepilogo Acquisti</p>
       <div class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary">
         <div class="flex flex-row justify-between">
