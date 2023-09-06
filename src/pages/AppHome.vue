@@ -22,6 +22,7 @@ export default {
       currentPage: 1,
       nPages: 0,
       loader: false,
+      noResults: false,
     };
   },
   methods: {
@@ -57,10 +58,22 @@ export default {
       axios
         .get(this.store.baseUrl + "api/restaurants", { params })
         .then((response) => {
-          this.arrRestaurants = response.data.results.data;
+          const resultsData = response.data.results.data;
+          if (resultsData.length) {
+            this.arrRestaurants = resultsData;
+            this.loader = false;
+          } else {
+            this.arrRestaurants = [];
+            this.loader = false;
+            this.noResults = true;
+          }
           this.nPages = response.data.results.last_page;
-          this.loader = false;
         });
+    },
+    refreshFilter() {
+      this.category.length = 0;
+      this.getRestaurants();
+      this.noResults = false;
     },
   },
   created() {
@@ -91,7 +104,21 @@ export default {
       :categories="arrCategory"
       @filtered="category = $event"
     />
-    <div class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div v-if="noResults" class="flex flex-col items-center p-20">
+      <div class="mb-4">NON CI SONO RISULTATI PER LA RICERCA</div>
+      <!-- <img src="" alt=""> -->
+
+      <button
+        @click="refreshFilter"
+        class="text-white bg-secondary px-4 py-1 rounded-md shadow-md"
+      >
+        Ripristina
+      </button>
+    </div>
+    <div
+      v-else
+      class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
       <AppRestaurant
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"
