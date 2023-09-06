@@ -78,11 +78,10 @@ export default {
 
 <template>
   <!-- component -->
-  <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-[5.5rem]">
+  <h1 class="text-secondary text-3xl font-extrabold mt-[100px] text-center">IL MIO CARRELLO</h1>
+  <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-1">
     <!-- My Cart -->
-    <div class="w-full flex flex-col h-fit gap-4 p-4">
-      <p class="text-secondary text-xl font-extrabold">Il mio carrello</p>
-
+    <div class="w-full flex flex-col h-fit gap-4 p-4 items-center">
       <!-- Product -->
       <div v-if="this.subtotal !== 0">
         <div class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
@@ -142,7 +141,9 @@ export default {
           </div>
         </div>
       </div>
-      <div v-else>Il tuo carrello è vuoto</div>
+      <div v-else>
+        <img src="../../public/img/cryng-pizza.jpg" alt="#" class="max-h-80">
+      </div>
     </div>
 
 
