@@ -8,7 +8,6 @@ export default {
       subtotal: null,
       totalPrice: null,
       shipping: 4.9,
-
     };
   },
   methods: {
@@ -20,7 +19,6 @@ export default {
       } else {
         this.products = [];
       }
-
     },
     getSubtotal() {
       if (this.products) {
@@ -75,7 +73,6 @@ export default {
   mounted() {
     initFlowbite();
   },
-
 };
 </script>
 
@@ -88,7 +85,7 @@ export default {
 
       <!-- Product -->
       <div
-        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"        
+        class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
         v-for="(product, index) in products"
         :key="product.id"
       >
@@ -203,17 +200,17 @@ export default {
           </div>
         </div>
         <div class="flex gap-2">
-          <button
-            class="transition-colors text-sm bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md"
+          <RouterLink
+            :to="{ name: 'contact' }"
+            class="transition-colors text-sm text-center bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md"
           >
-            CHECKOUT
-          </button>
+            <button>CHECKOUT</button>
+          </RouterLink>
           <button
             class="block transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md"
             data-modal-target="popup-modal"
             data-modal-toggle="popup-modal"
             type="button"
-
           >
             SVUOTA CARRELLO
           </button>
