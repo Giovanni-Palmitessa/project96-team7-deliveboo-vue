@@ -4,9 +4,10 @@ import { store } from "../store";
 import AppRestaurant from "../components/AppRestaurant.vue";
 import AppCategorySelector from "../components/AppCategorySelector.vue";
 import AppJumbo from "../components/AppJumbo.vue";
+import AppLoader from "../components/AppLoader.vue";
 
 export default {
-  components: { AppRestaurant, AppCategorySelector, AppJumbo },
+  components: { AppRestaurant, AppCategorySelector, AppJumbo, AppLoader },
   data() {
     return {
       // Store
@@ -20,6 +21,7 @@ export default {
       // Paginatore
       currentPage: 1,
       nPages: 0,
+      loader: false,
     };
   },
   methods: {
@@ -44,6 +46,7 @@ export default {
       });
     },
     getRestaurants() {
+      this.loader = true;
       const params = {
         page: this.currentPage,
       };
@@ -56,6 +59,7 @@ export default {
         .then((response) => {
           this.arrRestaurants = response.data.results.data;
           this.nPages = response.data.results.last_page;
+          this.loader = false;
         });
     },
   },
@@ -80,14 +84,14 @@ export default {
 <template>
   <AppJumbo />
   <div class="container mx-auto">
-    <h1 class="text-5xl text-center font-bold text-secondary my-3">
+    <h1 class="text-4xl lg:text-5xl text-center font-bold text-secondary my-3">
       Resturants
     </h1>
     <AppCategorySelector
       :categories="arrCategory"
       @filtered="category = $event"
     />
-    <div class="mt-20 p-8 grid grid-cols-3 gap-4">
+    <div class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <AppRestaurant
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"
@@ -103,7 +107,7 @@ export default {
       <ul class="flex items-center -space-x-px h-10 text-base">
         <li>
           <button
-            class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-white bg-blue-800 border border-blue-800 rounded-l-lg hover:bg-blue-500 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover rounded-l-lg hover:bg-primary shadow-md"
             @click="previousPage(page)"
           >
             <span class="sr-only">Previous</span>
@@ -126,10 +130,10 @@ export default {
         </li>
         <li v-for="page in nPages" :key="page">
           <button
-            class="flex items-center justify-center px-4 h-10 leading-tight text-white border border-blue-800 hover:bg-blue-500 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover border border-prbg-primary_hover hover:bg-primary shadow-md"
             :class="{
-              'bg-blue-500': page == currentPage,
-              'bg-blue-800': page !== currentPage,
+              'bg-primary': page == currentPage,
+              'bg-primary_hover': page !== currentPage,
             }"
             @click="changePage(page)"
           >
@@ -138,7 +142,7 @@ export default {
         </li>
         <li @click="nextPage(page)">
           <button
-            class="flex items-center justify-center px-4 h-10 leading-tight text-white bg-blue-800 border border-blue-800 rounded-r-lg hover:bg-blue-500 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover rounded-r-lg hover:bg-primary shadow-md"
           >
             <span class="sr-only">Next</span>
             <svg
@@ -160,6 +164,8 @@ export default {
         </li>
       </ul>
     </nav>
+
+    <AppLoader v-if="loader" />
   </div>
 </template>
 

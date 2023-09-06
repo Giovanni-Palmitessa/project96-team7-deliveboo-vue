@@ -2,6 +2,8 @@
 import axios from "axios";
 import { store } from "../store";
 import { RouterLink } from "vue-router";
+import Apploader from "./apploader.vue";
+import AppAlert from "./AppAlert.vue";
 
 export default {
   data() {
@@ -12,10 +14,12 @@ export default {
       restaurantId: null,
       notAllowed: false,
       showAlert: false,
+      loader: false,
     };
   },
   methods: {
     getProducts() {
+      this.loader = true;
       axios
         .get(store.baseUrl + "api/products", {
           params: {
@@ -24,10 +28,9 @@ export default {
         })
         .then((response) => {
           this.products = response.data.results.data;
+          this.loader = false;
         });
     },
-
-   
 
     getProductInfo(product) {
       console.log("Current restaurantId:", this.restaurantId); // Debug
@@ -61,122 +64,69 @@ export default {
         this.showAlert = true;
       }
     },
+    alert() {
+      this.showAlert = false;
+    },
   },
   created() {
     this.restaurantId = sessionStorage.getItem("restaurant_id");
     this.getProducts();
   },
-  components: { RouterLink },
+  components: { RouterLink, Apploader, AppAlert },
 };
 </script>
 
 <template>
   <div class="container mt-[5.5rem] py-8 px-4 md:px-0">
-    <div
-      id="alert-3"
-      class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-      role="alert"
-      v-if="this.showAlert"
-    >
-      <svg
-        class="flex-shrink-0 w-4 h-4"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <path
-          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-        />
-      </svg>
-      <span class="sr-only">Info</span>
-      <div class="ml-3 text-sm font-medium">
-        Non puoi selezionare prodotti da due ristoranti diversi, svuota il
-        carrello prima di procedere!
-        <RouterLink
-          :to="{ name: 'cart' }"
-          class="font-semibold underline hover:no-underline"
-          >Vai al carrello</RouterLink
-        >
-      </div>
-      <button
-        @click="this.showAlert = false"
-        type="button"
-        class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-        data-dismiss-target="#alert-3"
-        aria-label="Close"
-      >
-        <span class="sr-only">Close</span>
-        <svg
-          class="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 14 14"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-          />
-        </svg>
-      </button>
-    </div>
+    <AppAlert v-if="this.showAlert" @closeAlert="alert" />
+
     <h1 class="text-4xl text-center font-bold text-secondary pb-8">
       Il nostro Menù
     </h1>
-    <ul class="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <li v-for="product in products" class="cards_item relative">
-        <div class="card bg-primary" tabindex="0">
-          <div class="card_image">
-            <img
-              src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg"
-              alt="mixed vegetable salad in a mason jar. "
-            />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+        v-for="product in products"
+      >
+        <img
+          class="object-cover w-full rounded-t-lg h-96 md:h-48 lg:h-full md:w-full md:rounded-none md:rounded-l-lg"
+          src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg"
+          alt="ristorante"
+        />
+        <div class="grid grid-cols-1 justify-between p-4 leading-normal">
+          <div>
+            <h5
+              class="mb-2 text-2xl md:text-xl lg:text-2xl font-bold tracking-tight text-gray-900"
+            >
+              {{ product.name }}
+            </h5>
+            <h5
+              class="mb-2 text-xl font-semibold tracking-tight text-secondary"
+            >
+              € {{ product.price }}
+            </h5>
           </div>
-          <div class="card_content">
-            <h2 class="card_title bg-secondary">
-              {{ product.name }} &#x2022; {{ product.price }}€
-            </h2>
-            <div class="card_text">
-              <p>{{ product.description }}</p>
-              <p class="upcharge bg-secondary absolute bottom-0">
-                <button
-                  @click="getProductInfo(product)"
-                  class="button bg-primary"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                    class="bi bi-cart-check"
-                    height="24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="#00846B"
-                  >
-                    <path
-                      d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
-                    ></path>
-                    <path
-                      d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-                    ></path>
-                  </svg>
-                  <p class="text">Aggiungi all'ordine</p>
-                </button>
-              </p>
-            </div>
-          </div>
-          <!-- <input
-            type="number"
-            id="number"
-            class="w-2/5 mx-auto border-2 border-secondary rounded-xl text-gray-900 text-sm focus:ring-secondary focus:border-secondary block p-2.5"
-            required
-            v-model="qnt"
-          /> -->
+
+          <button
+            @click="getProductInfo(product)"
+            class="text-white text-sm bg-secondary hover:text-primary px-0 py-1 rounded-md shadow-md mb-2"
+          >
+            <i class="fa-solid fa-cart-arrow-down"></i>
+            Aggiungi al carrello!
+          </button>
+
+          <RouterLink
+            :to="{ name: 'details' }"
+            class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md"
+          >
+            Dettagli prodotto
+          </RouterLink>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+
+    <Apploader v-if="loader" />
   </div>
 </template>
 
