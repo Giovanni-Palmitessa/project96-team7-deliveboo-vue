@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import braintree from "braintree-web";
 import { store } from "../store";
 import { initFlowbite } from "flowbite";
 
@@ -13,9 +14,15 @@ export default {
       surname: "",
       phone: "",
       message: "",
-      shoWSuccess: false,
+      showSuccess: false,
       isSending: false,
       hasErrors: false,
+      hostedFieldInstance: false,
+      nonce: "",
+      error: "",
+      amount: 10,
+      paymentToken: null,
+      restaurantId: null,
     };
   },
   methods: {
@@ -33,7 +40,7 @@ export default {
           this.isSending = false;
 
           if (response.data.success) {
-            this.shoWSuccess = true;
+            this.showSuccess = true;
             this.resetForm();
           } else {
             this.hasErrors = true;
@@ -41,7 +48,7 @@ export default {
         });
     },
     closeModal() {
-      this.shoWSuccess = false;
+      this.showSuccess = false;
     },
     closeModalErr() {
       this.hasErrors = false;
@@ -50,7 +57,7 @@ export default {
       this.email = "";
       this.name = "";
       this.surname = "";
-      this.phone = "";
+      // this.phone = "";
       this.message = "";
     },
     getProductsCart() {
@@ -62,38 +69,114 @@ export default {
         this.products = [];
       }
     },
-    braintree() {
-      var button = document.querySelector("#submit-button");
+    async getPaymentToken() {
+      await axios
+        .get("http://localhost:8000/api/orders/generate")
+        .then((response) => {
+          if (response.data.success) {
+            this.paymentToken = response.data.token;
+          } else {
+            console.error("Errore nella generazione del token di pagamento");
+          }
+        });
+    },
 
-      braintree.dropin.create(
-        {
-          authorization: "sandbox_g42y39zw_348pk9cgf3bgyw2b",
-          selector: "#dropin-container",
-        },
-        function (err, instance) {
-          button.addEventListener("click", function () {
-            instance.requestPaymentMethod(function (err, payload) {
-              // Submit payload.nonce to your server
-            });
+    payWithCreditCard() {
+      if (this.hostedFieldInstance) {
+        this.error = "";
+        this.nonce = "";
+
+        this.hostedFieldInstance
+          .tokenize()
+          .then((payload) => {
+            console.log(payload);
+            this.nonce = payload.nonce;
+
+            // Sending nonce to Laravel API
+            axios
+              .post("http://localhost:8000/api/orders/make/payment", {
+                token: this.nonce,
+                cart: this.products,
+                restaurant_id: this.products[0].restaurant_id,
+                name: this.name,
+                surname: this.surname,
+                email: this.email,
+                message: this.message,
+              })
+              .then((response) => {
+                if (response.data.success) {
+                  // handle success
+                } else {
+                  // handle failure
+                }
+              })
+              .catch((error) => {
+                console.error("Payment Error:", error);
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            this.error = err.message;
           });
-        }
-      );
+      }
     },
   },
   created() {
     this.getProductsCart();
-    this.braintree();
+
+    this.payWithCreditCard();
   },
-  mounted() {
-    initFlowbite();
-    console.log(this.products);
+
+  async mounted() {
+    await this.getPaymentToken();
+    console.log("SERVER TOKEN", this.paymentToken);
+    braintree.client
+      .create({
+        //authorization: "sandbox_93smtrz3_bbgx4xf7h8bx24xg",
+        authorization: this.paymentToken,
+      })
+      .then((clientInstance) => {
+        let options = {
+          client: clientInstance,
+          // styles: {
+          //   input: {
+          //     "font-size": "14px",
+          //     "font-family": "Open Sans",
+          //   },
+          // },
+          fields: {
+            number: {
+              selector: "#creditCardNumber",
+              placeholder: "Enter Credit Card",
+            },
+            cvv: {
+              selector: "#cvv",
+              placeholder: "fake-three-digit-cvv-only-nonce",
+            },
+            expirationDate: {
+              selector: "#expireDate",
+              placeholder: "00 / 0000",
+            },
+          },
+        };
+
+        return braintree.hostedFields.create(options);
+      })
+      .then((hostedFieldInstance) => {
+        this.hostedFieldInstance = hostedFieldInstance;
+        console.log(hostedFieldInstance);
+      })
+      .catch((err) => {
+        // gestione errori
+        console.log(err);
+      });
   },
 };
 </script>
 <template>
   <div class="mt-40">
     <div
-      v-if="shoWSuccess"
+      v-if="showSuccess"
       id="alert-border-3"
       class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 mt-20"
       role="alert"
@@ -187,7 +270,7 @@ export default {
 
     <form
       class="my-32 max-w-md mx-auto"
-      @submit.prevent="sendMailtoGuest"
+      @submit.prevent="payWithCreditCard"
       novalidate
     >
       <div class="relative z-0 w-full mb-6 group">
@@ -236,7 +319,7 @@ export default {
         </div>
       </div>
       <div class="grid md:grid-cols-2 md:gap-6">
-        <div class="relative z-0 w-full mb-6 group">
+        <!-- <div class="relative z-0 w-full mb-6 group">
           <input
             v-model="phone"
             type="tel"
@@ -250,7 +333,7 @@ export default {
             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Numero di telefono</label
           >
-        </div>
+        </div> -->
         <div class="relative z-0 w-full mb-6 group">
           <input
             v-model="message"
@@ -267,6 +350,48 @@ export default {
           >
         </div>
       </div>
+      <!-- <button
+        type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        :disabled="isSending"
+      >
+        Submit
+      </button> -->
+
+      <!-- <div class="form-group">
+        <label for="amount">Amount</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input
+            type="number"
+            id="amount"
+            v-model="amount"
+            class="form-control"
+            placeholder="Enter Amount"
+          />
+        </div>
+      </div> -->
+      <hr />
+      <div class="form-group">
+        <label>Credit Card Number</label>
+        <div id="creditCardNumber" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-6">
+            <label>Expire Date</label>
+            <div id="expireDate" class="form-control"></div>
+          </div>
+          <div class="col-6">
+            <label>CVV</label>
+            <div id="cvv" class="form-control"></div>
+          </div>
+        </div>
+      </div>
+      <!-- @click.prevent="payWithCreditCard" -->
+
       <button
         type="submit"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
@@ -275,12 +400,71 @@ export default {
         Submit
       </button>
     </form>
-    <div id="dropin-wrapper" class="max-w-sm mx-auto mb-8">
+
+    <!-- <div id="dropin-wrapper" class="max-w-sm mx-auto mb-8">
       <div id="checkout-message"></div>
       <div id="dropin-container"></div>
       <button id="submit-button">Submit payment</button>
     </div>
+  </div> 
+  <div>-->
   </div>
 </template>
-
+<!-- 
+  <div>
+      <label for="amount">Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input
+          type="number"
+          id="amount"
+          v-model="amount"
+          class="form-control"
+          placeholder="Enter Amount"
+        />
+      </div>
+    </div>
+        <form>
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input
+              type="number"
+              id="amount"
+              v-model="amount"
+              class="form-control"
+              placeholder="Enter Amount"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="form-group">
+          <label>Credit Card Number</label>
+          <div id="creditCardNumber" class="form-control"></div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+              <div class="col-6">
+                <label>Expire Date</label>
+                <div id="expireDate" class="form-control"></div>
+              </div>
+              <div class="col-6">
+                <label>CVV</label>
+                <div id="cvv" class="form-control"></div>
+              </div>
+            </div>
+            </div>
+          </form>
+        <button
+          class="btn btn-primary btn-block"
+          @click.prevent="payWithCreditCard"
+        >
+          Pay with Credit Card
+        </button>
+ -->
 <style></style>
