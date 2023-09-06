@@ -100,10 +100,13 @@ export default {
     <h1 class="text-4xl lg:text-5xl text-center font-bold text-secondary my-3">
       Resturants
     </h1>
+    <!-- filtro categorie  -->
     <AppCategorySelector
       :categories="arrCategory"
       @filtered="category = $event"
     />
+
+    <!-- filtro senza risultati  -->
     <div v-if="noResults" class="flex flex-col items-center p-20">
       <div class="flex items-center gap-8">
         <div class="text-2xl text-primary font-bold mb-4">
@@ -123,6 +126,8 @@ export default {
         Ripristina
       </button>
     </div>
+
+    <!-- ristoranti  -->
     <div
       v-else
       class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
