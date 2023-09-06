@@ -9,6 +9,7 @@ export default {
     return {
       store,
       products: [],
+      hostedFieldInstance: false,
       email: "",
       name: "",
       surname: "",
