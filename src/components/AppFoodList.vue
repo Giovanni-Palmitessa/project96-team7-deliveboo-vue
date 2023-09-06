@@ -4,6 +4,7 @@ import { store } from "../store";
 import { RouterLink } from "vue-router";
 import Apploader from "./apploader.vue";
 import AppAlert from "./AppAlert.vue";
+import AppPurchaseResume from "./AppPurchaseResume.vue";
 
 export default {
   data() {
@@ -72,7 +73,7 @@ export default {
     this.restaurantId = sessionStorage.getItem("restaurant_id");
     this.getProducts();
   },
-  components: { RouterLink, Apploader, AppAlert },
+  components: { RouterLink, Apploader, AppAlert, AppPurchaseResume },
 };
 </script>
 
@@ -131,6 +132,7 @@ export default {
     >
       riepilogo
     </div>
+    <AppPurchaseResume />
     <Apploader v-if="loader" />
   </div>
 </template>
