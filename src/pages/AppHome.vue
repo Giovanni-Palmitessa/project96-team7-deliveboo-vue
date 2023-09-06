@@ -105,12 +105,20 @@ export default {
       @filtered="category = $event"
     />
     <div v-if="noResults" class="flex flex-col items-center p-20">
-      <div class="mb-4">NON CI SONO RISULTATI PER LA RICERCA</div>
-      <!-- <img src="" alt=""> -->
+      <div class="flex items-center gap-8">
+        <div class="text-2xl text-primary font-bold mb-4">
+          NON CI SONO RISULTATI PER LA RICERCA
+        </div>
+        <img
+          src="../../public/img/cryng-pizza.jpg"
+          alt="not-found"
+          class="h-24 md:h-40"
+        />
+      </div>
 
       <button
         @click="refreshFilter"
-        class="text-white bg-secondary px-4 py-1 rounded-md shadow-md"
+        class="text-white bg-secondary px-4 py-1 mt-6 rounded-md shadow-md"
       >
         Ripristina
       </button>
