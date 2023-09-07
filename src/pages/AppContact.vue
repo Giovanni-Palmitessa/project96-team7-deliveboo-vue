@@ -20,6 +20,7 @@ export default {
       amount: 10,
       paymentToken: null,
       restaurantId: null,
+      hasErrors: false,
     };
   },
   methods: {
