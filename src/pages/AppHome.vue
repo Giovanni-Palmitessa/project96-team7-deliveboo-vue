@@ -104,6 +104,7 @@ export default {
     <AppCategorySelector
       :categories="arrCategory"
       @filtered="category = $event"
+      @resetFilter="refreshFilter"
     />
 
     <!-- filtro senza risultati  -->

@@ -50,6 +50,7 @@ export default {
         </div>
         <div class="mt-6">
           <button
+            @click="$emit('resetFilter')"
             type="submit"
             class="filter-button px-5 py-2 bg-primary_hover hover:bg-primary rounded-md shadow-md"
           >
