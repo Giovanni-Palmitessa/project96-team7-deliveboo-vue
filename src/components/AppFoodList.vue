@@ -88,7 +88,7 @@ export default {
       <div
         class="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
         v-for="product in products">
-        <img :src="product.url_image" :alt="product.name"
+        <img :src="this.store.baseUrl + 'storage/' + product.url_image" :alt="product.name"
           class="object-cover w-full rounded-t-lg h-[250px] md:w-full md:rounded-none md:rounded-l-lg">
         <!-- <img -->
         <!-- class="object-cover w-full rounded-t-lg h-96 md:h-48 lg:h-full md:w-full md:rounded-none md:rounded-l-lg" -->
