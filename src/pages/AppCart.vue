@@ -1,9 +1,12 @@
 <script>
 import { initFlowbite } from "flowbite";
+import { store } from "../store";
 
 export default {
   data() {
     return {
+      // store
+      store,
       products: [],
       subtotal: null,
       totalPrice: null,
@@ -69,6 +72,7 @@ export default {
   created() {
     this.getProductsCart();
     this.getSubtotal();
+    console.log(this.products);
   },
   mounted() {
     initFlowbite();
@@ -90,8 +94,7 @@ export default {
             <!-- Product Information -->
             <div class="flex flex-row gap-6 items-center">
               <div class="w-28 h-28 rounded-full overflow-hidden">
-                <img class="w-full h-full"
-                  src="https://static.netshoes.com.br/produtos/tenis-adidas-coreracer-masculino/09/NQQ-4635-309/NQQ-4635-309_zoom1.jpg?ts=1675445414&ims=544x" />
+                <img class="w-full h-full" :src="this.store.baseUrl + 'storage/' + product.url_image" :alt="product.name">
               </div>
               <div class="flex flex-col gap-1 max-w-[300px]">
                 <p class="text-lg text-gray-800 font-semibold">
