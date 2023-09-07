@@ -233,7 +233,9 @@ export default {
       </button>
     </div> -->
 
-    <h1 class="text-5xl text-center font-bold">Riepilogo Ordine</h1>
+    <h1 class="text-5xl text-center font-bold text-secondary">
+      Riepilogo Ordine
+    </h1>
 
     <form
       class="my-20 max-w-5xl mx-auto px-10"
@@ -250,7 +252,7 @@ export default {
         />
         <label
           for="email"
-          class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >Email</label
         >
       </div>
@@ -264,7 +266,7 @@ export default {
           />
           <label
             for="name"
-            class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Nome</label
           >
         </div>
@@ -277,7 +279,7 @@ export default {
           />
           <label
             for="surname"
-            class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Cognome</label
           >
         </div>
@@ -293,14 +295,14 @@ export default {
           />
           <label
             for="message"
-            class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Messaggio</label
           >
         </div>
       </div>
 
       <div class="form-group">
-        <label for="creditCardNumber" style="color: gray">
+        <label for="creditCardNumber" style="color: #00a082">
           Numero carta di credito
         </label>
 
@@ -316,7 +318,7 @@ export default {
       <div class="form-group">
         <div class="row" style="display: flex; justify-content: space-between">
           <div class="col-6" style="flex-basis: 45%">
-            <label style="color: gray">Data di scadenza</label>
+            <label style="color: #00a082">Data di scadenza</label>
             <div
               id="expireDate"
               class="form-control"
@@ -328,7 +330,7 @@ export default {
             ></div>
           </div>
           <div class="col-6" style="flex-basis: 45%">
-            <label style="color: gray">CVV</label>
+            <label style="color: #00a082">CVV</label>
             <div
               id="cvv"
               class="form-control"
@@ -344,7 +346,7 @@ export default {
 
       <button
         type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center mt-5"
       >
         Paga Ora!
       </button>
