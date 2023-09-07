@@ -299,20 +299,6 @@ export default {
         </div>
       </div>
 
-      <!-- <div class="relative z-0 w-full mb-6 group">
-        <input
-          type="number"
-          id="creditCardNumber"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          required
-        />
-        <label
-          for="creditCardNumber"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Numero carta di credito</label
-        >
-      </div> -->
-
       <div class="form-group">
         <label for="creditCardNumber" style="color: gray">
           Numero carta di credito
@@ -355,7 +341,6 @@ export default {
           </div>
         </div>
       </div>
-      <!-- @click.prevent="payWithCreditCard" -->
 
       <button
         type="submit"
@@ -364,75 +349,7 @@ export default {
         Paga Ora!
       </button>
     </form>
-
-    <!-- <div id="dropin-wrapper" class="max-w-sm mx-auto mb-8">
-      <div id="checkout-message"></div>
-      <div id="dropin-container"></div>
-      <button id="submit-button">Submit payment</button>
-    </div>
-  </div> 
-  <div>-->
   </div>
 </template>
-<!-- 
-  <div>
-      <label for="amount">Amount</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
-        </div>
-        <input
-          type="number"
-          id="amount"
-          v-model="amount"
-          class="form-control"
-          placeholder="Enter Amount"
-        />
-      </div>
-    </div>
-        <form>
-        <div class="form-group">
-          <label for="amount">Amount</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">$</span>
-            </div>
-            <input
-              type="number"
-              id="amount"
-              v-model="amount"
-              class="form-control"
-              placeholder="Enter Amount"
-            />
-          </div>
-        </div>
-        <hr />
-        <div class="form-group">
-          <label>Credit Card Number</label>
-          <div id="creditCardNumber" class="form-control"></div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-              <div class="col-6">
-                <label>Expire Date</label>
-                <div id="expireDate" class="form-control"></div>
-              </div>
-              <div class="col-6">
-                <label>CVV</label>
-                <div id="cvv" class="form-control"></div>
-              </div>
-            </div>
-            </div>
-          </form>
-        <button
-          class="btn btn-primary btn-block"
-          @click.prevent="payWithCreditCard"
-        >
-          Pay with Credit Card
-        </button>
- -->
-<style>
-/* .container {
-  font-weight: 800;
-} */
-</style>
+
+<style></style>
