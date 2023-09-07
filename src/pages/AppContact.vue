@@ -21,6 +21,8 @@ export default {
       paymentToken: null,
       restaurantId: null,
       hasErrors: false,
+      emailError: "",
+      nameError: "",
     };
   },
   methods: {
