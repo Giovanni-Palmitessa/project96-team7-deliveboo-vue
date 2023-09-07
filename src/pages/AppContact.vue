@@ -10,13 +10,6 @@ export default {
       store,
       products: [],
       hostedFieldInstance: false,
-      email: "",
-      name: "",
-      surname: "",
-      message: "",
-      showSuccess: false,
-      isSending: false,
-      hasErrors: false,
       hostedFieldInstance: false,
       nonce: "",
       error: "",
@@ -26,38 +19,6 @@ export default {
     };
   },
   methods: {
-    sendMailtoGuest() {
-      this.isSending = true;
-      axios
-        .post(this.store.baseUrl + "api/guests", {
-          email: this.email,
-          name: this.name,
-          surname: this.surname,
-          message: this.message,
-        })
-        .then((response) => {
-          this.isSending = false;
-
-          if (response.data.success) {
-            this.showSuccess = true;
-            this.resetForm();
-          } else {
-            this.hasErrors = true;
-          }
-        });
-    },
-    closeModal() {
-      this.showSuccess = false;
-    },
-    closeModalErr() {
-      this.hasErrors = false;
-    },
-    resetForm() {
-      this.email = "";
-      this.name = "";
-      this.surname = "";
-      this.message = "";
-    },
     getProductsCart() {
       let productsStr = localStorage.getItem("cart");
       let products = JSON.parse(productsStr);
