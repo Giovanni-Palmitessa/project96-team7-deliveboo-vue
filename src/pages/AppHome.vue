@@ -120,12 +120,12 @@ export default {
         />
       </div>
 
-      <button
+      <!-- <button
         @click="refreshFilter"
         class="text-white bg-secondary px-4 py-1 mt-6 rounded-md shadow-md"
       >
         Ripristina
-      </button>
+      </button> -->
     </div>
 
     <!-- ristoranti  -->
