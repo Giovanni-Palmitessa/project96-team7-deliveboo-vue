@@ -35,6 +35,9 @@ export default {
     <p>{{ productIngredients }}</p>
     <p>{{ productUrlImage }}</p>
   </div>
+  <div class="container mx-auto">
+
+  </div>
 
   <!-- <div class="container mx-auto mt-[7rem]">
     <h1 class="text-3xl text-center text-secondary font-bold">
