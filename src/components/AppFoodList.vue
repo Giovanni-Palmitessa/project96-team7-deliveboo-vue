@@ -87,39 +87,32 @@ export default {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         class="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
-        v-for="product in products"
-      >
-        <img
-          class="object-cover w-full rounded-t-lg h-96 md:h-48 lg:h-full md:w-full md:rounded-none md:rounded-l-lg"
-          src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg"
-          alt="ristorante"
-        />
+        v-for="product in products">
+        <img :src="product.url_image" :alt="product.name"
+          class="object-cover w-full rounded-t-lg h-[250px] md:w-full md:rounded-none md:rounded-l-lg">
+        <!-- <img -->
+        <!-- class="object-cover w-full rounded-t-lg h-96 md:h-48 lg:h-full md:w-full md:rounded-none md:rounded-l-lg" -->
+        <!-- src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg" -->
+        <!-- alt="ristorante" -->
+        <!-- /> -->
         <div class="grid grid-cols-1 justify-between p-4 leading-normal">
           <div>
-            <h5
-              class="mb-2 text-2xl md:text-xl lg:text-2xl font-bold tracking-tight text-gray-900"
-            >
+            <h5 class="mb-2 text-2xl md:text-xl lg:text-2xl font-bold tracking-tight text-gray-900">
               {{ product.name }}
             </h5>
-            <h5
-              class="mb-2 text-xl font-semibold tracking-tight text-secondary"
-            >
+            <h5 class="mb-2 text-xl font-semibold tracking-tight text-secondary">
               € {{ product.price }}
             </h5>
           </div>
 
-          <button
-            @click="getProductInfo(product)"
-            class="text-white text-sm bg-secondary hover:text-primary px-0 py-1 rounded-md shadow-md mb-2"
-          >
+          <button @click="getProductInfo(product)"
+            class="text-white text-sm bg-secondary hover:text-primary px-0 py-1 rounded-md shadow-md mb-2">
             <i class="fa-solid fa-cart-arrow-down"></i>
             Aggiungi al carrello!
           </button>
 
-          <RouterLink
-            :to="{ name: 'details' }"
-            class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md"
-          >
+          <RouterLink :to="{ name: 'details' }"
+            class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md">
             Dettagli prodotto
           </RouterLink>
         </div>
