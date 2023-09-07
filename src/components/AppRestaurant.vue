@@ -1,7 +1,10 @@
 <script>
+import { store } from "../store";
 export default {
   data() {
-    return {};
+    return {
+      store
+    };
   },
   props: {
     restaurant: Object,
@@ -19,7 +22,8 @@ export default {
 <template>
   <div class="bg-primary border border-gray-200 rounded-lg shadow flex flex-col">
     <a href="#">
-      <img class="rounded-t-lg h-[250px] min-w-full object-cover" :src="restaurant.url_image" :alt="restaurant.name">
+      <img class="rounded-t-lg h-[250px] min-w-full object-cover"
+        :src="this.store.baseUrl + 'storage/' + restaurant.url_image" :alt="restaurant.name">
       <!-- <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" /> -->
     </a>
     <div class="p-5 bg-primary">
@@ -31,7 +35,7 @@ export default {
       <p class="mb-3 font-normal text-sm text-gray-700">
         {{ restaurant.description }}
       </p>
-      <template v-for="category in restaurant.categories">
+      <template v-for=" category  in  restaurant.categories ">
         <a class="flex gap-2 mb-3 text-sm font-semibold" href="#">
           {{ category.name }}
         </a>
