@@ -71,9 +71,9 @@ export default {
         });
     },
     refreshFilter() {
-      this.category.length = 0;
-      this.getRestaurants();
-      this.noResults = false;
+      if (this.arrRestaurants.length === 0) {
+        this.noResults = false;
+      }
     },
   },
   created() {
