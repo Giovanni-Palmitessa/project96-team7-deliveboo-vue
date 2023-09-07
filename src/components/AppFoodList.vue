@@ -82,7 +82,10 @@ export default {
       this.timer = setTimeout(() => {
         this.resume = false;
         this.timer = null;
-      }, 2000);
+      }, 5000);
+    },
+    closeResume() {
+      this.resume = false;
     },
   },
   created() {
@@ -143,7 +146,11 @@ export default {
       </div>
     </div>
     <div>
-      <AppPurchaseResume v-if="resume" :productsResume="productsCart" />
+      <AppPurchaseResume
+        v-if="resume"
+        :productsResume="productsCart"
+        @closeResume="closeResume"
+      />
     </div>
     <Apploader v-if="loader" />
   </div>
