@@ -11,6 +11,10 @@ export default {
       products: [],
       hostedFieldInstance: false,
       hostedFieldInstance: false,
+      email: "",
+      name: "",
+      surname: "",
+      message: "",
       nonce: "",
       error: "",
       amount: 10,
@@ -97,16 +101,26 @@ export default {
       .then((clientInstance) => {
         let options = {
           client: clientInstance,
-          // styles: {
-          //   input: {
-          //     "font-size": "14px",
-          //     "font-family": "Open Sans",
-          //   },
-          // },
+          styles: {
+            input: {
+              "font-size": "14px",
+              "font-family": "Open Sans",
+              "font-weight": "500",
+              "margin-inline": "auto",
+              "max-width": "80%",
+            },
+          },
           fields: {
             number: {
               selector: "#creditCardNumber",
-              placeholder: "Enter Credit Card",
+              placeholder: "Inserisci carta di credito valida",
+              // styles: {
+              //   input: {
+              //     "font-size": "40px",
+              //     "font-family": "Open Sans",
+              //     "font-weight": "800",
+              //   },
+              // },
             },
             cvv: {
               selector: "#cvv",
@@ -134,7 +148,7 @@ export default {
 </script>
 <template>
   <div class="mt-40">
-    <div
+    <!-- <div
       v-if="showSuccess"
       id="alert-border-3"
       class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 mt-20"
@@ -176,9 +190,9 @@ export default {
           />
         </svg>
       </button>
-    </div>
+    </div> -->
 
-    <div
+    <!-- <div
       v-if="hasErrors"
       id="alert-2"
       class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50"
@@ -223,7 +237,7 @@ export default {
           />
         </svg>
       </button>
-    </div>
+    </div> -->
 
     <h1 class="text-5xl text-center font-bold">Riepilogo Ordine</h1>
 
@@ -291,9 +305,27 @@ export default {
         </div>
       </div>
 
+      <!-- <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="number"
+          id="creditCardNumber"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          required
+        />
+        <label
+          for="creditCardNumber"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Numero carta di credito</label
+        >
+      </div> -->
+
       <div class="form-group">
-        <label>Credit Card Number</label>
-        <div id="creditCardNumber" class="form-control"></div>
+        <label for="creditCardNumber" class=""> Numero carta di credito </label>
+
+        <div
+          id="creditCardNumber"
+          class="form-control block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        ></div>
       </div>
       <div class="form-group">
         <div class="row">
@@ -312,7 +344,6 @@ export default {
       <button
         type="submit"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        :disabled="isSending"
       >
         Paga Ora!
       </button>
@@ -384,4 +415,8 @@ export default {
           Pay with Credit Card
         </button>
  -->
-<style></style>
+<style>
+/* .container {
+  font-weight: 800;
+} */
+</style>
