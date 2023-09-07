@@ -15,7 +15,9 @@ export default {
       restaurantId: null,
       notAllowed: false,
       showAlert: false,
+      resume: false,
       loader: false,
+      timer: null,
     };
   },
   methods: {
@@ -68,6 +70,20 @@ export default {
     alert() {
       this.showAlert = false;
     },
+    handleProductButtonClick(product) {
+      this.getProductInfo(product); // Esegui l'azione
+      if (this.timer) {
+        // Se il timer è già stato avviato, annullalo
+        clearTimeout(this.timer);
+        this.timer = null; // Resetta la variabile del timer
+      }
+      this.resume = true;
+      // Avvia il timer nuovamente
+      this.timer = setTimeout(() => {
+        this.resume = false;
+        this.timer = null;
+      }, 2000);
+    },
   },
   created() {
     this.restaurantId = sessionStorage.getItem("restaurant_id");
@@ -110,7 +126,7 @@ export default {
           </div>
 
           <button
-            @click="getProductInfo(product)"
+            @click="handleProductButtonClick(product)"
             class="text-white text-sm bg-secondary hover:text-primary px-0 py-1 rounded-md shadow-md mb-2"
           >
             <i class="fa-solid fa-cart-arrow-down"></i>
@@ -126,13 +142,9 @@ export default {
         </div>
       </div>
     </div>
-    <!-- riepilogo ordine  -->
-    <div
-      class="h-60 w-96 bg-secondary absolute top-16 right-12 z-50 rounded-md shadow-md p-4 text-sm"
-    >
-      riepilogo
+    <div>
+      <AppPurchaseResume v-if="resume" :productsResume="productsCart" />
     </div>
-    <AppPurchaseResume />
     <Apploader v-if="loader" />
   </div>
 </template>

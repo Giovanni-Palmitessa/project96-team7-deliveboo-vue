@@ -1,38 +1,21 @@
 <script>
 export default {
   data() {
-    return {
-      products: [],
-    };
+    return {};
   },
-  methods: {
-    getProductsCart() {
-      let productsStr = localStorage.getItem("cart");
-      let products = JSON.parse(productsStr);
-      if (products) {
-        this.products = products;
-      } else {
-        this.products = [];
-      }
-    },
+  props: {
+    productsResume: Array,
   },
-  created() {
-    this.getProductsCart();
-  },
-  watch: {
-    products() {
-      this.getProductsCart();
-    },
-  },
+  methods: {},
+  created() {},
 };
 </script>
 
 <template>
-  <!-- riepilogo ordine  -->
   <div
     class="h-60 w-96 bg-secondary absolute top-16 right-12 z-50 rounded-md shadow-md p-4 text-sm"
   >
-    <div v-for="product in products">
+    <div v-for="product in productsResume">
       <span class="mr-4">{{ product.name }}</span>
       <span class="mr-4">€ {{ product.price }}</span>
       <span>X {{ product.qnt }}</span>
