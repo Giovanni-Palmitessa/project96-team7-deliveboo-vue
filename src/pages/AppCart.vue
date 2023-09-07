@@ -105,17 +105,10 @@ export default {
               <p class="text-xs text-gray-600 font-semibold">
                 {{ product.description }}
               </p>
-              <!-- <p class="text-xs text-gray-600 font-semibold">
-                Size: <span class="font-normal">42</span>
-              </p> -->
             </div>
           </div>
           <!-- Price Information -->
           <div class="self-center text-center">
-            <!-- <p class="text-gray-600 font-normal text-sm line-through">
-              €99.99
-              <span class="text-emerald-500 ml-2">(-50% OFF)</span>
-            </p> -->
             <p class="text-gray-800 font-normal text-xl">
               €{{ product.price }}
             </p>
