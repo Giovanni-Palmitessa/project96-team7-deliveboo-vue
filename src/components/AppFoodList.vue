@@ -36,9 +36,9 @@ export default {
     },
 
     getProductInfo(product) {
-      console.log("Current restaurantId:", this.restaurantId); // Debug
-      console.log("Product restaurantId:", product.restaurantId); // Debug
-      console.log("Current productsCart:", this.productsCart); // Debug
+      // console.log("Current restaurantId:", this.restaurantId);
+      // console.log("Product restaurantId:", product.restaurantId);
+      // console.log("Current productsCart:", this.productsCart);
       // Se il carrello è vuoto o contiene prodotti dello stesso ristorante
       if (
         this.productsCart.length === 0 ||
@@ -71,18 +71,23 @@ export default {
       this.showAlert = false;
     },
     handleProductButtonClick(product) {
-      this.getProductInfo(product); // Esegui l'azione
-      if (this.timer) {
-        // Se il timer è già stato avviato, annullalo
-        clearTimeout(this.timer);
-        this.timer = null; // Resetta la variabile del timer
+      this.getProductInfo(product);
+      if (
+        this.productsCart.length === 0 ||
+        this.productsCart[0].restaurant_id === this.restaurantId
+      ) {
+        if (this.timer) {
+          // Se il timer è già stato avviato, annullalo
+          clearTimeout(this.timer);
+          this.timer = null;
+        }
+        this.resume = true;
+        // Avvia il timer nuovamente
+        this.timer = setTimeout(() => {
+          this.resume = false;
+          this.timer = null;
+        }, 8000);
       }
-      this.resume = true;
-      // Avvia il timer nuovamente
-      this.timer = setTimeout(() => {
-        this.resume = false;
-        this.timer = null;
-      }, 5000);
     },
     closeResume() {
       this.resume = false;

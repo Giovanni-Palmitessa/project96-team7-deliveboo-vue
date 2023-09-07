@@ -32,6 +32,11 @@ export default {
       <span class="mr-4">€ {{ product.price }}</span>
       <span>x {{ product.qnt }}</span>
     </div>
+    <RouterLink
+      :to="{ name: 'cart' }"
+      class="font-semibold underline hover:no-underline text-primary ml-56"
+      >Vai al carrello</RouterLink
+    >
   </div>
 </template>
 
