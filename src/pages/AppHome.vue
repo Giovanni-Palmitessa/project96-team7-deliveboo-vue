@@ -22,6 +22,7 @@ export default {
       currentPage: 1,
       nPages: 0,
       loader: false,
+      noResults: false,
     };
   },
   methods: {
@@ -57,10 +58,22 @@ export default {
       axios
         .get(this.store.baseUrl + "api/restaurants", { params })
         .then((response) => {
-          this.arrRestaurants = response.data.results.data;
+          const resultsData = response.data.results.data;
+          if (resultsData.length) {
+            this.arrRestaurants = resultsData;
+            this.loader = false;
+          } else {
+            this.arrRestaurants = [];
+            this.loader = false;
+            this.noResults = true;
+          }
           this.nPages = response.data.results.last_page;
-          this.loader = false;
         });
+    },
+    refreshFilter() {
+      this.category.length = 0;
+      this.getRestaurants();
+      this.noResults = false;
     },
   },
   created() {
@@ -87,11 +100,38 @@ export default {
     <h1 class="text-4xl lg:text-5xl text-center font-bold text-secondary my-3">
       Resturants
     </h1>
+    <!-- filtro categorie  -->
     <AppCategorySelector
       :categories="arrCategory"
       @filtered="category = $event"
     />
-    <div class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- filtro senza risultati  -->
+    <div v-if="noResults" class="flex flex-col items-center p-20">
+      <div class="flex items-center gap-8">
+        <div class="text-2xl text-primary font-bold mb-4">
+          NON CI SONO RISULTATI PER LA RICERCA
+        </div>
+        <img
+          src="../../public/img/cryng-pizza.jpg"
+          alt="not-found"
+          class="h-24 md:h-40"
+        />
+      </div>
+
+      <button
+        @click="refreshFilter"
+        class="text-white bg-secondary px-4 py-1 mt-6 rounded-md shadow-md"
+      >
+        Ripristina
+      </button>
+    </div>
+
+    <!-- ristoranti  -->
+    <div
+      v-else
+      class="mt-5 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
       <AppRestaurant
         v-for="restaurant in arrRestaurants"
         :key="restaurant.id"
