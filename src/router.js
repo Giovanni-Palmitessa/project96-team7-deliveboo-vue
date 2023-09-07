@@ -6,6 +6,7 @@ import App404 from "./pages/App404.vue";
 import AppMenu from "./pages/AppMenu.vue";
 import AppContact from "./pages/AppContact.vue";
 import AppProductDetails from "./pages/AppProductDetails.vue";
+import AppThankYou from "./pages/AppThankYou.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: "/cart",
       name: "cart",
       component: AppCart,
+    },
+    {
+      path: "/thankYou",
+      name: "thankYou",
+      component: AppThankYou,
     },
     //la 404 deve sempre stare per ultima
     {
