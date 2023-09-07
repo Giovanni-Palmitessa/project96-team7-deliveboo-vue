@@ -111,7 +111,8 @@ export default {
             Aggiungi al carrello!
           </button>
 
-          <RouterLink :to="{ name: 'details' }"
+          <RouterLink
+            :to="{ name: 'details', params: { productId: product.id, productName: product.name, productPrice: product.price, productDescription: product.description, productIngredients: product.ingredients, productUrlImage: product.url_image } }"
             class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md">
             Dettagli prodotto
           </RouterLink>
