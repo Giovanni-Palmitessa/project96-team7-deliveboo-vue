@@ -64,6 +64,13 @@ export default {
               return; // Esci se ci sono errori
             }
 
+            // Imposta gli errori per i campi specifici
+            if (!this.email) {
+              this.emailError = "Campo email obbligatorio";
+            } else {
+              this.emailError = ""; // Azzera l'errore se il campo è valido
+            }
+
             // Sending nonce to Laravel API
             axios
               .post("http://localhost:8000/api/orders/make/payment", {
@@ -126,11 +133,14 @@ export default {
               selector: "#creditCardNumber",
               placeholder: "Inserisci carta di credito valida",
               prefill: "4111111111111111",
+              minlength: 12,
             },
             cvv: {
               selector: "#cvv",
               placeholder: "fake-three-digit-cvv-only-nonce",
               prefill: "123",
+              minlength: 3,
+              maxlength: 3,
             },
             expirationDate: {
               selector: "#expireDate",
@@ -225,6 +235,9 @@ export default {
           >Email</label
         >
       </div>
+
+      <div v-if="emailError" class="text-red-500 mt-2">{{ emailError }}</div>
+
       <div class="grid md:grid-cols-2 md:gap-6">
         <div class="relative z-0 w-full mb-6 group">
           <input
