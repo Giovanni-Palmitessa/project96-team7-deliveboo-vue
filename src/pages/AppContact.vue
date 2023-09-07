@@ -103,32 +103,26 @@ export default {
           client: clientInstance,
           styles: {
             input: {
-              "font-size": "14px",
+              "font-size": "18px",
               "font-family": "Open Sans",
               "font-weight": "500",
-              "margin-inline": "auto",
-              "max-width": "80%",
             },
           },
           fields: {
             number: {
               selector: "#creditCardNumber",
               placeholder: "Inserisci carta di credito valida",
-              // styles: {
-              //   input: {
-              //     "font-size": "40px",
-              //     "font-family": "Open Sans",
-              //     "font-weight": "800",
-              //   },
-              // },
+              prefill: "4111111111111111",
             },
             cvv: {
               selector: "#cvv",
               placeholder: "fake-three-digit-cvv-only-nonce",
+              prefill: "123",
             },
             expirationDate: {
               selector: "#expireDate",
               placeholder: "00 / 0000",
+              prefill: "12/2023",
             },
           },
         };
@@ -242,7 +236,7 @@ export default {
     <h1 class="text-5xl text-center font-bold">Riepilogo Ordine</h1>
 
     <form
-      class="my-32 max-w-7xl mx-auto"
+      class="my-20 max-w-5xl mx-auto px-10"
       @submit.prevent="payWithCreditCard"
       novalidate
     >
@@ -251,12 +245,12 @@ export default {
           v-model="email"
           type="email"
           id="email"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           required
         />
         <label
-          for="floating_email"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          for="email"
+          class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >Email</label
         >
       </div>
@@ -266,11 +260,11 @@ export default {
             v-model="name"
             type="text"
             id="name"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
           <label
             for="name"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Nome</label
           >
         </div>
@@ -279,27 +273,27 @@ export default {
             v-model="surname"
             type="text"
             id="surname"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
           <label
             for="surname"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Cognome</label
           >
         </div>
       </div>
-      <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="w-full md:gap-6">
         <div class="relative z-0 w-full mb-6 group">
           <input
             v-model="message"
             type="text"
             name="message"
             id="message"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
           <label
             for="message"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Messaggio</label
           >
         </div>
@@ -320,22 +314,44 @@ export default {
       </div> -->
 
       <div class="form-group">
-        <label for="creditCardNumber" class=""> Numero carta di credito </label>
+        <label for="creditCardNumber" style="color: gray">
+          Numero carta di credito
+        </label>
 
         <div
           id="creditCardNumber"
-          class="form-control block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          style="
+            height: 80px;
+            border-bottom: 2px solid #d1d5db;
+            margin-bottom: 15px;
+          "
         ></div>
       </div>
       <div class="form-group">
-        <div class="row">
-          <div class="col-6">
-            <label>Expire Date</label>
-            <div id="expireDate" class="form-control"></div>
+        <div class="row" style="display: flex; justify-content: space-between">
+          <div class="col-6" style="flex-basis: 45%">
+            <label style="color: gray">Data di scadenza</label>
+            <div
+              id="expireDate"
+              class="form-control"
+              style="
+                height: 80px;
+                border-bottom: 2px solid #d1d5db;
+                margin-bottom: 15px;
+              "
+            ></div>
           </div>
-          <div class="col-6">
-            <label>CVV</label>
-            <div id="cvv" class="form-control"></div>
+          <div class="col-6" style="flex-basis: 45%">
+            <label style="color: gray">CVV</label>
+            <div
+              id="cvv"
+              class="form-control"
+              style="
+                height: 80px;
+                border-bottom: 2px solid #d1d5db;
+                margin-bottom: 15px;
+              "
+            ></div>
           </div>
         </div>
       </div>
