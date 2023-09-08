@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <div class="container">
+  <div class="container p-3 md:p-0">
     <h1 class="mt-28 text-3xl font-bold text-secondary">
       DeliveBoo: Gusta i Sapori del Mondo Comodamente a Casa Tua!
     </h1>
@@ -16,10 +16,10 @@ export default {};
     </p>
 
     <!-- PRIMA SEZIONE PER ABOUT -->
-    <div class="flex gap-5 mt-10">
+    <div class="flex flex-col md:flex-row gap-5 mt-10">
       <div class="image basis-full">
         <img
-          class="w-9/12 py-10"
+          class="w-full md:w-9/12 py-10"
           src="../../public/img/food-delivery.jpg"
           alt="Delivery"
         />
@@ -48,7 +48,7 @@ export default {};
     </div>
 
     <!-- SECONDA SEZIONE PER ABOUT -->
-    <div class="flex gap-5 mt-14">
+    <div class="flex flex-col md:flex-row gap-5 mt-14">
       <div class="flex flex-col basis-7/12 pt-6">
         <ul>
           <li class="pt-4 text-xl">
@@ -93,7 +93,9 @@ export default {};
 
     <!-- ULTIMA SEZIONE -->
     <div class="mt-14">
-      <h2 class="text-3xl font-bold text-secondary">La Nostra Missione</h2>
+      <h2 class="text-3xl font-bold text-secondary text-center">
+        La Nostra Missione
+      </h2>
 
       <p class="pt-5 text-xl text-gray-900 text-center">
         La nostra missione è rendere le tue esperienze culinarie il più comode
@@ -101,7 +103,9 @@ export default {};
         goderti pasti deliziosi nella tranquillità del tuo spazio personale.
       </p>
 
-      <div class="flex gap-5 justify-between pt-10">
+      <div
+        class="flex flex-col items-center md:flex-row gap-5 justify-between pt-10"
+      >
         <img
           class="w-3/6 rounded-2xl"
           src="../../public/img/Ricerca-delivery.jpg"
