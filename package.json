@@ -11,10 +11,10 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
     "axios": "^1.4.0",
-    "braintree-web-drop-in": "^1.40.2",
     "flowbite": "^1.8.1",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "braintree-web": "^3.96.0"
   },
   "devDependencies": {
     "@types/braintree-web": "^3.96.4",
