@@ -51,6 +51,7 @@ export default {
         this.error = "";
         this.nonce = "";
         this.hasErrors = false;
+        this.emailError = "";
 
         this.hostedFieldInstance
           .tokenize()
