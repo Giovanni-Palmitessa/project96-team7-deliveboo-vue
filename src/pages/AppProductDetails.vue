@@ -33,7 +33,7 @@ export default {
       class="flex flex-col items-center bg-primary border border-gray-200 rounded-lg shadow md:flex-row md:max-w-4xl"
     >
       <img
-        class="object-cover w-full md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
+        class="object-cover w-[30rem] md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
         :src="this.store.baseUrl + 'storage/' + productUrlImage"
         :alt="productName"
       />
