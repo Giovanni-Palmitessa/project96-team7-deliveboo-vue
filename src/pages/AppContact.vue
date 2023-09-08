@@ -10,7 +10,6 @@ export default {
       store,
       products: [],
       hostedFieldInstance: false,
-      hostedFieldInstance: false,
       email: "",
       name: "",
       surname: "",
@@ -51,6 +50,7 @@ export default {
       if (this.hostedFieldInstance) {
         this.error = "";
         this.nonce = "";
+        this.hasErrors = false;
 
         this.hostedFieldInstance
           .tokenize()
@@ -61,14 +61,15 @@ export default {
             // Verifica le validazioni dei campi
             if (!this.email || !this.name || !this.surname || !this.message) {
               this.hasErrors = true;
-              return; // Esci se ci sono errori
-            }
 
-            // Imposta gli errori per i campi specifici
-            if (!this.email) {
-              this.emailError = "Campo email obbligatorio";
-            } else {
-              this.emailError = ""; // Azzera l'errore se il campo è valido
+              // Imposta gli errori per i campi specifici
+              if (!this.email) {
+                this.emailError = "Campo email obbligatorio";
+              } else {
+                this.emailError = ""; // Azzera l'errore se il campo è valido
+              }
+
+              return; // Esci se ci sono errori
             }
 
             // Sending nonce to Laravel API
