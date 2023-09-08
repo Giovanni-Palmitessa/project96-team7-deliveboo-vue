@@ -68,7 +68,7 @@ export default {
     </div>
     <RouterLink
       :to="{ name: 'cart' }"
-      class="font-semibold underline hover:no-underline text-primary ml-56"
+      class="font-semibold underline hover:no-underline text-primary ml-[17rem]"
       >Vai al carrello</RouterLink
     >
   </div>
