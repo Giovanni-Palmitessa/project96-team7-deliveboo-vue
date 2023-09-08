@@ -49,12 +49,12 @@ export default {
       this.getSubtotal();
     },
     decreaseQnt(index) {
-      if (this.products[index].qnt > 0) {
+      if (this.products[index].qnt > 1) {
         this.products[index].qnt -= 1;
         this.updateCart();
         this.getSubtotal();
       } else {
-        this.products[index].qnt = 0;
+        this.products[index].qnt = 1;
       }
     },
     removeCartEle(index) {
