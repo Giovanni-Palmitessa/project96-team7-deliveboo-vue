@@ -84,7 +84,7 @@ export default {
               })
               .then((response) => {
                 if (response.data.success) {
-                  // handle success
+                  this.$router.push({ name: "thankYou" });
                 } else {
                   // handle failure
                 }
