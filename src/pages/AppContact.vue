@@ -107,7 +107,7 @@ export default {
   created() {
     this.getProductsCart();
 
-    this.payWithCreditCard();
+    // this.payWithCreditCard();
   },
 
   async mounted() {
@@ -216,11 +216,7 @@ export default {
       Riepilogo Ordine
     </h1>
 
-    <form
-      class="my-20 max-w-5xl mx-auto px-10"
-      @submit.prevent="payWithCreditCard"
-      novalidate
-    >
+    <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
       <div class="relative z-0 w-full mb-6 group">
         <input
           v-model="email"
@@ -236,7 +232,9 @@ export default {
         >
       </div>
 
-      <div v-if="emailError" class="text-red-500 mt-2">{{ emailError }}</div>
+      <div v-if="emailError || emailError" class="text-red-500 mt-2">
+        {{ hasErrors ? "il campo email è richiesto!" : emailError }}
+      </div>
 
       <div class="grid md:grid-cols-2 md:gap-6">
         <div class="relative z-0 w-full mb-6 group">
@@ -282,7 +280,9 @@ export default {
           >
         </div>
       </div>
+    </form>
 
+    <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
       <div class="form-group">
         <label for="creditCardNumber" style="color: #00a082">
           Numero carta di credito
@@ -329,6 +329,7 @@ export default {
       <button
         type="submit"
         class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center mt-5"
+        @click.prevent="payWithCreditCard"
       >
         Paga Ora!
       </button>
