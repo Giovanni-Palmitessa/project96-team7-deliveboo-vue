@@ -85,6 +85,7 @@ export default {
               .then((response) => {
                 if (response.data.success) {
                   this.$router.push({ name: "thankYou" });
+                  localStorage.clear();
                 } else {
                   // handle failure
                 }
