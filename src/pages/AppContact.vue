@@ -22,6 +22,7 @@ export default {
       hasErrors: false,
       emailError: "",
       nameError: "",
+      surnameError: "",
     };
   },
   methods: {
@@ -52,6 +53,8 @@ export default {
         this.nonce = "";
         this.hasErrors = false;
         this.emailError = "";
+        this.nameError = "";
+        this.surnameError = "";
 
         this.hostedFieldInstance
           .tokenize()
@@ -60,14 +63,26 @@ export default {
             this.nonce = payload.nonce;
 
             // Verifica le validazioni dei campi
-            if (!this.email || !this.name || !this.surname || !this.message) {
+            if (!this.email || !this.name || !this.surname) {
               this.hasErrors = true;
 
               // Imposta gli errori per i campi specifici
               if (!this.email) {
-                this.emailError = "Campo email obbligatorio";
+                this.emailError = "Il campo email è richiesto!";
               } else {
                 this.emailError = ""; // Azzera l'errore se il campo è valido
+              }
+
+              if (!this.name) {
+                this.nameError = "Il campo nome è richiesto!";
+              } else {
+                this.nameError = ""; // Azzera l'errore se il campo è valido
+              }
+
+              if (!this.surname) {
+                this.surnameError = "Il campo cognome è richiesto!";
+              } else {
+                this.surnameError = ""; // Azzera l'errore se il campo è valido
               }
 
               return; // Esci se ci sono errori
@@ -109,8 +124,6 @@ export default {
   },
   created() {
     this.getProductsCart();
-
-    // this.payWithCreditCard();
   },
 
   async mounted() {
@@ -235,8 +248,8 @@ export default {
         >
       </div>
 
-      <div v-if="emailError || emailError" class="text-red-500 mt-2">
-        {{ hasErrors ? "il campo email è richiesto!" : emailError }}
+      <div v-if="emailError" class="text-red-500 mt-2">
+        {{ hasErrors ? "Il campo email è richiesto!" : emailError }}
       </div>
 
       <div class="grid md:grid-cols-2 md:gap-6">
@@ -253,6 +266,11 @@ export default {
             >Nome</label
           >
         </div>
+
+        <div v-if="nameError" class="text-red-500 mt-2">
+          {{ hasErrors ? "Il campo nome è richiesto!" : nameError }}
+        </div>
+
         <div class="relative z-0 w-full mb-6 group">
           <input
             v-model="surname"
@@ -265,6 +283,10 @@ export default {
             class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Cognome</label
           >
+        </div>
+
+        <div v-if="surnameError" class="text-red-500 mt-2">
+          {{ hasErrors ? "Il campo cognome è richiesto!" : surnameError }}
         </div>
       </div>
       <div class="w-full md:gap-6">
