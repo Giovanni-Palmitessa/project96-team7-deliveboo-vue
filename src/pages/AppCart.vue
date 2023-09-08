@@ -82,7 +82,7 @@ export default {
 
 <template>
   <!-- component -->
-  <h1 class="text-secondary text-3xl font-extrabold mt-[100px] text-center">
+  <h1 class="text-secondary text-3xl text-center font-extrabold mt-28">
     IL MIO CARRELLO
   </h1>
   <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-1">
@@ -97,7 +97,7 @@ export default {
         >
           <div class="flex flex-col md:flex-row gap-3 justify-between">
             <!-- Product Information -->
-            <div class="flex flex-row gap-6 items-center">
+            <div class="flex flex-col md:flex-row gap-6 items-center">
               <div class="w-28 h-28 rounded-full overflow-hidden">
                 <img
                   class="w-full h-full"
@@ -105,30 +105,29 @@ export default {
                   :alt="product.name"
                 />
               </div>
-              <div class="flex flex-col gap-1 max-w-[300px]">
+              <div class="flex flex-col gap-1 max-w-[300px] text-center">
                 <p class="text-lg text-gray-800 font-semibold">
                   {{ product.name }}
-                </p>
-                <p class="text-xs text-gray-600 font-semibold">
-                  {{ product.description }}
                 </p>
               </div>
             </div>
             <!-- Price Information -->
-            <div class="self-center text-center">
-              <p class="text-gray-800 font-normal text-xl">
-                €{{ product.price }}
-              </p>
-            </div>
-            <!-- Remove Product Icon -->
-            <div class="self-center">
-              <button @click="removeCartEle(index)">
-                <i class="fa-solid fa-trash text-secondary"></i>
-              </button>
+            <div class="flex flex-col md:flex-row">
+              <div class="self-center text-center md:mr-3 lg:mr-20">
+                <p class="text-gray-800 font-normal text-xl md:mb-2">
+                  €{{ product.price }}
+                </p>
+              </div>
+              <!-- Remove Product Icon -->
+              <div class="self-center mb-2">
+                <button @click="removeCartEle(index)">
+                  <i class="fa-solid fa-trash text-secondary"></i>
+                </button>
+              </div>
             </div>
           </div>
           <!-- Product Quantity -->
-          <div class="flex flex-row self-center gap-1">
+          <div class="flex flex-row self-center gap-1 md:mt-3 lg:mt-0">
             <button
               class="w-4 h-4 self-center rounded-full border border-secondary"
               @click="decreaseQnt(index)"
