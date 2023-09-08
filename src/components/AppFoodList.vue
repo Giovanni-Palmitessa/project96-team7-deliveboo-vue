@@ -50,6 +50,7 @@ export default {
           price: product.price,
           qnt: 1,
           restaurant_id: this.restaurantId,
+          url_image: product.url_image,
         };
         if (this.productsCart.some((item) => item.id === newProduct.id)) {
           const obj = this.productsCart.find(
@@ -112,9 +113,13 @@ export default {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         class="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
-        v-for="product in products">
-        <img :src="this.store.baseUrl + 'storage/' + product.url_image" :alt="product.name"
-          class="object-cover w-full rounded-t-lg h-[250px] md:w-full md:rounded-none md:rounded-l-lg">
+        v-for="product in products"
+      >
+        <img
+          :src="this.store.baseUrl + 'storage/' + product.url_image"
+          :alt="product.name"
+          class="object-cover w-full rounded-t-lg h-[250px] md:w-full md:rounded-none md:rounded-l-lg"
+        />
         <!-- <img -->
         <!-- class="object-cover w-full rounded-t-lg h-96 md:h-48 lg:h-full md:w-full md:rounded-none md:rounded-l-lg" -->
         <!-- src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg" -->
@@ -142,8 +147,19 @@ export default {
           </button>
 
           <RouterLink
-            :to="{ name: 'details', params: { productId: product.id, productName: product.name, productPrice: product.price, productDescription: product.description, productIngredients: product.ingredients, productUrlImage: product.url_image } }"
-            class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md">
+            :to="{
+              name: 'details',
+              params: {
+                productId: product.id,
+                productName: product.name,
+                productPrice: product.price,
+                productDescription: product.description,
+                productIngredients: product.ingredients,
+                productUrlImage: product.url_image,
+              },
+            }"
+            class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md"
+          >
             Dettagli prodotto
           </RouterLink>
         </div>

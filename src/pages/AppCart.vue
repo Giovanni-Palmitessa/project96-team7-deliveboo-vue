@@ -82,19 +82,28 @@ export default {
 
 <template>
   <!-- component -->
-  <h1 class="text-secondary text-3xl font-extrabold mt-[100px] text-center">IL MIO CARRELLO</h1>
+  <h1 class="text-secondary text-3xl font-extrabold mt-[100px] text-center">
+    IL MIO CARRELLO
+  </h1>
   <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-1">
     <!-- My Cart -->
     <div class="w-full flex flex-col h-fit items-center">
       <!-- Product -->
       <div v-if="this.subtotal !== 0" class="w-4/5 gap-3 flex flex-col">
-        <div class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
-          v-for="(product, index) in products" :key="product.id">
+        <div
+          class="flex flex-col p-4 text-lg font-semibold bg-primary shadow-md border rounded-lg"
+          v-for="(product, index) in products"
+          :key="product.id"
+        >
           <div class="flex flex-col md:flex-row gap-3 justify-between">
             <!-- Product Information -->
             <div class="flex flex-row gap-6 items-center">
               <div class="w-28 h-28 rounded-full overflow-hidden">
-                <img class="w-full h-full" :src="this.store.baseUrl + 'storage/' + product.url_image" :alt="product.name">
+                <img
+                  class="w-full h-full"
+                  :src="this.store.baseUrl + 'storage/' + product.url_image"
+                  :alt="product.name"
+                />
               </div>
               <div class="flex flex-col gap-1 max-w-[300px]">
                 <p class="text-lg text-gray-800 font-semibold">
@@ -120,17 +129,41 @@ export default {
           </div>
           <!-- Product Quantity -->
           <div class="flex flex-row self-center gap-1">
-            <button class="w-4 h-4 self-center rounded-full border border-secondary" @click="decreaseQnt(index)">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00A082" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
+            <button
+              class="w-4 h-4 self-center rounded-full border border-secondary"
+              @click="decreaseQnt(index)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#00A082"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <path d="M5 12h14" />
               </svg>
             </button>
-            <input type="text" readonly="readonly" :value="product.qnt"
-              class="w-12 h-6 text-center text-gray-900 text-sm outline-none border border-secondary rounded-md" />
-            <button class="w-4 h-4 self-center rounded-full border border-secondary" @click="increaseQnt(index)">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="" stroke="#00A082" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
+            <input
+              type="text"
+              readonly="readonly"
+              :value="product.qnt"
+              class="w-12 h-6 text-center text-gray-900 text-sm outline-none border border-secondary rounded-md"
+            />
+            <button
+              class="w-4 h-4 self-center rounded-full border border-secondary"
+              @click="increaseQnt(index)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill=""
+                stroke="#00A082"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <path d="M12 5v14M5 12h14" />
               </svg>
             </button>
@@ -138,16 +171,21 @@ export default {
         </div>
       </div>
       <div v-else class="flex flex-col items-center">
-        <img src="../../public/img/cryng-pizza.jpg" alt="#" class="max-h-80">
-        <h2 class="text-2xl font-semibold mb-2">Aggiungi prodotti al carrello!</h2>
+        <img src="../../public/img/cryng-pizza.jpg" alt="#" class="max-h-80" />
+        <h2 class="text-2xl font-semibold mb-2">
+          Aggiungi prodotti al carrello!
+        </h2>
       </div>
     </div>
 
-
     <!-- Purchase Resume -->
-    <div class="flex flex-col bg-primary_hover w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg">
+    <div
+      class="flex flex-col bg-primary_hover w-full md:w-2/3 h-fit gap-4 p-4 rounded-lg mt-8 lg:mt-0"
+    >
       <p class="text-b_hover text-xl font-extrabold">Riepilogo Acquisti</p>
-      <div class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary">
+      <div
+        class="flex flex-col p-4 gap-4 text-lg font-semibold shadow-md border border-secondary rounded-sm bg-primary"
+      >
         <div class="flex flex-row justify-between">
           <p class="text-dark">
             Subtotale ({{ this.products.length }} Articoli)
@@ -169,46 +207,85 @@ export default {
           </div>
         </div>
         <div class="flex gap-2">
-          <RouterLink :to="{ name: 'contact' }"
-            class="transition-colors text-sm text-center bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md">
+          <RouterLink
+            :to="{ name: 'contact' }"
+            class="transition-colors text-sm text-center bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md"
+          >
             <button>CHECKOUT</button>
           </RouterLink>
           <button
             class="block transition-colors text-sm bg-white border border-gray-600 p-2 rounded-sm w-full text-gray-700 text-hover shadow-md"
-            data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button">
+            data-modal-target="popup-modal"
+            data-modal-toggle="popup-modal"
+            type="button"
+          >
             SVUOTA CARRELLO
           </button>
 
           <!-- modal  -->
-          <div id="popup-modal" tabindex="-1"
-            class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div
+            id="popup-modal"
+            tabindex="-1"
+            class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+          >
             <div class="relative w-full max-w-md max-h-full shadow-lg">
-              <div class="relative bg-b_hover rounded-lg shadow border-2 border-primary">
-                <button type="button"
+              <div
+                class="relative bg-b_hover rounded-lg shadow border-2 border-primary"
+              >
+                <button
+                  type="button"
                   class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                  data-modal-hide="popup-modal">
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  data-modal-hide="popup-modal"
+                >
+                  <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
                   </svg>
                   <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-6 text-center">
-                  <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 20 20">
-                    <path stroke="#FFC244" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  <svg
+                    class="mx-auto mb-4 text-gray-400 w-12 h-12"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="#FFC244"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
                   </svg>
                   <h3 class="mb-5 text-lg font-normal text-primary">
                     Sei sicuro di voler svuotare il carrello?
                   </h3>
-                  <button @click="restoreCart" data-modal-hide="popup-modal" type="button"
-                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                  <button
+                    @click="restoreCart"
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                  >
                     Sono sicuro!
                   </button>
-                  <button data-modal-hide="popup-modal" type="button"
-                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
+                  <button
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                  >
                     No, cancella
                   </button>
                 </div>
