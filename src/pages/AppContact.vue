@@ -63,26 +63,44 @@ export default {
             this.nonce = payload.nonce;
 
             // Verifica le validazioni dei campi
-            if (!this.email || !this.name || !this.surname) {
+            if (!this.email || !this.name || !this.surname || !this.message) {
               this.hasErrors = true;
 
               // Imposta gli errori per i campi specifici
               if (!this.email) {
-                this.emailError = "Il campo email è richiesto!";
+                this.emailError = "Il campo 'email' è richiesto!";
+              } else if (!this.email.includes('@')) {
+                this.emailError = "Il campo 'email' deve contenere la '@'";
+              } else if (!(this.email.endsWith(".com") || this.email.endsWith(".it"))) {
+                this.emailError = "Il campo 'email' deve terminare con '.com' o '.it'"
+              } else if (this.email.length < 5) {
+                this.emailError = "Il campo 'email' deve contenere almeno 5 caratteri"
               } else {
-                this.emailError = ""; // Azzera l'errore se il campo è valido
+                this.emailError = " " // Azzera l'errore se il campo è valido
               }
 
               if (!this.name) {
-                this.nameError = "Il campo nome è richiesto!";
+                this.nameError = "Il campo 'nome' è richiesto!";
+              } else if (this.name.length < 5) {
+                this.nameError = "Il campo 'nome' è troppo corto!";
               } else {
-                this.nameError = ""; // Azzera l'errore se il campo è valido
+                this.nameError = " "; // Azzera l'errore se il campo è valido
               }
 
               if (!this.surname) {
-                this.surnameError = "Il campo cognome è richiesto!";
+                this.surnameError = "Il campo 'cognome' è richiesto!";
+              } else if (this.surname.length < 5) {
+                this.surnameError = "Il campo 'cognome' è troppo corto!";
               } else {
                 this.surnameError = ""; // Azzera l'errore se il campo è valido
+              }
+
+              if (!this.message) {
+                this.messageError = "Il campo 'messaggio' è richiesto!";
+              } else if (this.message.length < 5) {
+                this.messageError = "Il campo 'messaggio' è troppo corto!";
+              } else {
+                this.messageError = ""; // Azzera l'errore se il campo è valido
               }
 
               return; // Esci se ci sono errori
@@ -180,186 +198,132 @@ export default {
 };
 </script>
 <template>
-  <div class="mt-40">
-    <div
-      v-if="hasErrors"
-      id="alert-2"
-      class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50"
-      role="alert"
-    >
-      <svg
-        class="flex-shrink-0 w-4 h-4"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <path
-          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-        />
-      </svg>
-      <span class="sr-only">Info</span>
-      <div class="ml-3 text-sm font-medium">
-        Ordine non inviato, controlla i campi e riprova!
-      </div>
-      <button
-        @click="closeModalErr"
-        type="button"
-        class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8"
-        data-dismiss-target="#alert-2"
-        aria-label="Close"
-      >
-        <span class="sr-only">Close</span>
-        <svg
-          class="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 14 14"
-        >
+  <div class="container">
+    <div class="mt-40">
+      <!-- ERRORE -->
+      <div v-if="hasErrors" id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50"
+        role="alert">
+        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          viewBox="0 0 20 20">
           <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-          />
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
         </svg>
-      </button>
-    </div>
-
-    <h1 class="text-5xl text-center font-bold text-secondary">
-      Riepilogo Ordine
-    </h1>
-
-    <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
-      <div class="relative z-0 w-full mb-6 group">
-        <input
-          v-model="email"
-          type="email"
-          id="email"
-          class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          required
-        />
-        <label
-          for="email"
-          class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Email</label
-        >
+        <span class="sr-only">Info</span>
+        <div class="ml-3 text-sm font-medium">
+          Ordine non inviato, controlla i campi e riprova!
+        </div>
+        <button @click="closeModalErr" type="button"
+          class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8"
+          data-dismiss-target="#alert-2" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </button>
       </div>
 
-      <div v-if="emailError" class="text-red-500 mt-2">
-        {{ hasErrors ? "Il campo email è richiesto!" : emailError }}
-      </div>
+      <h1 class="text-5xl text-center font-bold text-secondary">
+        Riepilogo Ordine
+      </h1>
 
-      <div class="grid md:grid-cols-2 md:gap-6">
+      <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="relative z-0 w-full mb-6 group">
-          <input
-            v-model="name"
-            type="text"
-            id="name"
-            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          />
-          <label
-            for="name"
-            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Nome</label
-          >
+          <label for="email"
+            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 bottom-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mb-2 my-label">Email</label>
+          <input v-model="email" type="email" id="email"
+            class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            autocomplete="off" required />
+          <div v-if="emailError" class="text-red-500 mt-2">
+            {{ emailError }}
+          </div>
         </div>
 
-        <div v-if="nameError" class="text-red-500 mt-2">
-          {{ hasErrors ? "Il campo nome è richiesto!" : nameError }}
-        </div>
 
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            v-model="surname"
-            type="text"
-            id="surname"
-            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none -blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          />
-          <label
-            for="surname"
-            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Cognome</label
-          >
-        </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 w-full mb-6 group">
+            <label for="name"
+              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 bottom-4 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mb-2">Nome</label>
+            <input v-model="name" type="text" id="name"
+              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              autocomplete="off" />
+            <div v-if="nameError" class="text-red-500 mt-2">
+              {{ nameError }}
+            </div>
+          </div>
 
-        <div v-if="surnameError" class="text-red-500 mt-2">
-          {{ hasErrors ? "Il campo cognome è richiesto!" : surnameError }}
-        </div>
-      </div>
-      <div class="w-full md:gap-6">
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            v-model="message"
-            type="text"
-            name="message"
-            id="message"
-            class="block py-5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          />
-          <label
-            for="message"
-            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Messaggio</label
-          >
-        </div>
-      </div>
-    </form>
 
-    <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
-      <div class="form-group">
-        <label for="creditCardNumber" style="color: #00a082">
-          Numero carta di credito
-        </label>
+          <div class="relative z-0 w-full mb-6 group">
+            <label for="surname"
+              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 bottom-4 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mb-2">Cognome</label>
+            <input v-model="surname" type="text" id="surname"
+              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              autocomplete="off" />
+            <div v-if="surnameError" class="text-red-500 mt-2">
+              {{ surnameError }}
+            </div>
+          </div>
 
-        <div
-          id="creditCardNumber"
-          style="
+        </div>
+        <div class="w-full md:gap-6">
+          <div class="relative z-0 w-full mb-6 group">
+            <label for="message"
+              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 bottom-4 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mb-2">Messaggio</label>
+            <input v-model="message" type="text" name="message" id="message"
+              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              autocomplete="off" />
+            <div v-if="messageError" class="text-red-500 mt-2">
+              {{ messageError }}
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
+        <div class="form-group">
+          <label for="creditCardNumber" style="color: #00a082">
+            Numero carta di credito
+          </label>
+
+          <div id="creditCardNumber" style="
             height: 80px;
             border-bottom: 2px solid #d1d5db;
             margin-bottom: 15px;
-          "
-        ></div>
-      </div>
-      <div class="form-group">
-        <div class="row" style="display: flex; justify-content: space-between">
-          <div class="col-6" style="flex-basis: 45%">
-            <label style="color: #00a082">Data di scadenza</label>
-            <div
-              id="expireDate"
-              class="form-control"
-              style="
+          "></div>
+        </div>
+        <div class="form-group">
+          <div class="row" style="display: flex; justify-content: space-between">
+            <div class="col-6" style="flex-basis: 45%">
+              <label style="color: #00a082">Data di scadenza</label>
+              <div id="expireDate" class="form-control" style="
                 height: 80px;
                 border-bottom: 2px solid #d1d5db;
                 margin-bottom: 15px;
-              "
-            ></div>
-          </div>
-          <div class="col-6" style="flex-basis: 45%">
-            <label style="color: #00a082">CVV</label>
-            <div
-              id="cvv"
-              class="form-control"
-              style="
+              "></div>
+            </div>
+            <div class="col-6" style="flex-basis: 45%">
+              <label style="color: #00a082">CVV</label>
+              <div id="cvv" class="form-control" style="
                 height: 80px;
                 border-bottom: 2px solid #d1d5db;
                 margin-bottom: 15px;
-              "
-            ></div>
+              "></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <button
-        type="submit"
-        class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center mt-5"
-        @click.prevent="payWithCreditCard"
-      >
-        Paga Ora!
-      </button>
-    </form>
+        <button type="submit"
+          class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center mt-5"
+          @click.prevent="payWithCreditCard">
+          Paga Ora!
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.my-label {
+  margin-bottom: 10px;
+}
+</style>
