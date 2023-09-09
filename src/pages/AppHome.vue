@@ -119,13 +119,6 @@ export default {
           class="h-24 md:h-40"
         />
       </div>
-
-      <!-- <button
-        @click="refreshFilter"
-        class="text-white bg-secondary px-4 py-1 mt-6 rounded-md shadow-md"
-      >
-        Ripristina
-      </button> -->
     </div>
 
     <!-- ristoranti  -->
@@ -146,9 +139,9 @@ export default {
       aria-label="Page navigation example"
     >
       <ul class="flex items-center -space-x-px h-10 text-base">
-        <li>
+        <li class="rounded-full">
           <button
-            class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover rounded-l-lg hover:bg-primary shadow-md"
+            class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover hover:bg-primary shadow-md rounded-full"
             @click="previousPage(page)"
           >
             <span class="sr-only">Previous</span>
@@ -171,7 +164,7 @@ export default {
         </li>
         <li v-for="page in nPages" :key="page">
           <button
-            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover border border-prbg-primary_hover hover:bg-primary shadow-md"
+            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover border border-prbg-primary_hover hover:bg-primary shadow-md rounded-full"
             :class="{
               'bg-primary': page == currentPage,
               'bg-primary_hover': page !== currentPage,
@@ -183,7 +176,7 @@ export default {
         </li>
         <li @click="nextPage(page)">
           <button
-            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover rounded-r-lg hover:bg-primary shadow-md"
+            class="flex items-center justify-center px-4 h-10 leading-tight text-b_hover bg-primary_hover border border-prbg-primary_hover hover:bg-primary shadow-md rounded-full"
           >
             <span class="sr-only">Next</span>
             <svg

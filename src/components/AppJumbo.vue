@@ -14,19 +14,12 @@ export default {};
       />
       <div class="flex flex-col justify-center items-center gap-4">
         <h2 class="text-2xl font-bold">Sei un ristoratore?</h2>
-        <div class="flex gap-4">
+        <div>
           <a
             href="http://localhost:8000/login"
             class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded text-sm px-4 py-2 text-center mr-3 md:mr-0"
           >
             Accedi
-          </a>
-
-          <a
-            href="http://localhost:8000/register"
-            class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded text-sm px-4 py-2 text-center mr-3 md:mr-0"
-          >
-            Registrati
           </a>
         </div>
       </div>

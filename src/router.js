@@ -33,7 +33,7 @@ const router = createRouter({
       component: AppMenu,
     },
     {
-      path: "/details/:productId/:productName/:productPrice/:productDescription/:productIngredients/:productUrlImage",
+      path: "/details/:slug",
       name: "details",
       component: AppProductDetails,
     },
@@ -54,6 +54,14 @@ const router = createRouter({
       component: App404,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // Se la navigazione proviene da un back-button e la posizione è stata salvata, ritorna quella posizione
+    if (savedPosition) {
+      return savedPosition;
+    }
+    // Altrimenti, scrolla in cima alla pagina
+    return { top: 0 };
+  },
 });
 
 export { router };

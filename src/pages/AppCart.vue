@@ -68,6 +68,11 @@ export default {
     updateCart() {
       localStorage.setItem("cart", JSON.stringify(this.products));
     },
+    getImageUrl(image) {
+      return image
+        ? this.store.baseUrl + "storage/" + image
+        : this.store.baseUrl + "storage/uploads/products/non-disponibile.jpg";
+    },
   },
   created() {
     this.getProductsCart();
@@ -101,7 +106,7 @@ export default {
               <div class="w-28 h-28 rounded-full overflow-hidden">
                 <img
                   class="w-full h-full"
-                  :src="this.store.baseUrl + 'storage/' + product.url_image"
+                  :src="getImageUrl(product.url_image)"
                   :alt="product.name"
                 />
               </div>

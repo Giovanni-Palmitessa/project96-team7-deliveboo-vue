@@ -1,47 +1,57 @@
-<script></script>
+<script>
+export default {};
+</script>
 <template>
-  <div class="text-white MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div
+    class="text-white MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+  >
     <div class="cardFooter">
       <h1 class="mb-7 mt-4 font-bold text-xl">Scopri Deliveboo</h1>
       <ul>
-        <li><a href="#">Investitori</a></li>
+        <li><div>Investitori</div></li>
         <li><router-link :to="{ name: 'about' }">Chi siamo</router-link></li>
-        <li><a href="#">Ristoranti</a></li>
-        <li><a href="#">Altro</a></li>
-        <li><a href="#">Pressroom</a></li>
-        <li><a href="#">Programmazione</a></li>
-        <li><a href="#">Design</a></li>
-        <li><a href="#">Lavora con noi</a></li>
-        <li><a href="#">Diventa nostro partner</a></li>
+        <li><div>Ristoranti</div></li>
+        <li><div>Altro</div></li>
+        <li><div>Pressroom</div></li>
+        <li><div>Programmazione</div></li>
+        <li><div>Design</div></li>
+        <li><div>Lavora con noi</div></li>
+        <li><div>Diventa nostro partner</div></li>
       </ul>
     </div>
     <div class="cardFooter">
       <h2 class="mb-7 mt-4 font-bold text-xl">Note Legali</h2>
       <ul>
-        <li><a href="#">Termini & Condizioni</a></li>
-        <li><a href="#">Informativa sulla privacy</a></li>
-        <li><a href="#">Cookies</a></li>
+        <li><div>Termini & Condizioni</div></li>
+        <li><div>Informativa sulla privacy</div></li>
+        <li><div>Cookies</div></li>
       </ul>
     </div>
     <div class="cardFooter">
       <h2 class="mb-7 mt-4 font-bold text-xl">Aiuto</h2>
       <ul>
-        <li><a href="#">Contatti</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Tipi di cucina</a></li>
-        <li><a href="#"></a></li>
+        <li><div>Contatti</div></li>
+        <li><div>FAQ</div></li>
+        <li><div>Tipi di cucina</div></li>
+        <li><div></div></li>
       </ul>
     </div>
     <div class="cardFooter flex flex-col">
       <h2 class="my-4 font-bold text-xl">Porta Deliveboo con te</h2>
-      <a href="#" class="appStoreApple w-40 mb-4"></a>
-      <a href="#" class="appStoreGoogle w-40"></a>
+      <div class="appStoreApple w-40 mb-4"></div>
+      <div class="appStoreGoogle w-40"></div>
     </div>
   </div>
   <div class="icon text-white flex items-center gap-4 px-[50px] pb-4">
-    <a href="#"><i class="fa-brands fa-facebook text-2xl hover:text-b_hover"></i></a>
-    <a href="#"><i class="fa-brands fa-twitter text-2xl hover:text-b_hover"></i></a>
-    <a href="#"><i class="fa-brands fa-instagram text-2xl hover:text-b_hover"></i></a>
+    <div>
+      <i class="fa-brands fa-facebook text-2xl hover:text-b_hover"></i>
+    </div>
+    <div>
+      <i class="fa-brands fa-twitter text-2xl hover:text-b_hover"></i>
+    </div>
+    <div>
+      <i class="fa-brands fa-instagram text-2xl hover:text-b_hover"></i>
+    </div>
   </div>
 </template>
 <style scoped>
