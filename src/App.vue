@@ -14,22 +14,20 @@ export default {
 </script>
 
 <template>
-  <AppHeader />
+  <header>
+    <AppHeader />
+  </header>
 
-  <div class="home">
-    <div class="">
-      <router-view></router-view>
-    </div>
-  </div>
+  <main>
+    <router-view></router-view>
+  </main>
 
-  <AppFooter />
+  <footer>
+    <AppFooter />
+  </footer>
 </template>
 
 <style>
-
-
- 
-
 /* .home {
   background-image: url('../public/img/bg-food.jpg');
   background-repeat: no-repeat;
