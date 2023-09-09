@@ -33,7 +33,7 @@ const router = createRouter({
       component: AppMenu,
     },
     {
-      path: "/details/:productId/:productName/:productPrice/:productDescription/:productIngredients/:productUrlImage",
+      path: "/details/:slug",
       name: "details",
       component: AppProductDetails,
     },

@@ -2,7 +2,7 @@
 import axios from "axios";
 import { store } from "../store";
 import { RouterLink } from "vue-router";
-import Apploader from "./apploader.vue";
+import AppLoader from "./AppLoader.vue";
 import AppAlert from "./AppAlert.vue";
 import AppPurchaseResume from "./AppPurchaseResume.vue";
 
@@ -16,13 +16,13 @@ export default {
       notAllowed: false,
       showAlert: false,
       resume: false,
-      loader: false,
+      loading: false,
       timer: null,
     };
   },
   methods: {
     getProducts() {
-      this.loader = true;
+      this.loading = true;
       axios
         .get(store.baseUrl + "api/products", {
           params: {
@@ -31,7 +31,7 @@ export default {
         })
         .then((response) => {
           this.products = response.data.results.data;
-          this.loader = false;
+          this.loading = false;
         });
     },
 
@@ -93,30 +93,36 @@ export default {
     closeResume() {
       this.resume = false;
     },
+    getImageUrl(image) {
+      return image
+        ? this.store.baseUrl + "storage/" + image
+        : this.store.baseUrl + "storage/uploads/products/non-disponibile.jpg";
+    },
   },
   created() {
     this.restaurantId = sessionStorage.getItem("restaurant_id");
     this.getProducts();
   },
-  components: { RouterLink, Apploader, AppAlert, AppPurchaseResume },
+  components: { RouterLink, AppLoader, AppAlert, AppPurchaseResume },
 };
 </script>
 
 <template>
   <div class="container mt-[5.5rem] py-8 px-4 md:px-0">
-    <AppAlert v-if="this.showAlert" @closeAlert="alert" />
+    <AppAlert v-show="this.showAlert" @closeAlert="alert" />
 
     <h1 class="text-4xl text-center font-bold text-secondary pb-8">
       Il nostro Menù
     </h1>
+    <AppLoader v-if="loading" />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         class="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
         v-for="product in products"
       >
         <img
-          :src="this.store.baseUrl + 'storage/' + product.url_image"
+          :src="getImageUrl(product.url_image)"
           :alt="product.name"
           class="object-cover w-full rounded-t-lg h-[250px] md:w-full md:rounded-none md:rounded-l-lg"
         />
@@ -147,17 +153,7 @@ export default {
           </button>
 
           <RouterLink
-            :to="{
-              name: 'details',
-              params: {
-                productId: product.id,
-                productName: product.name,
-                productPrice: product.price,
-                productDescription: product.description,
-                productIngredients: product.ingredients,
-                productUrlImage: product.url_image,
-              },
-            }"
+            :to="{ name: 'details', params: { slug: product.slug } }"
             class="text-white text-center text-sm bg-primary hover:text-secondary px-0 py-1 rounded-md shadow-md"
           >
             Dettagli prodotto
@@ -167,12 +163,11 @@ export default {
     </div>
     <div>
       <AppPurchaseResume
-        v-if="resume"
+        v-show="resume"
         :productsResume="productsCart"
         @closeResume="closeResume"
       />
     </div>
-    <Apploader v-if="loader" />
   </div>
 </template>
 

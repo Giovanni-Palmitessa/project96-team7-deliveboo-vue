@@ -1,28 +1,30 @@
 <script>
 import { store } from "../store";
-import Apploader from "../components/apploader.vue";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      productId: [],
-      productName: [],
-      productPrice: [],
-      productDescription: [],
-      productIngredients: [],
-      productUrlImage: [],
-      // store
       store,
+      productDetails: [],
     };
   },
-  components: { Apploader },
+  methods: {
+    getProductDetails() {
+      axios
+        .get(this.store.baseUrl + "api/products/" + this.$route.params.slug)
+        .then((response) => {
+          this.productDetails = response.data.results;
+        });
+    },
+    getImageUrl(image) {
+      return image
+        ? this.store.baseUrl + "storage/" + image
+        : this.store.baseUrl + "storage/uploads/products/non-disponibile.jpg";
+    },
+  },
   created() {
-    this.productId = this.$route.params.productId;
-    this.productName = this.$route.params.productName;
-    this.productPrice = this.$route.params.productPrice;
-    this.productDescription = this.$route.params.productDescription;
-    this.productIngredients = this.$route.params.productIngredients;
-    this.productUrlImage = this.$route.params.productUrlImage;
+    this.getProductDetails();
   },
 };
 </script>
@@ -34,37 +36,31 @@ export default {
     >
       <img
         class="object-cover w-[30rem] md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
-        :src="this.store.baseUrl + 'storage/' + productUrlImage"
-        :alt="productName"
+        :src="getImageUrl(productDetails.url_image)"
+        :alt="productDetails.name"
       />
       <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-secondary">
-          {{ productName }}
+          {{ productDetails.name }}
         </h5>
         <p class="mb-3 font-normal text-gray-700">
-          {{ productDescription }}
+          {{ productDetails.description }}
         </p>
         <div>
           <h2 class="text-secondary font-semibold">Ingredienti:</h2>
           <p class="mb-3 font-normal text-gray-700">
-            {{ productIngredients }}
+            {{ productDetails.ingredients }}
           </p>
         </div>
         <div>
           <h2 class="text-secondary font-semibold">Prezzo:</h2>
-          <p class="mb-3 font-normal text-gray-700">€ {{ productPrice }}</p>
+          <p class="mb-3 font-normal text-gray-700">
+            € {{ productDetails.price }}
+          </p>
         </div>
       </div>
     </div>
-    <!-- Mostra i dettagli del prodotto in base all'ID -->
   </div>
-
-  <!-- <div class="container mx-auto mt-[7rem]">
-    <h1 class="text-3xl text-center text-secondary font-bold">
-      Stiamo lavorando per voi...
-    </h1>
-    <Apploader />
-  </div> -->
 </template>
 
 <style></style>
