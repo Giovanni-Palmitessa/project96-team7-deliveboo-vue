@@ -35,7 +35,7 @@ export default {
       class="flex flex-col items-center bg-primary border border-gray-200 rounded-lg shadow md:flex-row md:max-w-4xl"
     >
       <img
-        class="object-cover w-[30rem] md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
+        class="object-cover myImage md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
         :src="getImageUrl(productDetails.url_image)"
         :alt="productDetails.name"
       />
@@ -63,4 +63,9 @@ export default {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.myImage {
+  width: 250px;
+  aspect-ratio: 1/1;
+}
+</style>

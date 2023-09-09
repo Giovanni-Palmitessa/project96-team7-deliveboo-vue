@@ -54,12 +54,7 @@ const router = createRouter({
       component: App404,
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    // Se la navigazione proviene da un back-button e la posizione è stata salvata, ritorna quella posizione
-    if (savedPosition) {
-      return savedPosition;
-    }
-    // Altrimenti, scrolla in cima alla pagina
+  scrollBehavior() {
     return { top: 0 };
   },
 });
