@@ -257,23 +257,25 @@ export default {
       </h1>
 
       <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
+        <!-- EMAIL -->
         <div class="relative z-0 w-full mb-6 group">
-          <label
-            for="email"
-            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 bottom-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mb-2 my-label"
-            >Email</label
-          >
           <input
             v-model="email"
             type="email"
             id="email"
-            class="block py-4 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
             autocomplete="off"
             required
           />
-          <div v-if="emailError" class="text-red-500 mt-2">
-            {{ emailError }}
-          </div>
+          <label
+            for="email"
+            class="peer-focus:font-medium absolute text-base text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email address</label
+          >
+        </div>
+
+        <div v-if="emailError" class="text-red-500 mt-2">
+          {{ emailError }}
         </div>
 
         <div class="grid md:grid-cols-2 md:gap-6">
@@ -287,7 +289,7 @@ export default {
               v-model="name"
               type="text"
               id="name"
-              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-4 px-0 w-full text-lg text-gray-900 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               autocomplete="off"
             />
             <div v-if="nameError" class="text-red-500 mt-2">
@@ -305,7 +307,7 @@ export default {
               v-model="surname"
               type="text"
               id="surname"
-              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-4 px-0 w-full text-lg text-gray-900 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               autocomplete="off"
             />
             <div v-if="surnameError" class="text-red-500 mt-2">
@@ -325,7 +327,7 @@ export default {
               type="text"
               name="message"
               id="message"
-              class="block py-2 px-0 w-full text-lg text-gray-900 bg-secondary/40 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-4 px-0 w-full text-lg text-gray-900 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               autocomplete="off"
             />
             <div v-if="messageError" class="text-red-500 mt-2">
