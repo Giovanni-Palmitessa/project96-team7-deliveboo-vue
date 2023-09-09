@@ -256,7 +256,7 @@ export default {
         Riepilogo Ordine
       </h1>
 
-      <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
+      <form class="mt-20 mb-16 max-w-5xl mx-auto px-10" novalidate>
         <!-- EMAIL -->
         <div class="relative z-0 w-full mb-6 group">
           <input
@@ -338,7 +338,7 @@ export default {
         </div>
       </form>
 
-      <form class="my-20 max-w-5xl mx-auto px-10" novalidate>
+      <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="form-group">
           <label for="creditCardNumber" style="color: #00a082">
             Numero carta di credito
