@@ -19,11 +19,11 @@ export default {
       this.updateCart();
     },
     decreaseQnt(index) {
-      if (this.productsResume[index].qnt > 0) {
+      if (this.productsResume[index].qnt > 1) {
         this.productsResume[index].qnt -= 1;
         this.updateCart();
       } else {
-        this.productsResume[index].qnt = 0;
+        this.productsResume[index].qnt = 1;
       }
     },
   },
