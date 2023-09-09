@@ -1,6 +1,10 @@
-<script></script>
+<script>
+export default {};
+</script>
 <template>
-  <div class="text-white MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div
+    class="text-white MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+  >
     <div class="cardFooter">
       <h1 class="mb-7 mt-4 font-bold text-xl">Scopri Deliveboo</h1>
       <ul>
@@ -39,9 +43,15 @@
     </div>
   </div>
   <div class="icon text-white flex items-center gap-4 px-[50px] pb-4">
-    <a href="#"><i class="fa-brands fa-facebook text-2xl hover:text-b_hover"></i></a>
-    <a href="#"><i class="fa-brands fa-twitter text-2xl hover:text-b_hover"></i></a>
-    <a href="#"><i class="fa-brands fa-instagram text-2xl hover:text-b_hover"></i></a>
+    <a href="#"
+      ><i class="fa-brands fa-facebook text-2xl hover:text-b_hover"></i
+    ></a>
+    <a href="#"
+      ><i class="fa-brands fa-twitter text-2xl hover:text-b_hover"></i
+    ></a>
+    <a href="#"
+      ><i class="fa-brands fa-instagram text-2xl hover:text-b_hover"></i
+    ></a>
   </div>
 </template>
 <style scoped>
