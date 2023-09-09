@@ -3,7 +3,7 @@ import { store } from "../store";
 export default {
   data() {
     return {
-      store
+      store,
     };
   },
   props: {
@@ -15,15 +15,25 @@ export default {
       sessionStorage.setItem("restaurant_id", index);
       // console.log(sessionStorage.getItem("restaurant_id"));
     },
+    getImageUrl(image) {
+      return image
+        ? this.store.baseUrl + "storage/" + image
+        : this.store.baseUrl + "storage/uploads/restaurant/non-disponibile.jpg";
+    },
   },
 };
 </script>
 
 <template>
-  <div class="bg-primary border border-gray-200 rounded-lg shadow flex flex-col">
+  <div
+    class="bg-primary border border-gray-200 rounded-lg shadow flex flex-col"
+  >
     <a href="#">
-      <img class="rounded-t-lg h-[250px] min-w-full object-cover"
-        :src="this.store.baseUrl + 'storage/' + restaurant.url_image" :alt="restaurant.name">
+      <img
+        class="rounded-t-lg h-[250px] min-w-full object-cover"
+        :src="getImageUrl(restaurant.url_image)"
+        :alt="restaurant.name"
+      />
       <!-- <img class="rounded-t-lg" src="../../public/img/rest01.jpg" alt="" /> -->
     </a>
     <div class="p-5 bg-primary">
@@ -35,19 +45,31 @@ export default {
       <p class="mb-3 font-normal text-sm text-gray-700">
         {{ restaurant.description }}
       </p>
-      <template v-for=" category  in  restaurant.categories ">
+      <template v-for="category in restaurant.categories">
         <a class="flex gap-2 mb-3 text-sm font-semibold" href="#">
           {{ category.name }}
         </a>
       </template>
-      <RouterLink :to="{ name: 'menu' }"
+      <RouterLink
+        :to="{ name: 'menu' }"
         class="inline-flex items-center px-4 py-2 text-xs font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary"
-        @click.prevent="setRestaurantId(restaurant.id)">
+        @click.prevent="setRestaurantId(restaurant.id)"
+      >
         Vai al Menù
-        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 5h12m0 0L9 1m4 4L9 9" />
+        <svg
+          class="w-3.5 h-3.5 ml-2"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9"
+          />
         </svg>
       </RouterLink>
     </div>
