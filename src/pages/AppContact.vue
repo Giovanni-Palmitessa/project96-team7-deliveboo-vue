@@ -165,6 +165,14 @@ export default {
               "font-family": "Open Sans",
               "font-weight": "500",
             },
+            ".valid": {
+              color: "green",
+              // border: "1px solid green",
+            },
+            ".invalid": {
+              color: "red",
+              // border: "1px solid red",
+            },
           },
           fields: {
             number: {
@@ -195,8 +203,27 @@ export default {
         console.log(hostedFieldInstance);
       })
       .catch((err) => {
-        // gestione errori
-        console.log(err);
+        console.error(err);
+        switch (err.code) {
+          case "HOSTED_FIELDS_FIELDS_EMPTY":
+            this.error =
+              "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
+            break;
+          case "HOSTED_FIELDS_FIELDS_INVALID":
+            this.error = "Alcuni campi sono invalidi. Si prega di correggerli.";
+            break;
+          case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
+            this.error =
+              "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
+            break;
+          case "HOSTED_FIELDS_FIELDS_MISSING":
+            this.error = "Mancano alcuni campi obbligatori.";
+            break;
+          default:
+            this.error =
+              "Si è verificato un errore . Ricarica la pagina e riprova.";
+            break;
+        }
       });
   },
 };
@@ -337,7 +364,9 @@ export default {
           </div>
         </div>
       </form>
-
+      <div v-if="error" class="errorMessage text-red-500">
+        {{ error }}
+      </div>
       <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="form-group">
           <label for="creditCardNumber" style="color: #00a082">
@@ -352,7 +381,11 @@ export default {
               margin-bottom: 15px;
             "
           ></div>
+          <div v-if="error" class="alert alert-danger text-red-500">
+            {{ error }}
+          </div>
         </div>
+
         <div class="form-group">
           <div
             class="row"
@@ -369,7 +402,11 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
+              <div v-if="error" class="alert alert-danger text-red-500">
+                {{ error }}
+              </div>
             </div>
+
             <div class="col-6" style="flex-basis: 45%">
               <label style="color: #00a082">CVV</label>
               <div
@@ -381,6 +418,9 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
+              <div v-if="error" class="alert alert-danger text-red-500">
+                {{ error }}
+              </div>
             </div>
           </div>
         </div>
@@ -400,5 +440,9 @@ export default {
 <style scoped>
 .my-label {
   margin-bottom: 10px;
+}
+.invalid-field {
+  border: 1px solid red;
+  /* altri stili per indicare un campo non valido */
 }
 </style>
