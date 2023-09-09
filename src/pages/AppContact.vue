@@ -203,7 +203,7 @@ export default {
 </script>
 <template>
   <div class="container">
-    <div class="mt-40">
+    <div class="mt-28">
       <!-- ERRORE -->
       <div
         v-if="hasErrors"
@@ -272,9 +272,9 @@ export default {
             class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >Email address</label
           >
-        </div>
-        <div v-if="emailError" class="text-red-500">
-          {{ emailError }}
+          <span v-if="emailError" class="text-red-500">
+            {{ emailError }}
+          </span>
         </div>
 
         <!-- NOME E COGNOME -->
