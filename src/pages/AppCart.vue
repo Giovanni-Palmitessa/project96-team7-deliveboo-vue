@@ -90,7 +90,7 @@ export default {
   <h1 class="text-secondary text-3xl text-center font-extrabold mt-28">
     IL MIO CARRELLO
   </h1>
-  <div class="flex flex-col md:flex-row w-screen h-full px-14 py-7 mt-1">
+  <div class="flex flex-col md:flex-row h-full px-14 py-7 mt-1">
     <!-- My Cart -->
     <div class="w-full flex flex-col h-fit items-center">
       <!-- Product -->
