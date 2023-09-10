@@ -59,13 +59,7 @@ export default {};
               >Chi Siamo</router-link
             >
           </li>
-          <li>
-            <router-link
-              :to="{ name: 'contact' }"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"
-              >Ordini</router-link
-            >
-          </li>
+
           <li>
             <router-link
               class="block py-2 pl-3 pr-4 mb-2 lg:mb-0 text-gray-900 rounded hover:bg-secondary md:hover:bg-transparent md:hover:text-secondary hover:text-white md:p-0"

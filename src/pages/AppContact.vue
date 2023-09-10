@@ -23,7 +23,8 @@ export default {
       emailError: "",
       nameError: "",
       surnameError: "",
-      errorMessage1: "",
+      cardError: "",
+      errorMessage1: null,
     };
   },
   methods: {
@@ -56,69 +57,69 @@ export default {
         this.emailError = "";
         this.nameError = "";
         this.surnameError = "";
-        // Imposta il messaggio di errore personalizzato per il campo 'number' (numero di carta di credito)
-        this.hostedFieldInstance.setMessage({
-          field: "number",
-          errorMessage1: "Invalid card number",
-        });
+        this.cardError = "";
+
+        // Verifica le validazioni dei campi
+        let isValid = true;
+
+        if (!this.email) {
+          this.emailError = "Il campo 'email' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (!this.email.includes("@")) {
+          this.emailError = "Il campo 'email' deve contenere la '@'";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (
+          !(this.email.endsWith(".com") || this.email.endsWith(".it"))
+        ) {
+          this.emailError =
+            "Il campo 'email' deve terminare con '.com' o '.it'";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.email.length < 5) {
+          this.emailError =
+            "Il campo 'email' deve contenere almeno 5 caratteri";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.emailError = ""; // Azzera l'errore se il campo è valido
+        }
+
+        if (!this.name) {
+          this.nameError = "Il campo 'nome' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.name.length < 5) {
+          this.nameError = "Il campo 'nome' è troppo corto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.nameError = ""; // Azzera l'errore se il campo è valido
+        }
+
+        if (!this.surname) {
+          this.surnameError = "Il campo 'cognome' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.surname.length < 5) {
+          this.surnameError = "Il campo 'cognome' è troppo corto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.surnameError = "";
+        }
+
+        if (!isValid) {
+          return;
+        }
 
         this.hostedFieldInstance
           .tokenize()
           .then((payload) => {
             console.log(payload);
             this.nonce = payload.nonce;
-
-            // Verifica le validazioni dei campi
-            let isValid = true;
-
-            if (!this.email) {
-              this.emailError = "Il campo 'email' è richiesto!";
-              isValid = false;
-              this.hasErrors = true;
-            } else if (!this.email.includes("@")) {
-              this.emailError = "Il campo 'email' deve contenere la '@'";
-              isValid = false;
-              this.hasErrors = true;
-            } else if (
-              !(this.email.endsWith(".com") || this.email.endsWith(".it"))
-            ) {
-              this.emailError =
-                "Il campo 'email' deve terminare con '.com' o '.it'";
-              isValid = false;
-              this.hasErrors = true;
-            } else if (this.email.length < 5) {
-              this.emailError =
-                "Il campo 'email' deve contenere almeno 5 caratteri";
-              isValid = false;
-              this.hasErrors = true;
-            } else {
-              this.emailError = " "; // Azzera l'errore se il campo è valido
-            }
-
-            if (!this.name) {
-              this.nameError = "Il campo 'nome' è richiesto!";
-              isValid = false;
-              this.hasErrors = true;
-            } else if (this.name.length < 5) {
-              this.nameError = "Il campo 'nome' è troppo corto!";
-              isValid = false;
-              this.hasErrors = true;
-            } else {
-              this.nameError = " "; // Azzera l'errore se il campo è valido
-            }
-
-            if (!this.surname) {
-              this.surnameError = "Il campo 'cognome' è richiesto!";
-              isValid = false;
-              this.hasErrors = true;
-            } else if (this.surname.length < 5) {
-              this.surnameError = "Il campo 'cognome' è troppo corto!";
-              isValid = false;
-              this.hasErrors = true;
-            } else {
-              this.surnameError = ""; // Azzera l'errore se il campo è valido
-            }
-
+            this.cardError = "";
             if (isValid) {
               // Esci se ci sono errori
               // }
@@ -153,29 +154,39 @@ export default {
           .catch((err) => {
             console.error(err);
             this.error = err.message;
-            console.log(this.error);
-            // }
+            this.errorMessage1 = err;
 
             switch (err.code) {
               case "HOSTED_FIELDS_FIELDS_EMPTY":
-                this.errorMessage1 = "Riempi tutti i campi.";
+                this.cardError = "Riempi tutti i campi della carta.";
                 break;
               case "HOSTED_FIELDS_FIELDS_INVALID":
-                this.errorMessage1 =
-                  "Alcuni campi non sono invalidi. Si prega di correggerli.";
+                const invalidFields = err.details.invalidFieldKeys;
+
+                if (invalidFields.includes("number")) {
+                  this.cardError = "Il numero della carta non è valido.";
+                }
+                if (invalidFields.includes("cvv")) {
+                  this.cardError = "Il CVV non è valido.";
+                }
+                if (invalidFields.includes("expirationDate")) {
+                  this.cardError = "La data di scadenza non è valida.";
+                }
                 break;
               case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
-                this.errorMessage1 =
-                  "Si è verificato un errorMessage1e durante la tokenizzazione. Si prega di riprovare.";
+                this.cardError =
+                  "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
                 break;
               case "HOSTED_FIELDS_FIELDS_MISSING":
-                this.errorMessage1 = "Mancano alcuni campi obbligatori.";
+                this.cardError =
+                  "Mancano alcuni campi obbligatori della carta.";
                 break;
               default:
-                this.errorMessage1 =
-                  "Si è verificato un errore . Ricarica la pagina e riprova.";
+                this.cardError =
+                  "Si è verificato un errore con la tua carta. Ricarica la pagina e riprova.";
                 break;
             }
+            console.log(this.error);
           });
       }
     },
@@ -388,17 +399,21 @@ export default {
         </div>
       </form>
       <div
-        v-if="errorMessage1"
-        class="mb-3 text-center errorMessage text-red-500"
+        v-if="
+          cardError &&
+          errorMessage1.details &&
+          errorMessage1.details.invalidFieldKeys.includes('number')
+        "
+        class="alert text-center alert-danger text-red-500"
       >
-        {{ errorMessage1 }}
+        {{ cardError }}
       </div>
+
       <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="form-group">
-          <label for="creditCardNumber" style="color: #00a082">
-            Numero carta di credito
-          </label>
-
+          <label for="creditCardNumber" style="color: #00a082"
+            >Numero carta di credito</label
+          >
           <div
             id="creditCardNumber"
             style="
@@ -407,9 +422,6 @@ export default {
               margin-bottom: 15px;
             "
           ></div>
-          <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
-            {{ errorMessage1 }}
-          </div> -->
         </div>
 
         <div class="form-group">
@@ -428,9 +440,6 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
-              <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
-                {{ errorMessage1 }}
-              </div> -->
             </div>
 
             <div class="col-6" style="flex-basis: 45%">
@@ -444,9 +453,6 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
-              <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
-                {{ errorMessage1 }}
-              </div> -->
             </div>
           </div>
         </div>
