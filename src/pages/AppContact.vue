@@ -23,6 +23,8 @@ export default {
       emailError: "",
       nameError: "",
       surnameError: "",
+      cardError: "",
+      errorMessage1: null,
     };
   },
   methods: {
@@ -55,87 +57,136 @@ export default {
         this.emailError = "";
         this.nameError = "";
         this.surnameError = "";
+        this.cardError = "";
+
+        // Verifica le validazioni dei campi
+        let isValid = true;
+
+        if (!this.email) {
+          this.emailError = "Il campo 'email' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (!this.email.includes("@")) {
+          this.emailError = "Il campo 'email' deve contenere la '@'";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (
+          !(this.email.endsWith(".com") || this.email.endsWith(".it"))
+        ) {
+          this.emailError =
+            "Il campo 'email' deve terminare con '.com' o '.it'";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.email.length < 5) {
+          this.emailError =
+            "Il campo 'email' deve contenere almeno 5 caratteri";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.emailError = ""; // Azzera l'errore se il campo è valido
+        }
+
+        if (!this.name) {
+          this.nameError = "Il campo 'nome' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.name.length < 5) {
+          this.nameError = "Il campo 'nome' è troppo corto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.nameError = ""; // Azzera l'errore se il campo è valido
+        }
+
+        if (!this.surname) {
+          this.surnameError = "Il campo 'cognome' è richiesto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else if (this.surname.length < 5) {
+          this.surnameError = "Il campo 'cognome' è troppo corto!";
+          isValid = false;
+          this.hasErrors = true;
+        } else {
+          this.surnameError = "";
+        }
+
+        if (!isValid) {
+          return;
+        }
 
         this.hostedFieldInstance
           .tokenize()
           .then((payload) => {
             console.log(payload);
             this.nonce = payload.nonce;
-
-            // Verifica le validazioni dei campi
-            if (!this.email || !this.name || !this.surname || !this.message) {
-              this.hasErrors = true;
-
-              // Imposta gli errori per i campi specifici
-              if (!this.email) {
-                this.emailError = "Il campo 'email' è richiesto!";
-              } else if (!this.email.includes("@")) {
-                this.emailError = "Il campo 'email' deve contenere la '@'";
-              } else if (
-                !(this.email.endsWith(".com") || this.email.endsWith(".it"))
-              ) {
-                this.emailError =
-                  "Il campo 'email' deve terminare con '.com' o '.it'";
-              } else if (this.email.length < 5) {
-                this.emailError =
-                  "Il campo 'email' deve contenere almeno 5 caratteri";
-              } else {
-                this.emailError = " "; // Azzera l'errore se il campo è valido
-              }
-
-              if (!this.name) {
-                this.nameError = "Il campo 'nome' è richiesto!";
-              } else if (this.name.length < 5) {
-                this.nameError = "Il campo 'nome' è troppo corto!";
-              } else {
-                this.nameError = " "; // Azzera l'errore se il campo è valido
-              }
-
-              if (!this.surname) {
-                this.surnameError = "Il campo 'cognome' è richiesto!";
-              } else if (this.surname.length < 5) {
-                this.surnameError = "Il campo 'cognome' è troppo corto!";
-              } else {
-                this.surnameError = ""; // Azzera l'errore se il campo è valido
-              }
-
-              // if (!this.message) {
-              //   this.messageError = "Il campo 'messaggio' è richiesto!";
-              // } else if (this.message.length < 5) {
-              //   this.messageError = "Il campo 'messaggio' è troppo corto!";
-              // } else {
-              //   this.messageError = "";
+            this.cardError = "";
+            if (isValid) {
+              // Esci se ci sono errori
               // }
 
-              return; // Esci se ci sono errori
+              // Sending nonce to Laravel API
+              axios
+                .post("http://localhost:8000/api/orders/make/payment", {
+                  token: this.nonce,
+                  cart: this.products,
+                  restaurant_id: this.products[0].restaurant_id,
+                  name: this.name,
+                  surname: this.surname,
+                  email: this.email,
+                  message: this.message,
+                })
+                .then((response) => {
+                  if (response.data.success) {
+                    this.$router.push({ name: "thankYou" });
+                    localStorage.clear();
+                  } else {
+                    // handle failure
+                  }
+                })
+                .catch((error) => {
+                  console.error("Payment Error:", error);
+                  if (error) {
+                    console.log("pagamento rifiutato");
+                  }
+                });
             }
-
-            // Sending nonce to Laravel API
-            axios
-              .post("http://localhost:8000/api/orders/make/payment", {
-                token: this.nonce,
-                cart: this.products,
-                restaurant_id: this.products[0].restaurant_id,
-                name: this.name,
-                surname: this.surname,
-                email: this.email,
-                message: this.message,
-              })
-              .then((response) => {
-                if (response.data.success) {
-                  this.$router.push({ name: "thankYou" });
-                  localStorage.clear();
-                } else {
-                  // handle failure
-                }
-              })
-              .catch((error) => {
-                console.error("Payment Error:", error);
-              });
           })
           .catch((err) => {
             console.error(err);
             this.error = err.message;
+            this.errorMessage1 = err;
+
+            switch (err.code) {
+              case "HOSTED_FIELDS_FIELDS_EMPTY":
+                this.cardError = "Riempi tutti i campi della carta.";
+                break;
+              case "HOSTED_FIELDS_FIELDS_INVALID":
+                const invalidFields = err.details.invalidFieldKeys;
+
+                if (invalidFields.includes("number")) {
+                  this.cardError = "Il numero della carta non è valido.";
+                }
+                if (invalidFields.includes("cvv")) {
+                  this.cardError = "Il CVV non è valido.";
+                }
+                if (invalidFields.includes("expirationDate")) {
+                  this.cardError = "La data di scadenza non è valida.";
+                }
+                break;
+              case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
+                this.cardError =
+                  "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
+                break;
+              case "HOSTED_FIELDS_FIELDS_MISSING":
+                this.cardError =
+                  "Mancano alcuni campi obbligatori della carta.";
+                break;
+              default:
+                this.cardError =
+                  "Si è verificato un errore con la tua carta. Ricarica la pagina e riprova.";
+                break;
+            }
+            console.log(this.error);
           });
       }
     },
@@ -159,17 +210,27 @@ export default {
       .then((clientInstance) => {
         let options = {
           client: clientInstance,
+
           styles: {
             input: {
               "font-size": "18px",
               "font-family": "Open Sans",
               "font-weight": "500",
             },
+            ".valid": {
+              color: "green",
+              // border: "1px solid green",
+            },
+            ".invalid": {
+              color: "red",
+              // border: "1px solid red",
+            },
           },
           fields: {
             number: {
               selector: "#creditCardNumber",
               placeholder: "Inserisci carta di credito valida",
+              message: "Inserisci carta di credito valida",
               prefill: "4111111111111111",
               minlength: 12,
             },
@@ -192,11 +253,11 @@ export default {
       })
       .then((hostedFieldInstance) => {
         this.hostedFieldInstance = hostedFieldInstance;
+
         console.log(hostedFieldInstance);
       })
       .catch((err) => {
-        // gestione errori
-        console.log(err);
+        console.error(err);
       });
   },
 };
@@ -337,13 +398,22 @@ export default {
           </div>
         </div>
       </form>
+      <div
+        v-if="
+          cardError &&
+          errorMessage1.details &&
+          errorMessage1.details.invalidFieldKeys.includes('number')
+        "
+        class="alert text-center alert-danger text-red-500"
+      >
+        {{ cardError }}
+      </div>
 
       <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="form-group">
-          <label for="creditCardNumber" style="color: #00a082">
-            Numero carta di credito
-          </label>
-
+          <label for="creditCardNumber" style="color: #00a082"
+            >Numero carta di credito</label
+          >
           <div
             id="creditCardNumber"
             style="
@@ -353,6 +423,7 @@ export default {
             "
           ></div>
         </div>
+
         <div class="form-group">
           <div
             class="row"
@@ -370,6 +441,7 @@ export default {
                 "
               ></div>
             </div>
+
             <div class="col-6" style="flex-basis: 45%">
               <label style="color: #00a082">CVV</label>
               <div
@@ -400,5 +472,9 @@ export default {
 <style scoped>
 .my-label {
   margin-bottom: 10px;
+}
+.invalid-field {
+  border: 1px solid red;
+  /* altri stili per indicare un campo non valido */
 }
 </style>
