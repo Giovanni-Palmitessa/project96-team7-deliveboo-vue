@@ -204,25 +204,29 @@ export default {
       })
       .catch((err) => {
         console.error(err);
-        switch (err.code) {
-          case "HOSTED_FIELDS_FIELDS_EMPTY":
-            this.error =
-              "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
-            break;
-          case "HOSTED_FIELDS_FIELDS_INVALID":
-            this.error = "Alcuni campi sono invalidi. Si prega di correggerli.";
-            break;
-          case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
-            this.error =
-              "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
-            break;
-          case "HOSTED_FIELDS_FIELDS_MISSING":
-            this.error = "Mancano alcuni campi obbligatori.";
-            break;
-          default:
-            this.error =
-              "Si è verificato un errore . Ricarica la pagina e riprova.";
-            break;
+        // switch (err.code) {
+        //   case "HOSTED_FIELDS_FIELDS_EMPTY":
+        //     this.error =
+        //       "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
+        //     break;
+        //   case "HOSTED_FIELDS_FIELDS_INVALID":
+        //     this.error = "Alcuni campi sono invalidi. Si prega di correggerli.";
+        //     break;
+        //   case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
+        //     this.error =
+        //       "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
+        //     break;
+        //   case "HOSTED_FIELDS_FIELDS_MISSING":
+        //     this.error = "Mancano alcuni campi obbligatori.";
+        //     break;
+        //   default:
+        //     this.error =
+        //       "Si è verificato un errore . Ricarica la pagina e riprova.";
+        //     break;
+        // }
+        if (HOSTED_FIELDS_FIELDS_EMPTY) {
+          this.error =
+            "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
         }
       });
   },
@@ -382,7 +386,7 @@ export default {
             "
           ></div>
           <div v-if="error" class="alert alert-danger text-red-500">
-            {{ error }}
+            PorcoDioPorcoPorcoDio
           </div>
         </div>
 
@@ -403,7 +407,7 @@ export default {
                 "
               ></div>
               <div v-if="error" class="alert alert-danger text-red-500">
-                {{ error }}
+                PorcoDioPorcoDioPorcoDio
               </div>
             </div>
 
@@ -419,7 +423,7 @@ export default {
                 "
               ></div>
               <div v-if="error" class="alert alert-danger text-red-500">
-                {{ error }}
+                PorcoDioPorcoPorcoDio
               </div>
             </div>
           </div>
