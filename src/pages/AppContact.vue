@@ -313,8 +313,8 @@ export default {
         </button>
       </div>
 
-      <h1 class="text-5xl text-center font-bold text-secondary">
-        Riepilogo Ordine
+      <h1 class="text-3xl text-center font-bold text-secondary">
+        Completa il tuo ordine
       </h1>
 
       <form class="mt-20 mb-16 max-w-5xl mx-auto px-10" novalidate>

@@ -210,7 +210,7 @@ export default {
             <p class="text-end font-bold">€ {{ getTotalPrice() }}</p>
           </div>
         </div>
-        <div class="flex gap-2">
+        <div v-if="products.length > 0" class="flex gap-2">
           <RouterLink
             :to="{ name: 'contact' }"
             class="transition-colors text-sm text-center bg-secondary hover:bg-b_hover p-2 rounded-sm w-full text-white text-hover shadow-md"
