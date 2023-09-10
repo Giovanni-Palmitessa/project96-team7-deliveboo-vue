@@ -23,6 +23,7 @@ export default {
       emailError: "",
       nameError: "",
       surnameError: "",
+      errorMessage1: "",
     };
   },
   methods: {
@@ -55,6 +56,11 @@ export default {
         this.emailError = "";
         this.nameError = "";
         this.surnameError = "";
+        // Imposta il messaggio di errore personalizzato per il campo 'number' (numero di carta di credito)
+        this.hostedFieldInstance.setMessage({
+          field: "number",
+          errorMessage1: "Invalid card number",
+        });
 
         this.hostedFieldInstance
           .tokenize()
@@ -63,79 +69,113 @@ export default {
             this.nonce = payload.nonce;
 
             // Verifica le validazioni dei campi
-            if (!this.email || !this.name || !this.surname || !this.message) {
+            let isValid = true;
+
+            if (!this.email) {
+              this.emailError = "Il campo 'email' è richiesto!";
+              isValid = false;
               this.hasErrors = true;
-
-              // Imposta gli errori per i campi specifici
-              if (!this.email) {
-                this.emailError = "Il campo 'email' è richiesto!";
-              } else if (!this.email.includes("@")) {
-                this.emailError = "Il campo 'email' deve contenere la '@'";
-              } else if (
-                !(this.email.endsWith(".com") || this.email.endsWith(".it"))
-              ) {
-                this.emailError =
-                  "Il campo 'email' deve terminare con '.com' o '.it'";
-              } else if (this.email.length < 5) {
-                this.emailError =
-                  "Il campo 'email' deve contenere almeno 5 caratteri";
-              } else {
-                this.emailError = " "; // Azzera l'errore se il campo è valido
-              }
-
-              if (!this.name) {
-                this.nameError = "Il campo 'nome' è richiesto!";
-              } else if (this.name.length < 5) {
-                this.nameError = "Il campo 'nome' è troppo corto!";
-              } else {
-                this.nameError = " "; // Azzera l'errore se il campo è valido
-              }
-
-              if (!this.surname) {
-                this.surnameError = "Il campo 'cognome' è richiesto!";
-              } else if (this.surname.length < 5) {
-                this.surnameError = "Il campo 'cognome' è troppo corto!";
-              } else {
-                this.surnameError = ""; // Azzera l'errore se il campo è valido
-              }
-
-              // if (!this.message) {
-              //   this.messageError = "Il campo 'messaggio' è richiesto!";
-              // } else if (this.message.length < 5) {
-              //   this.messageError = "Il campo 'messaggio' è troppo corto!";
-              // } else {
-              //   this.messageError = "";
-              // }
-
-              return; // Esci se ci sono errori
+            } else if (!this.email.includes("@")) {
+              this.emailError = "Il campo 'email' deve contenere la '@'";
+              isValid = false;
+              this.hasErrors = true;
+            } else if (
+              !(this.email.endsWith(".com") || this.email.endsWith(".it"))
+            ) {
+              this.emailError =
+                "Il campo 'email' deve terminare con '.com' o '.it'";
+              isValid = false;
+              this.hasErrors = true;
+            } else if (this.email.length < 5) {
+              this.emailError =
+                "Il campo 'email' deve contenere almeno 5 caratteri";
+              isValid = false;
+              this.hasErrors = true;
+            } else {
+              this.emailError = " "; // Azzera l'errore se il campo è valido
             }
 
-            // Sending nonce to Laravel API
-            axios
-              .post("http://localhost:8000/api/orders/make/payment", {
-                token: this.nonce,
-                cart: this.products,
-                restaurant_id: this.products[0].restaurant_id,
-                name: this.name,
-                surname: this.surname,
-                email: this.email,
-                message: this.message,
-              })
-              .then((response) => {
-                if (response.data.success) {
-                  this.$router.push({ name: "thankYou" });
-                  localStorage.clear();
-                } else {
-                  // handle failure
-                }
-              })
-              .catch((error) => {
-                console.error("Payment Error:", error);
-              });
+            if (!this.name) {
+              this.nameError = "Il campo 'nome' è richiesto!";
+              isValid = false;
+              this.hasErrors = true;
+            } else if (this.name.length < 5) {
+              this.nameError = "Il campo 'nome' è troppo corto!";
+              isValid = false;
+              this.hasErrors = true;
+            } else {
+              this.nameError = " "; // Azzera l'errore se il campo è valido
+            }
+
+            if (!this.surname) {
+              this.surnameError = "Il campo 'cognome' è richiesto!";
+              isValid = false;
+              this.hasErrors = true;
+            } else if (this.surname.length < 5) {
+              this.surnameError = "Il campo 'cognome' è troppo corto!";
+              isValid = false;
+              this.hasErrors = true;
+            } else {
+              this.surnameError = ""; // Azzera l'errore se il campo è valido
+            }
+
+            if (isValid) {
+              // Esci se ci sono errori
+              // }
+
+              // Sending nonce to Laravel API
+              axios
+                .post("http://localhost:8000/api/orders/make/payment", {
+                  token: this.nonce,
+                  cart: this.products,
+                  restaurant_id: this.products[0].restaurant_id,
+                  name: this.name,
+                  surname: this.surname,
+                  email: this.email,
+                  message: this.message,
+                })
+                .then((response) => {
+                  if (response.data.success) {
+                    this.$router.push({ name: "thankYou" });
+                    localStorage.clear();
+                  } else {
+                    // handle failure
+                  }
+                })
+                .catch((error) => {
+                  console.error("Payment Error:", error);
+                  if (error) {
+                    console.log("pagamento rifiutato");
+                  }
+                });
+            }
           })
           .catch((err) => {
             console.error(err);
             this.error = err.message;
+            console.log(this.error);
+            // }
+
+            switch (err.code) {
+              case "HOSTED_FIELDS_FIELDS_EMPTY":
+                this.errorMessage1 = "Riempi tutti i campi.";
+                break;
+              case "HOSTED_FIELDS_FIELDS_INVALID":
+                this.errorMessage1 =
+                  "Alcuni campi non sono invalidi. Si prega di correggerli.";
+                break;
+              case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
+                this.errorMessage1 =
+                  "Si è verificato un errorMessage1e durante la tokenizzazione. Si prega di riprovare.";
+                break;
+              case "HOSTED_FIELDS_FIELDS_MISSING":
+                this.errorMessage1 = "Mancano alcuni campi obbligatori.";
+                break;
+              default:
+                this.errorMessage1 =
+                  "Si è verificato un errore . Ricarica la pagina e riprova.";
+                break;
+            }
           });
       }
     },
@@ -159,6 +199,7 @@ export default {
       .then((clientInstance) => {
         let options = {
           client: clientInstance,
+
           styles: {
             input: {
               "font-size": "18px",
@@ -178,6 +219,7 @@ export default {
             number: {
               selector: "#creditCardNumber",
               placeholder: "Inserisci carta di credito valida",
+              message: "Inserisci carta di credito valida",
               prefill: "4111111111111111",
               minlength: 12,
             },
@@ -200,34 +242,11 @@ export default {
       })
       .then((hostedFieldInstance) => {
         this.hostedFieldInstance = hostedFieldInstance;
+
         console.log(hostedFieldInstance);
       })
       .catch((err) => {
         console.error(err);
-        // switch (err.code) {
-        //   case "HOSTED_FIELDS_FIELDS_EMPTY":
-        //     this.error =
-        //       "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
-        //     break;
-        //   case "HOSTED_FIELDS_FIELDS_INVALID":
-        //     this.error = "Alcuni campi sono invalidi. Si prega di correggerli.";
-        //     break;
-        //   case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
-        //     this.error =
-        //       "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
-        //     break;
-        //   case "HOSTED_FIELDS_FIELDS_MISSING":
-        //     this.error = "Mancano alcuni campi obbligatori.";
-        //     break;
-        //   default:
-        //     this.error =
-        //       "Si è verificato un errore . Ricarica la pagina e riprova.";
-        //     break;
-        // }
-        if (HOSTED_FIELDS_FIELDS_EMPTY) {
-          this.error =
-            "Tutti i campi sono vuoti. Si prega di compilare tutti i campi.";
-        }
       });
   },
 };
@@ -368,8 +387,11 @@ export default {
           </div>
         </div>
       </form>
-      <div v-if="error" class="errorMessage text-red-500">
-        {{ error }}
+      <div
+        v-if="errorMessage1"
+        class="mb-3 text-center errorMessage text-red-500"
+      >
+        {{ errorMessage1 }}
       </div>
       <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
         <div class="form-group">
@@ -385,9 +407,9 @@ export default {
               margin-bottom: 15px;
             "
           ></div>
-          <div v-if="error" class="alert alert-danger text-red-500">
-            PorcoDioPorcoPorcoDio
-          </div>
+          <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
+            {{ errorMessage1 }}
+          </div> -->
         </div>
 
         <div class="form-group">
@@ -406,9 +428,9 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
-              <div v-if="error" class="alert alert-danger text-red-500">
-                PorcoDioPorcoDioPorcoDio
-              </div>
+              <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
+                {{ errorMessage1 }}
+              </div> -->
             </div>
 
             <div class="col-6" style="flex-basis: 45%">
@@ -422,9 +444,9 @@ export default {
                   margin-bottom: 15px;
                 "
               ></div>
-              <div v-if="error" class="alert alert-danger text-red-500">
-                PorcoDioPorcoPorcoDio
-              </div>
+              <!-- <div v-if="errorMessage1" class="alert alert-danger text-red-500">
+                {{ errorMessage1 }}
+              </div> -->
             </div>
           </div>
         </div>
