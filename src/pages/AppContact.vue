@@ -163,14 +163,14 @@ export default {
               case "HOSTED_FIELDS_FIELDS_INVALID":
                 const invalidFields = err.details.invalidFieldKeys;
 
-                if (invalidFields.includes("number")) {
-                  this.cardError = "Il numero della carta non è valido.";
-                }
                 if (invalidFields.includes("cvv")) {
                   this.cardError = "Il CVV non è valido.";
                 }
                 if (invalidFields.includes("expirationDate")) {
                   this.cardError = "La data di scadenza non è valida.";
+                }
+                if (invalidFields.includes("number")) {
+                  this.cardError = "Il numero della carta non è valido.";
                 }
                 break;
               case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
@@ -346,7 +346,7 @@ export default {
               v-model="name"
               type="text"
               name="floating_first_name"
-              id="floating_first_name"
+              id="name"
               class="block py-4 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               autocomplete="off"
               required
@@ -398,14 +398,7 @@ export default {
           </div>
         </div>
       </form>
-      <div
-        v-if="
-          cardError &&
-          errorMessage1.details &&
-          errorMessage1.details.invalidFieldKeys.includes('number')
-        "
-        class="alert text-center alert-danger text-red-500"
-      >
+      <div v-if="cardError" class="alert text-center alert-danger text-red-500">
         {{ cardError }}
       </div>
 
