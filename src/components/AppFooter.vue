@@ -3,7 +3,7 @@ export default {};
 </script>
 <template>
   <div
-    class="text-white MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+    class="text-white text-sm MyFooteer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
   >
     <div class="cardFooter">
       <h1 class="mb-7 mt-4 font-bold text-xl">Scopri Deliveboo</h1>
@@ -13,10 +13,6 @@ export default {};
         <li><div>Ristoranti</div></li>
         <li><div>Altro</div></li>
         <li><div>Pressroom</div></li>
-        <li><div>Programmazione</div></li>
-        <li><div>Design</div></li>
-        <li><div>Lavora con noi</div></li>
-        <li><div>Diventa nostro partner</div></li>
       </ul>
     </div>
     <div class="cardFooter">

@@ -32,7 +32,7 @@ export default {
   <div>
     <div>
       <form @submit.prevent="filterRestaurants" class="px-8 mt-9">
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap justify-center mb-5 gap-4">
           <div
             class="category-button px-3 py-1 bg-secondary rounded-md shadow-md"
             v-for="category in categories"
