@@ -344,7 +344,7 @@ export default {
 
             <!-- CardNumber -->
             <div class="">
-              <label for="" class="hidden">Card Number</label>
+              <label for="" class="hidden">Carta di Credito</label>
               <input
                 type="text"
                 id=""
@@ -356,22 +356,22 @@ export default {
 
             <div class="w-full flex flex-row justify-between">
               <div class="w-full flex flex-col">
-                <label for="">Card holder</label>
+                <label for="">Intestatario</label>
                 <input
                   type="text"
                   id=""
-                  value="Daniel Castillo Guindos"
+                  value="Daniele Rossi"
                   readonly
                   class="outline-none bg-transparent"
                 />
               </div>
 
               <div class="w-1/4 flex flex-col">
-                <label for="">Expires</label>
+                <label for="">Scadenza</label>
                 <input
                   type="text"
                   id=""
-                  value="12/34"
+                  value="12/26"
                   readonly
                   class="outline-none bg-transparent"
                 />
@@ -434,7 +434,7 @@ export default {
           <label
             for="email"
             class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Email address</label
+            >Indirizzo Email</label
           >
           <span v-if="emailError" class="text-red-500">
             {{ emailError }}
