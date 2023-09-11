@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <div class="bg-primary mt-[5.5rem] pt-8">
+  <div class="bg-primary mt-[5.5rem] mb-[-5px] pt-8">
     <div
       class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 bg-primary"
     >
@@ -12,7 +12,7 @@ export default {};
         src="../../public/img/logo-deliveboo.png"
         alt="logo"
       />
-      <div class="flex flex-col justify-center items-center gap-4">
+      <div class="flex flex-col justify-center items-center gap-4 p-4">
         <h2 class="text-2xl font-bold">Sei un ristoratore?</h2>
         <div>
           <a
