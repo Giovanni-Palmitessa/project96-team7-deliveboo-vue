@@ -122,6 +122,7 @@ export default {
             if (isValid) {
               // Esci se ci sono errori
               // }
+              console.log("i dati sono stati inviati");
 
               // Sending nonce to Laravel API
               axios
@@ -344,10 +345,12 @@ export default {
 
             <!-- CardNumber -->
             <div class="">
-              <label for="" class="hidden">Carta di Credito</label>
+              <label for="cartaDiCredito" class="hidden"
+                >Carta di Credito</label
+              >
               <input
                 type="text"
-                id=""
+                id="cartaDiCredito"
                 value="**** **** **** ****"
                 readonly
                 class="outline-none w-full bg-transparent text-center text-2xl"
@@ -356,10 +359,10 @@ export default {
 
             <div class="w-full flex flex-row justify-between">
               <div class="w-full flex flex-col">
-                <label for="">Intestatario</label>
+                <label for="intestatarioCarta">Intestatario</label>
                 <input
                   type="text"
-                  id=""
+                  id="intestatarioCarta"
                   value="Daniele Rossi"
                   readonly
                   class="outline-none bg-transparent"
@@ -367,10 +370,10 @@ export default {
               </div>
 
               <div class="w-1/4 flex flex-col">
-                <label for="">Scadenza</label>
+                <label for="dataScadenza">Scadenza</label>
                 <input
                   type="text"
-                  id=""
+                  id="dataScadenza"
                   value="12/26"
                   readonly
                   class="outline-none bg-transparent"
@@ -389,10 +392,10 @@ export default {
 
             <div class="px-6 flex flex-col gap-6 justify-center">
               <div class="flex flex-col items-end">
-                <label for="">CVV</label>
+                <label for="numCvv">CVV</label>
                 <input
                   type="text"
-                  id=""
+                  id="numCvv"
                   value="123"
                   readonly
                   class="outline-none rounded text-black w-full h-8 text-right"
