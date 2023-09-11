@@ -2,7 +2,6 @@
 import axios from "axios";
 import braintree from "braintree-web";
 import { store } from "../store";
-import { initFlowbite } from "flowbite";
 
 export default {
   data() {
@@ -317,6 +316,110 @@ export default {
         Completa il tuo ordine
       </h1>
 
+      <!-- Card Credit -->
+      <div class="px-2 mt-7 hidden md:block">
+        <div
+          id="card"
+          class="relative mx-auto w-96 h-60 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500"
+          style="transition: 0.6s; transform-style: preserve-3d"
+        >
+          <!-- Front content -->
+          <div
+            class="absolute top-0 left-0 w-full h-full flex flex-col justify-center gap-6 p-6 bg-gradient-to-tr from-secondary to-b_hover transition-all duration-100 delay-200 z-20"
+            style="transform: rotateY(0deg)"
+          >
+            <div class="flex justify-between items-center">
+              <img
+                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                alt="Smart card"
+                class="w-12"
+              />
+
+              <img
+                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
+                alt="Visa image"
+                class="w-12"
+              />
+            </div>
+
+            <!-- CardNumber -->
+            <div class="">
+              <label for="" class="hidden">Card Number</label>
+              <input
+                type="text"
+                id=""
+                value="**** **** **** ****"
+                readonly
+                class="outline-none w-full bg-transparent text-center text-2xl"
+              />
+            </div>
+
+            <div class="w-full flex flex-row justify-between">
+              <div class="w-full flex flex-col">
+                <label for="">Card holder</label>
+                <input
+                  type="text"
+                  id=""
+                  value="Daniel Castillo Guindos"
+                  readonly
+                  class="outline-none bg-transparent"
+                />
+              </div>
+
+              <div class="w-1/4 flex flex-col">
+                <label for="">Expires</label>
+                <input
+                  type="text"
+                  id=""
+                  value="12/34"
+                  readonly
+                  class="outline-none bg-transparent"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Back content -->
+          <div
+            class="absolute top-0 left-0 w-full h-full flex flex-col gap-3 justify-center bg-gradient-to-tr from-secondary to-b_hover transition-all z-10"
+            style="transform: rotateY(180deg)"
+          >
+            <!-- Band -->
+            <div class="w-full h-12 bg-black"></div>
+
+            <div class="px-6 flex flex-col gap-6 justify-center">
+              <div class="flex flex-col items-end">
+                <label for="">CVV</label>
+                <input
+                  type="text"
+                  id=""
+                  value="123"
+                  readonly
+                  class="outline-none rounded text-black w-full h-8 text-right"
+                  style="
+                    background: repeating-linear-gradient(
+                      45deg,
+                      #ededed,
+                      #ededed 5px,
+                      #f9f9f9 5px,
+                      #f9f9f9 10px
+                    );
+                  "
+                />
+              </div>
+
+              <div class="flex justify-start items-center">
+                <img
+                  src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
+                  alt=""
+                  class="w-12"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <form class="mt-20 mb-16 max-w-5xl mx-auto px-10" novalidate>
         <!-- EMAIL -->
         <div class="relative z-0 w-full mb-6 group">
@@ -469,5 +572,18 @@ export default {
 .invalid-field {
   border: 1px solid red;
   /* altri stili per indicare un campo non valido */
+}
+
+#card:hover {
+  transform: rotateY(180deg);
+}
+
+#card > div:nth-child(1) {
+  transition-delay: 150ms;
+}
+
+#card:hover > div:nth-child(1) {
+  opacity: 0;
+  z-index: -1;
 }
 </style>
