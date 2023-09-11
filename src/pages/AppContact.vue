@@ -236,7 +236,7 @@ export default {
             },
             cvv: {
               selector: "#cvv",
-              placeholder: "fake-three-digit-cvv-only-nonce",
+              placeholder: "Inserisci un CVV",
               prefill: "123",
               minlength: 3,
               maxlength: 3,
