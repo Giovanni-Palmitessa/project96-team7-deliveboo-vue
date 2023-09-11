@@ -2,6 +2,7 @@
 import axios from "axios";
 import braintree from "braintree-web";
 import { store } from "../store";
+import AppLoader from "../components/AppLoader.vue";
 
 export default {
   data() {
@@ -24,8 +25,10 @@ export default {
       surnameError: "",
       cardError: "",
       errorMessage1: null,
+      showLoader: false,
     };
   },
+  components: { AppLoader },
   methods: {
     getProductsCart() {
       let productsStr = localStorage.getItem("cart");
@@ -122,7 +125,7 @@ export default {
             if (isValid) {
               // Esci se ci sono errori
               // }
-              console.log("i dati sono stati inviati");
+              this.showLoader = true;
 
               // Sending nonce to Laravel API
               axios
@@ -554,6 +557,10 @@ export default {
               ></div>
             </div>
           </div>
+        </div>
+
+        <div v-if="showLoader">
+          <AppLoader />
         </div>
 
         <button
