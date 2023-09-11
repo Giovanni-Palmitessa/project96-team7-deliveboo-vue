@@ -99,7 +99,7 @@ export default {
   <AppJumbo />
   <div class="container mx-auto">
     <h1 class="text-4xl lg:text-5xl text-center font-bold text-secondary my-3">
-      Resturants
+      Ristoranti
     </h1>
     <!-- filtro categorie  -->
     <AppCategorySelector
