@@ -33,7 +33,7 @@ export default {
 
 <template>
   <div
-    class="resume h-60 w-80 md:h-48 md:w-96 bg-secondary absolute top-16 right-4 md:top-16 md:right-12 z-50 rounded-lg shadow-lg p-2 text-sm overflow-y-scroll"
+    class="resume h-60 w-80 md:h-48 md:w-96 bg-secondary fixed top-16 right-4 md:top-16 md:right-12 z-50 rounded-lg shadow-lg p-2 text-sm overflow-y-scroll"
   >
     <div class="flex justify-between items-center">
       <h2 class="text-center mb-2 text-md font-semibold text-primary">
