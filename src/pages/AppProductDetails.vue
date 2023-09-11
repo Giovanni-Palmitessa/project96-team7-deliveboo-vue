@@ -30,9 +30,15 @@ export default {
 </script>
 
 <template>
-  <div class="container mx-auto mt-32 mb-8 px-3 md:px-0">
+  <div class="container mx-auto mt-32 mb-8 px-3">
+    <RouterLink
+      :to="{ name: 'menu' }"
+      class="px-6 py-3 text-base font-medium text-center text-white bg-secondary rounded-lg hover:bg-b_hover focus:ring-4 focus:outline-none focus:ring-secondary"
+    >
+      Torna Indietro
+    </RouterLink>
     <div
-      class="flex flex-col items-center bg-primary border border-gray-200 rounded-lg shadow md:flex-row md:max-w-4xl"
+      class="flex flex-col items-center bg-primary border border-gray-200 rounded-lg shadow md:flex-row md:max-w-4xl my-8"
     >
       <img
         class="object-cover myImage md:pl-3 rounded-t-lg md:h-auto md:rounded-none md:rounded-l-lg"
