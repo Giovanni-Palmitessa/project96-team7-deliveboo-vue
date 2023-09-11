@@ -89,7 +89,7 @@ export default {
           this.nameError = "Il campo 'nome' è richiesto!";
           isValid = false;
           this.hasErrors = true;
-        } else if (this.name.length < 5) {
+        } else if (this.name.length < 2) {
           this.nameError = "Il campo 'nome' è troppo corto!";
           isValid = false;
           this.hasErrors = true;
@@ -101,7 +101,7 @@ export default {
           this.surnameError = "Il campo 'cognome' è richiesto!";
           isValid = false;
           this.hasErrors = true;
-        } else if (this.surname.length < 5) {
+        } else if (this.surname.length < 2) {
           this.surnameError = "Il campo 'cognome' è troppo corto!";
           isValid = false;
           this.hasErrors = true;
