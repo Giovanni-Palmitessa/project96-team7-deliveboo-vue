@@ -33,7 +33,7 @@ export default {
 
 <template>
   <div
-    class="resume h-60 w-80 md:h-48 md:w-96 bg-secondary fixed top-16 right-4 md:top-16 md:right-12 z-50 rounded-lg shadow-lg p-2 text-sm overflow-y-scroll"
+    class="resume h-60 w-[22rem] md:h-48 md:w-[26rem] bg-secondary fixed top-16 right-4 md:top-16 md:right-12 z-50 rounded-lg shadow-lg p-2 text-sm overflow-y-scroll"
   >
     <div class="flex justify-between items-center">
       <h2 class="text-center mb-2 text-md font-semibold text-primary">
@@ -48,9 +48,9 @@ export default {
       v-for="(product, index) in productsResume"
       class="grid grid-cols-7 text-white font-semibold p-1 mb-1 bg-b_hover rounded-md shadow-sm"
     >
-      <span class="col-span-3 md:col-span-4 mr-4">{{ product.name }}</span>
-      <span class="mr-4">€ {{ product.price }}</span>
-      <div class="inline-block col-span-2 md:col-span-1 ml-4 md:ml-0">
+      <span class="col-span-3">{{ product.name }}</span>
+      <span class="md:col-span-2 text-center">€ {{ product.price }}</span>
+      <div class="inline-block col-span-2 md:col-span-1 ml-10 md:ml-0">
         <i
           @click="decreaseQnt(index)"
           class="fa-solid fa-minus text-xs mr-2 text-primary_hover hover:text-primary cursor-pointer"
@@ -63,7 +63,7 @@ export default {
       </div>
       <i
         @click="removeCartEle(index)"
-        class="fa-solid fa-xmark p-1 mr-2 mb-1 ml-3 text-primary_hover hover:text-primary rounded-md cursor-pointer"
+        class="text-right fa-solid fa-xmark p-1 mr-2 mb-1 ml-3 text-primary_hover hover:text-primary rounded-md cursor-pointer"
       ></i>
     </div>
     <RouterLink

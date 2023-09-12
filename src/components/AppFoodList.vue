@@ -15,7 +15,7 @@ export default {
       restaurantId: null,
       notAllowed: false,
       showAlert: false,
-      resume: false,
+      resume: true,
       loading: false,
       timer: null,
     };
