@@ -1,30 +1,26 @@
 <script>
 import axios from "axios";
-import braintree from "braintree-web";
 import { store } from "../store";
+import braintreeDropIn from "braintree-web-drop-in";
 import AppLoader from "../components/AppLoader.vue";
 
 export default {
   data() {
     return {
-      store,
       products: [],
-      hostedFieldInstance: false,
       email: "",
       name: "",
       surname: "",
       message: "",
       nonce: "",
       error: "",
-      amount: 10,
       paymentToken: null,
       restaurantId: null,
       hasErrors: false,
       emailError: "",
       nameError: "",
       surnameError: "",
-      cardError: "",
-      errorMessage1: null,
+      messageError: "",
       showLoader: false,
     };
   },
@@ -50,221 +46,121 @@ export default {
           }
         });
     },
+    async initializeDropIn() {
+      try {
+        const instance = await braintreeDropIn.create({
+          container: "#dropin-container",
+          authorization: this.paymentToken,
+        });
 
-    payWithCreditCard() {
-      if (this.hostedFieldInstance) {
-        this.error = "";
-        this.nonce = "";
-        this.hasErrors = false;
-        this.emailError = "";
-        this.nameError = "";
-        this.surnameError = "";
-        this.cardError = "";
-
-        // Verifica le validazioni dei campi
-        let isValid = true;
-
-        if (!this.email) {
-          this.emailError = "Il campo 'email' è richiesto!";
-          isValid = false;
-          this.hasErrors = true;
-        } else if (!this.email.includes("@")) {
-          this.emailError = "Il campo 'email' deve contenere la '@'";
-          isValid = false;
-          this.hasErrors = true;
-        } else if (
-          !(this.email.endsWith(".com") || this.email.endsWith(".it"))
-        ) {
-          this.emailError =
-            "Il campo 'email' deve terminare con '.com' o '.it'";
-          isValid = false;
-          this.hasErrors = true;
-        } else if (this.email.length < 5) {
-          this.emailError =
-            "Il campo 'email' deve contenere almeno 5 caratteri";
-          isValid = false;
-          this.hasErrors = true;
-        } else {
-          this.emailError = ""; // Azzera l'errore se il campo è valido
-        }
-
-        if (!this.name) {
-          this.nameError = "Il campo 'nome' è richiesto!";
-          isValid = false;
-          this.hasErrors = true;
-        } else if (this.name.length < 2) {
-          this.nameError = "Il campo 'nome' è troppo corto!";
-          isValid = false;
-          this.hasErrors = true;
-        } else {
-          this.nameError = ""; // Azzera l'errore se il campo è valido
-        }
-
-        if (!this.surname) {
-          this.surnameError = "Il campo 'cognome' è richiesto!";
-          isValid = false;
-          this.hasErrors = true;
-        } else if (this.surname.length < 2) {
-          this.surnameError = "Il campo 'cognome' è troppo corto!";
-          isValid = false;
-          this.hasErrors = true;
-        } else {
-          this.surnameError = "";
-        }
-
-        if (!isValid) {
-          return;
-        }
-
-        this.hostedFieldInstance
-          .tokenize()
-          .then((payload) => {
-            console.log(payload);
+        const payButton = this.$refs.payButton;
+        payButton.addEventListener("click", () => {
+          instance.requestPaymentMethod((err, payload) => {
+            if (err) {
+              console.error(
+                "Errore nel recupero del metodo di pagamento:",
+                err
+              );
+              return;
+            }
             this.nonce = payload.nonce;
-            this.cardError = "";
-            if (isValid) {
-              // Esci se ci sono errori
-              // }
-              this.showLoader = true;
-
-              // Sending nonce to Laravel API
-              axios
-                .post("http://localhost:8000/api/orders/make/payment", {
-                  token: this.nonce,
-                  cart: this.products,
-                  restaurant_id: this.products[0].restaurant_id,
-                  name: this.name,
-                  surname: this.surname,
-                  email: this.email,
-                  message: this.message,
-                })
-                .then((response) => {
-                  if (response.data.success) {
-                    this.$router.push({ name: "thankYou" });
-                    localStorage.clear();
-                  } else {
-                    // handle failure
-                  }
-                })
-                .catch((error) => {
-                  console.error("Payment Error:", error);
-                  if (error) {
-                    console.log("pagamento rifiutato");
-                  }
-                });
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            this.error = err.message;
-            this.errorMessage1 = err;
-
-            switch (err.code) {
-              case "HOSTED_FIELDS_FIELDS_EMPTY":
-                this.cardError = "Riempi tutti i campi della carta.";
-                break;
-              case "HOSTED_FIELDS_FIELDS_INVALID":
-                const invalidFields = err.details.invalidFieldKeys;
-
-                if (invalidFields.includes("cvv")) {
-                  this.cardError = "Il CVV non è valido.";
-                }
-                if (invalidFields.includes("expirationDate")) {
-                  this.cardError = "La data di scadenza non è valida.";
-                }
-                if (invalidFields.includes("number")) {
-                  this.cardError = "Il numero della carta non è valido.";
-                }
-                break;
-              case "HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE":
-                this.cardError =
-                  "Si è verificato un errore durante la tokenizzazione. Si prega di riprovare.";
-                break;
-              case "HOSTED_FIELDS_FIELDS_MISSING":
-                this.cardError =
-                  "Mancano alcuni campi obbligatori della carta.";
-                break;
-              default:
-                this.cardError =
-                  "Si è verificato un errore con la tua carta. Ricarica la pagina e riprova.";
-                break;
-            }
-            console.log(this.error);
+            this.submitPayment();
           });
+        });
+      } catch (createErr) {
+        console.error("Errore nella creazione di Drop-in:", createErr);
       }
     },
+    validateFields() {
+      let isValid = true;
 
-    closeModalErr() {
+      if (!this.email) {
+        this.emailError = "Il campo 'email' è richiesto!";
+        isValid = false;
+        this.hasErrors = true;
+      } else if (!this.email.includes("@")) {
+        this.emailError = "Il campo 'email' deve contenere la '@'";
+        isValid = false;
+        this.hasErrors = true;
+      } else if (!(this.email.endsWith(".com") || this.email.endsWith(".it"))) {
+        this.emailError = "Il campo 'email' deve terminare con '.com' o '.it'";
+        isValid = false;
+        this.hasErrors = true;
+      } else if (this.email.length < 5) {
+        this.emailError = "Il campo 'email' deve contenere almeno 5 caratteri";
+        isValid = false;
+        this.hasErrors = true;
+      } else {
+        this.emailError = ""; // Azzera l'errore se il campo è valido
+      }
+
+      if (!this.name) {
+        this.nameError = "Il campo 'nome' è richiesto!";
+        isValid = false;
+        this.hasErrors = true;
+      } else if (this.name.length < 2) {
+        this.nameError = "Il campo 'nome' è troppo corto!";
+        isValid = false;
+        this.hasErrors = true;
+      } else {
+        this.nameError = ""; // Azzera l'errore se il campo è valido
+      }
+
+      if (!this.surname) {
+        this.surnameError = "Il campo 'cognome' è richiesto!";
+        isValid = false;
+        this.hasErrors = true;
+      } else if (this.surname.length < 2) {
+        this.surnameError = "Il campo 'cognome' è troppo corto!";
+        isValid = false;
+        this.hasErrors = true;
+      } else {
+        this.surnameError = "";
+      }
+      return isValid;
+    },
+
+    submitPayment() {
+      if (!this.validateFields()) {
+        this.hasErrors = true;
+        return; // Interrompe se la validazione fallisce.
+      }
       this.hasErrors = false;
+      this.showLoader = true;
+      axios
+        .post("http://localhost:8000/api/orders/make/payment", {
+          token: this.nonce,
+          cart: this.products,
+          restaurant_id: this.products[0].restaurant_id,
+          name: this.name,
+          surname: this.surname,
+          email: this.email,
+          message: this.message,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.$router.push({ name: "thankYou" });
+            localStorage.clear();
+          } else {
+            // handle failure
+          }
+        })
+        .catch((error) => {
+          console.error("Payment Error:", error);
+          this.error =
+            error.response.data.message ||
+            "Errore durante il processo di pagamento. Si prega di riprovare.";
+        });
     },
   },
-  created() {
-    this.getProductsCart();
-  },
-
-  async mounted() {
+  async created() {
+    await this.getProductsCart();
     await this.getPaymentToken();
-    console.log("SERVER TOKEN", this.paymentToken);
-    braintree.client
-      .create({
-        //authorization: "sandbox_93smtrz3_bbgx4xf7h8bx24xg",
-        authorization: this.paymentToken,
-      })
-      .then((clientInstance) => {
-        let options = {
-          client: clientInstance,
-
-          styles: {
-            input: {
-              "font-size": "18px",
-              "font-family": "Open Sans",
-              "font-weight": "500",
-            },
-            ".valid": {
-              color: "green",
-              // border: "1px solid green",
-            },
-            ".invalid": {
-              color: "red",
-              // border: "1px solid red",
-            },
-          },
-          fields: {
-            number: {
-              selector: "#creditCardNumber",
-              placeholder: "Inserisci carta di credito valida",
-              message: "Inserisci carta di credito valida",
-              prefill: "4111111111111111",
-              minlength: 12,
-            },
-            cvv: {
-              selector: "#cvv",
-              placeholder: "Inserisci un CVV",
-              prefill: "123",
-              minlength: 3,
-              maxlength: 3,
-            },
-            expirationDate: {
-              selector: "#expireDate",
-              placeholder: "00 / 0000",
-              prefill: "12/2023",
-            },
-          },
-        };
-
-        return braintree.hostedFields.create(options);
-      })
-      .then((hostedFieldInstance) => {
-        this.hostedFieldInstance = hostedFieldInstance;
-
-        console.log(hostedFieldInstance);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    this.initializeDropIn();
   },
 };
 </script>
+
 <template>
   <div class="container">
     <div class="mt-28">
@@ -319,262 +215,40 @@ export default {
       <h1 class="text-3xl text-center font-bold text-secondary">
         Completa il tuo ordine
       </h1>
-
-      <!-- Card Credit -->
-      <div class="px-2 mt-7 hidden md:block">
-        <div
-          id="card"
-          class="relative mx-auto w-96 h-60 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500"
-          style="transition: 0.6s; transform-style: preserve-3d"
-        >
-          <!-- Front content -->
-          <div
-            class="absolute top-0 left-0 w-full h-full flex flex-col justify-center gap-6 p-6 bg-gradient-to-tr from-secondary to-b_hover transition-all duration-100 delay-200 z-20"
-            style="transform: rotateY(0deg)"
-          >
-            <div class="flex justify-between items-center">
-              <img
-                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
-                alt="Smart card"
-                class="w-12"
-              />
-
-              <img
-                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
-                alt="Visa image"
-                class="w-12"
-              />
-            </div>
-
-            <!-- CardNumber -->
-            <div class="">
-              <label for="cartaDiCredito" class="hidden"
-                >Carta di Credito</label
-              >
-              <input
-                type="text"
-                id="cartaDiCredito"
-                value="**** **** **** ****"
-                readonly
-                class="outline-none w-full bg-transparent text-center text-2xl"
-              />
-            </div>
-
-            <div class="w-full flex flex-row justify-between">
-              <div class="w-full flex flex-col">
-                <label for="intestatarioCarta">Intestatario</label>
-                <input
-                  type="text"
-                  id="intestatarioCarta"
-                  value="Daniele Rossi"
-                  readonly
-                  class="outline-none bg-transparent"
-                />
-              </div>
-
-              <div class="w-1/4 flex flex-col">
-                <label for="dataScadenza">Scadenza</label>
-                <input
-                  type="text"
-                  id="dataScadenza"
-                  value="12/26"
-                  readonly
-                  class="outline-none bg-transparent"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Back content -->
-          <div
-            class="absolute top-0 left-0 w-full h-full flex flex-col gap-3 justify-center bg-gradient-to-tr from-secondary to-b_hover transition-all z-10"
-            style="transform: rotateY(180deg)"
-          >
-            <!-- Band -->
-            <div class="w-full h-12 bg-black"></div>
-
-            <div class="px-6 flex flex-col gap-6 justify-center">
-              <div class="flex flex-col items-end">
-                <label for="numCvv">CVV</label>
-                <input
-                  type="text"
-                  id="numCvv"
-                  value="123"
-                  readonly
-                  class="outline-none rounded text-black w-full h-8 text-right"
-                  style="
-                    background: repeating-linear-gradient(
-                      45deg,
-                      #ededed,
-                      #ededed 5px,
-                      #f9f9f9 5px,
-                      #f9f9f9 10px
-                    );
-                  "
-                />
-              </div>
-
-              <div class="flex justify-start items-center">
-                <img
-                  src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
-                  alt=""
-                  class="w-12"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <form class="mt-20 mb-16 max-w-5xl mx-auto px-10" novalidate>
-        <!-- EMAIL -->
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            v-model="email"
-            type="email"
-            id="email"
-            class="block py-4 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-            autocomplete="off"
-            required
-          />
-          <label
-            for="email"
-            class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Indirizzo Email</label
-          >
-          <span v-if="emailError" class="text-red-500">
-            {{ emailError }}
-          </span>
-        </div>
-
-        <!-- NOME E COGNOME -->
-
-        <div class="grid md:grid-cols-2 md:gap-6">
-          <div class="relative z-0 w-full mb-6 group">
-            <input
-              v-model="name"
-              type="text"
-              name="floating_first_name"
-              id="name"
-              class="block py-4 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-              autocomplete="off"
-              required
-            />
-            <label
-              for="name"
-              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Nome</label
-            >
-            <span v-if="nameError" class="text-red-500">{{ nameError }}</span>
-          </div>
-
-          <div class="relative z-0 w-full mb-6 group">
-            <input
-              v-model="surname"
-              type="text"
-              id="surname"
-              class="block py-4 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-              autocomplete="off"
-              required
-            />
-            <label
-              for="surname"
-              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Cognome</label
-            >
-            <span v-if="surnameError" class="text-red-500">{{
-              surnameError
-            }}</span>
-          </div>
-        </div>
-
-        <!-- MESSAGGIO -->
-        <div class="w-full md:gap-6">
-          <div class="relative z-0 w-full mb-6 group">
-            <input
-              v-model="message"
-              type="text"
-              name="message"
-              id="message"
-              class="block py-4 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-              autocomplete="off"
-            />
-            <label
-              for="message"
-              class="peer-focus:font-medium absolute text-lg text-secondary duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Messaggio</label
-            >
-          </div>
-        </div>
+      <h1 class="text-3xl text-center font-bold text-secondary">
+        Completa il tuo ordine
+      </h1>
+      <form @submit.prevent="submitPayment">
+        <input
+          v-model="name"
+          placeholder="Nome"
+          :class="{ 'invalid-field': nameError }"
+        />
+        <input
+          v-model="surname"
+          placeholder="Cognome"
+          :class="{ 'invalid-field': surnameError }"
+        />
+        <input
+          v-model="message"
+          placeholder="Messaggio"
+          :class="{ 'invalid-field': messageError }"
+        />
+        <input
+          v-model="email"
+          type="email"
+          placeholder="Email"
+          :class="{ 'invalid-field': emailError }"
+        />
+        <div id="dropin-container"></div>
+        <button ref="payButton" type="submit">Effettua pagamento</button>
       </form>
-      <div v-if="cardError" class="alert text-center alert-danger text-red-500">
-        {{ cardError }}
+      <div v-if="showLoader">
+        <AppLoader />
       </div>
-
-      <form class="mb-20 max-w-5xl mx-auto px-10" novalidate>
-        <div class="form-group">
-          <label for="creditCardNumber" style="color: #00a082"
-            >Numero carta di credito</label
-          >
-          <div
-            id="creditCardNumber"
-            style="
-              height: 80px;
-              border-bottom: 2px solid #d1d5db;
-              margin-bottom: 15px;
-            "
-          ></div>
-        </div>
-
-        <div class="form-group">
-          <div
-            class="row"
-            style="display: flex; justify-content: space-between"
-          >
-            <div class="col-6" style="flex-basis: 45%">
-              <label style="color: #00a082">Data di scadenza</label>
-              <div
-                id="expireDate"
-                class="form-control"
-                style="
-                  height: 80px;
-                  border-bottom: 2px solid #d1d5db;
-                  margin-bottom: 15px;
-                "
-              ></div>
-            </div>
-
-            <div class="col-6" style="flex-basis: 45%">
-              <label style="color: #00a082">CVV</label>
-              <div
-                id="cvv"
-                class="form-control"
-                style="
-                  height: 80px;
-                  border-bottom: 2px solid #d1d5db;
-                  margin-bottom: 15px;
-                "
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="showLoader">
-          <AppLoader />
-        </div>
-
-        <button
-          type="submit"
-          class="text-white bg-secondary hover:bg-b_hover focus:ring-4 focus:outline-none font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center mt-5"
-          @click.prevent="payWithCreditCard"
-        >
-          Paga Ora!
-        </button>
-      </form>
     </div>
   </div>
 </template>
-
 <style scoped>
 .my-label {
   margin-bottom: 10px;
