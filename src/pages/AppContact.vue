@@ -50,6 +50,67 @@ export default {
           }
         });
     },
+    createHostedFieldsInstance() {
+      braintree.client
+        .create({
+          //authorization: "sandbox_93smtrz3_bbgx4xf7h8bx24xg",
+          authorization: this.paymentToken,
+        })
+        .then((clientInstance) => {
+          let options = {
+            client: clientInstance,
+
+            styles: {
+              input: {
+                "font-size": "18px",
+                "font-family": "Open Sans",
+                "font-weight": "500",
+              },
+              ".valid": {
+                color: "green",
+                // border: "1px solid green",
+              },
+              ".invalid": {
+                color: "red",
+                // border: "1px solid red",
+              },
+            },
+            fields: {
+              number: {
+                selector: "#creditCardNumber",
+                placeholder: "Inserisci carta di credito valida",
+                message: "Inserisci carta di credito valida",
+                minlength: 12,
+              },
+              cvv: {
+                selector: "#cvv",
+                placeholder: "Inserisci un CVV",
+                minlength: 3,
+                maxlength: 3,
+              },
+              expirationDate: {
+                selector: "#expireDate",
+                placeholder: "00 / 0000",
+              },
+            },
+          };
+
+          return braintree.hostedFields.create(options);
+        })
+        .then((hostedFieldInstance) => {
+          this.hostedFieldInstance = hostedFieldInstance;
+
+          console.log(hostedFieldInstance);
+        })
+        .catch((err) => {
+          if (err.code === "HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME") {
+            console.log("errore");
+
+            // location.reload();
+          }
+          console.error(err);
+        });
+    },
 
     payWithCreditCard() {
       if (this.hostedFieldInstance) {
@@ -201,67 +262,56 @@ export default {
   created() {
     this.getProductsCart();
   },
+  beforeDestroy() {
+    if (this.hostedFieldInstance) {
+      this.hostedFieldInstance.teardown((err) => {
+        if (err) {
+          console.error(
+            "Could not tear down the previous hosted fields instance:",
+            err
+          );
+        }
+      });
+    }
+  },
 
   async mounted() {
     await this.getPaymentToken();
     console.log("SERVER TOKEN", this.paymentToken);
-    braintree.client
-      .create({
-        //authorization: "sandbox_93smtrz3_bbgx4xf7h8bx24xg",
-        authorization: this.paymentToken,
-      })
-      .then((clientInstance) => {
-        let options = {
-          client: clientInstance,
 
-          styles: {
-            input: {
-              "font-size": "18px",
-              "font-family": "Open Sans",
-              "font-weight": "500",
-            },
-            ".valid": {
-              color: "green",
-              // border: "1px solid green",
-            },
-            ".invalid": {
-              color: "red",
-              // border: "1px solid red",
-            },
-          },
-          fields: {
-            number: {
-              selector: "#creditCardNumber",
-              placeholder: "Inserisci carta di credito valida",
-              message: "Inserisci carta di credito valida",
-              prefill: "4111111111111111",
-              minlength: 12,
-            },
-            cvv: {
-              selector: "#cvv",
-              placeholder: "Inserisci un CVV",
-              prefill: "123",
-              minlength: 3,
-              maxlength: 3,
-            },
-            expirationDate: {
-              selector: "#expireDate",
-              placeholder: "00 / 0000",
-              prefill: "12/2023",
-            },
-          },
-        };
+    // Qui rimuovo manualmente eventuali iframe presenti nel container prima di procedere
+    ["creditCardNumber", "expireDate", "cvv"].forEach((id) => {
+      const container = document.getElementById(id);
+      while (container && container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    });
 
-        return braintree.hostedFields.create(options);
+    if (this.hostedFieldInstance) {
+      // Ho avvolto il teardown in una Promise per assicurarmi che completi prima di continuare
+      new Promise((resolve, reject) => {
+        this.hostedFieldInstance.teardown((err) => {
+          if (err) {
+            console.error(
+              "Could not tear down the previous hosted fields instance:",
+              err
+            );
+            reject(err);
+            return;
+          }
+          console.log("Successfully torn down the previous instance");
+          resolve();
+        });
       })
-      .then((hostedFieldInstance) => {
-        this.hostedFieldInstance = hostedFieldInstance;
-
-        console.log(hostedFieldInstance);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then(() => {
+          this.createHostedFieldsInstance();
+        })
+        .catch((err) => {
+          console.error("Failed to teardown:", err);
+        });
+    } else {
+      this.createHostedFieldsInstance();
+    }
   },
 };
 </script>
@@ -319,112 +369,6 @@ export default {
       <h1 class="text-3xl text-center font-bold text-secondary">
         Completa il tuo ordine
       </h1>
-
-      <!-- Card Credit -->
-      <div class="px-2 mt-7 hidden md:block">
-        <div
-          id="card"
-          class="relative mx-auto w-96 h-60 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500"
-          style="transition: 0.6s; transform-style: preserve-3d"
-        >
-          <!-- Front content -->
-          <div
-            class="absolute top-0 left-0 w-full h-full flex flex-col justify-center gap-6 p-6 bg-gradient-to-tr from-secondary to-b_hover transition-all duration-100 delay-200 z-20"
-            style="transform: rotateY(0deg)"
-          >
-            <div class="flex justify-between items-center">
-              <img
-                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
-                alt="Smart card"
-                class="w-12"
-              />
-
-              <img
-                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
-                alt="Visa image"
-                class="w-12"
-              />
-            </div>
-
-            <!-- CardNumber -->
-            <div class="">
-              <label for="cartaDiCredito" class="hidden"
-                >Carta di Credito</label
-              >
-              <input
-                type="text"
-                id="cartaDiCredito"
-                value="**** **** **** ****"
-                readonly
-                class="outline-none w-full bg-transparent text-center text-2xl"
-              />
-            </div>
-
-            <div class="w-full flex flex-row justify-between">
-              <div class="w-full flex flex-col">
-                <label for="intestatarioCarta">Intestatario</label>
-                <input
-                  type="text"
-                  id="intestatarioCarta"
-                  value="Daniele Rossi"
-                  readonly
-                  class="outline-none bg-transparent"
-                />
-              </div>
-
-              <div class="w-1/4 flex flex-col">
-                <label for="dataScadenza">Scadenza</label>
-                <input
-                  type="text"
-                  id="dataScadenza"
-                  value="12/26"
-                  readonly
-                  class="outline-none bg-transparent"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Back content -->
-          <div
-            class="absolute top-0 left-0 w-full h-full flex flex-col gap-3 justify-center bg-gradient-to-tr from-secondary to-b_hover transition-all z-10"
-            style="transform: rotateY(180deg)"
-          >
-            <!-- Band -->
-            <div class="w-full h-12 bg-black"></div>
-
-            <div class="px-6 flex flex-col gap-6 justify-center">
-              <div class="flex flex-col items-end">
-                <label for="numCvv">CVV</label>
-                <input
-                  type="text"
-                  id="numCvv"
-                  value="123"
-                  readonly
-                  class="outline-none rounded text-black w-full h-8 text-right"
-                  style="
-                    background: repeating-linear-gradient(
-                      45deg,
-                      #ededed,
-                      #ededed 5px,
-                      #f9f9f9 5px,
-                      #f9f9f9 10px
-                    );
-                  "
-                />
-              </div>
-
-              <div class="flex justify-start items-center">
-                <img
-                  src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
-                  alt=""
-                  class="w-12"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <form class="mt-20 mb-16 max-w-5xl mx-auto px-10" novalidate>
         <!-- EMAIL -->
